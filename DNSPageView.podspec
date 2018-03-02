@@ -9,6 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'DNSPageView'
   s.version          = '1.0.0'
+  s.swift_version = '4.0'
   s.summary          = 'DNSPageView a lightweight, pure-Swift library.'
 
 # This description is used to generate tags and improve search results.
@@ -18,7 +19,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-                       DNSPageView a lightweight, pure-Swift library.
+                       DNSPageView a lightweight, pure-Swift library for pageView.
                        DESC
 
   s.homepage         = 'https://github.com/Danie1s/DNSPageView'
