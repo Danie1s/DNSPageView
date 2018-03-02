@@ -59,15 +59,19 @@ If you prefer not to use any of the aforementioned dependency managers, you can 
 
 To run the example project, clone the repo, and run `Example.xcodeproj` from the Example directory.
 
-![img](https://github.com/Danie1s/DNSPageView/blob/master/Images/1.gif)
-![img](https://github.com/Danie1s/DNSPageView/blob/master/Images/2.gif)
-![img](https://github.com/Danie1s/DNSPageView/blob/master/Images/3.gif)
+<img src="https://github.com/Danie1s/DNSPageView/blob/master/Images/1.gif" width="30%" height="30%">
+
+<img src="https://github.com/Danie1s/DNSPageView/blob/master/Images/2.gif" width="30%" height="30%">
+
+<img src="https://github.com/Danie1s/DNSPageView/blob/master/Images/3.gif" width="30%" height="30%">
+
+
 
 
 
 ## Usage
 
-###直接使用DNSPageView初始化
+### 直接使用DNSPageView初始化
 
 ```swift
 // 创建DNSPageStyle，设置样式
@@ -95,7 +99,7 @@ view.addSubview(pageView)
 
 
 
-###使用xib或者storyboard初始化
+### 使用xib或者storyboard初始化
 
  在xib或者storyboard中拖出2个UIView，让它们分别继承DNSPageTitleView和DNSPageContentView，拖线到代码中
 
