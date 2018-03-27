@@ -123,7 +123,7 @@
         <!--View Controller2-->
         <scene sceneID="fwP-Tx-6wq">
             <objects>
-                <viewController id="iUn-zH-352" customClass="ViewController2" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="iUn-zH-352" customClass="ViewController2" customModule="Dmeo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YZM-hg-OIl"/>
                         <viewControllerLayoutGuide type="bottom" id="9LD-es-TjZ"/>
@@ -132,14 +132,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAd-6Z-8ox" customClass="DNSPageTitleView" customModule="Example" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAd-6Z-8ox" customClass="DNSPageTitleView" customModule="DNSPageView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="t5W-nV-EJu"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-aV-rfr" customClass="DNSPageContentView" customModule="Example" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-aV-rfr" customClass="DNSPageContentView" customModule="DNSPageView">
                                 <rect key="frame" x="0.0" y="108" width="375" height="559"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -167,7 +167,7 @@
         <!--View Controller3-->
         <scene sceneID="fP7-Zb-6me">
             <objects>
-                <viewController id="iGD-vk-wow" customClass="ViewController3" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="iGD-vk-wow" customClass="ViewController3" customModule="Dmeo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5Xy-Zs-mPr"/>
                         <viewControllerLayoutGuide type="bottom" id="CWC-eR-Zbk"/>
@@ -185,7 +185,7 @@
         <!--View Controller1-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController1" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController1" customModule="Dmeo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1VL-Ta-f7c"/>
                         <viewControllerLayoutGuide type="bottom" id="Zvp-AB-PqF"/>

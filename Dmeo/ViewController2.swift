@@ -7,13 +7,13 @@
 //
 
 import UIKit
+import DNSPageView
 
 class ViewController2: UIViewController {
 
     @IBOutlet weak var titleView: DNSPageTitleView!
 
     @IBOutlet weak var contentView: DNSPageContentView!
-
 
 
     override func viewDidLoad() {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DNSPageView
 
 class ViewController3: UIViewController {
 

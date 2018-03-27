@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DNSPageView'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.swift_version = '4.0'
   s.summary          = 'DNSPageView is a lightweight, pure-Swift library.'
   s.description      = <<-DESC
