@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'Source/*.swift'
+  s.source_files = 'DNSPageView/*.swift'
   s.requires_arc = true
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 
