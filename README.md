@@ -6,7 +6,26 @@
 
 DNSPageView一个纯Swift的轻量级、灵活且易于使用的pageView框架，titleView和contentView可以布局在任意地方，可以纯代码初始化，也可以使用xib或者storyboard初始化，并且提供了常见样式属性进行设置。
 
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Example](#example)
+- [Usage](#usage)
+  - [直接使用DNSPageView初始化](#直接使用dnspageview初始化)
+  - [使用xib或者storyboard初始化](#使用xib或者storyboard初始化)
+  - [使用DNSPageViewManager初始化，再分别对titleView和contentView进行布局](#使用dnspageviewmanager初始化，再分别对titleview和contentview进行布局)
+  - [样式](#样式)
+  - [事件监听](#事件监听)
+- [License](#license)
 
+## Features:
+
+- [x] 使用简单
+- [x] 多种初始化方式
+- [x] 灵活布局
+- [x] 常见的样式
+- [x] 双击titleView的回调
+- [x] contentView滑动监听
 
 ## Requirements
 
@@ -56,7 +75,7 @@ If you prefer not to use any of the aforementioned dependency managers, you can 
 
 ## Example
 
-To run the example project, clone the repo, and run `Example.xcodeproj` from the Example directory.
+To run the example project, clone the repo, and run `DNSPageView.xcodeproj` .
 
 <img src="https://github.com/Danie1s/DNSPageView/blob/master/Images/1.gif" width="30%" height="30%">
 
