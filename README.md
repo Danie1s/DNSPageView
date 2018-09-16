@@ -83,6 +83,8 @@ To run the example project, clone the repo, and run `DNSPageView.xcodeproj` .
 
 <img src="https://github.com/Danie1s/DNSPageView/blob/master/Images/3.gif" width="30%" height="30%">
 
+<img src="https://github.com/Danie1s/DNSPageView/blob/master/Images/4.gif" width="30%" height="30%">
+
 
 
 

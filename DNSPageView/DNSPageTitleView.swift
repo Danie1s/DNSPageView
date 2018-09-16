@@ -143,7 +143,7 @@ extension DNSPageTitleView {
             label.text = title
             label.textColor = i == currentIndex ? style.titleSelectedColor : style.titleColor
             label.textAlignment = .center
-            label.font = UIFont.systemFont(ofSize: style.titleFontSize)
+            label.font = style.titleFont
             
             scrollView.addSubview(label)
             
