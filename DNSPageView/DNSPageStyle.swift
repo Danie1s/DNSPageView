@@ -28,28 +28,31 @@ import UIKit
 
 public class DNSPageStyle {
     
-    /// 标题是否可以滚动
-    public var isTitleScrollEnable: Bool = false
-    
-    
-    /// titleView的一些属性
+    /// titleView
     public var titleViewHeight: CGFloat = 44
     public var titleColor: UIColor = UIColor.black
     public var titleSelectedColor: UIColor = UIColor.blue
     public var titleFont: UIFont = UIFont.systemFont(ofSize: 15)
     public var titleViewBackgroundColor: UIColor = UIColor.white
     public var titleMargin: CGFloat = 30
+    public var titleViewSelectedColor: UIColor?
+
     
-    /// 是否显示滚动条
+    /// titleView滑动
+    public var isTitleViewScrollEnabled: Bool = false
+    
+    /// title下划线
     public var isShowBottomLine: Bool = false
     public var bottomLineColor: UIColor = UIColor.blue
     public var bottomLineHeight: CGFloat = 2
+    public var bottomLineRadius: CGFloat = 1
+
     
-    /// 是否需要缩放功能
-    public var isScaleEnable: Bool = false
-    public var maximumScaleFactor: CGFloat = 1.2
+    /// title缩放
+    public var isTitleScaleEnabled: Bool = false
+    public var titleMaximumScaleFactor: CGFloat = 1.2
     
-    /// 是否需要显示coverView
+    /// title遮罩
     public var isShowCoverView: Bool = false
     public var coverViewBackgroundColor: UIColor = UIColor.black
     public var coverViewAlpha: CGFloat = 0.4
@@ -58,14 +61,12 @@ public class DNSPageStyle {
     public var coverViewRadius: CGFloat = 12
     
     
-    
-    /// contentView是否可以滚动
-    public var isContentScrollEnable : Bool = true
+    /// contentView
+    public var isContentScrollEnabled : Bool = true
     public var contentViewBackgroundColor = UIColor.white
-
-
+    
+    
     public init() {
-
+        
     }
-
 }

@@ -57,7 +57,6 @@
 		E1C1DD27206A9D14003665A9 /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C1DD04206A9D14003665A9 /* Constraint.swift */; };
 		E1C1DD28206A9D14003665A9 /* Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C1DD05206A9D14003665A9 /* Debugging.swift */; };
 		E1C1DD29206A9D14003665A9 /* ConstraintRelatableTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C1DD06206A9D14003665A9 /* ConstraintRelatableTarget.swift */; };
-		E1C1DD2A206A9D14003665A9 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1C1DD07206A9D14003665A9 /* Info.plist */; };
 		E1C1DD2B206A9D14003665A9 /* LayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C1DD08206A9D14003665A9 /* LayoutConstraint.swift */; };
 		E1C1DD2C206A9D14003665A9 /* ConstraintLayoutGuide+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C1DD09206A9D14003665A9 /* ConstraintLayoutGuide+Extensions.swift */; };
 		E1C1DD2D206A9D14003665A9 /* ConstraintLayoutSupportDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C1DD0A206A9D14003665A9 /* ConstraintLayoutSupportDSL.swift */; };
@@ -100,7 +99,7 @@
 		E1C1DCBD206A9C68003665A9 /* DNSPageStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSPageStyle.swift; sourceTree = "<group>"; };
 		E1C1DCBE206A9C68003665A9 /* DNSPageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSPageContentView.swift; sourceTree = "<group>"; };
 		E1C1DCBF206A9C68003665A9 /* DNSPageViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSPageViewManager.swift; sourceTree = "<group>"; };
-		E1C1DCCB206A9CA3003665A9 /* Dmeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dmeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1C1DCCB206A9CA3003665A9 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1C1DCCD206A9CA3003665A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1C1DCD2206A9CA3003665A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E1C1DCD4206A9CA3003665A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -173,7 +172,7 @@
 			children = (
 				E1C1DCE7206A9D14003665A9 /* SnapKit */,
 				E1C1DCA2206A9C13003665A9 /* DNSPageView */,
-				E1C1DCCC206A9CA3003665A9 /* Dmeo */,
+				E1C1DCCC206A9CA3003665A9 /* Demo */,
 				E1C1DCA1206A9C13003665A9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -182,7 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				E1C1DCA0206A9C13003665A9 /* DNSPageView.framework */,
-				E1C1DCCB206A9CA3003665A9 /* Dmeo.app */,
+				E1C1DCCB206A9CA3003665A9 /* Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -203,7 +202,7 @@
 			path = DNSPageView;
 			sourceTree = "<group>";
 		};
-		E1C1DCCC206A9CA3003665A9 /* Dmeo */ = {
+		E1C1DCCC206A9CA3003665A9 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
 				E1C1DCE0206A9CCB003665A9 /* Helper.swift */,
@@ -218,7 +217,7 @@
 				E1C1DCD6206A9CA3003665A9 /* LaunchScreen.storyboard */,
 				E1C1DCD9206A9CA3003665A9 /* Info.plist */,
 			);
-			path = Dmeo;
+			path = Demo;
 			sourceTree = "<group>";
 		};
 		E1C1DCE7206A9D14003665A9 /* SnapKit */ = {
@@ -296,9 +295,9 @@
 			productReference = E1C1DCA0206A9C13003665A9 /* DNSPageView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		E1C1DCCA206A9CA3003665A9 /* Dmeo */ = {
+		E1C1DCCA206A9CA3003665A9 /* Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E1C1DCDA206A9CA3003665A9 /* Build configuration list for PBXNativeTarget "Dmeo" */;
+			buildConfigurationList = E1C1DCDA206A9CA3003665A9 /* Build configuration list for PBXNativeTarget "Demo" */;
 			buildPhases = (
 				E1C1DCC7206A9CA3003665A9 /* Sources */,
 				E1C1DCC8206A9CA3003665A9 /* Frameworks */,
@@ -310,9 +309,9 @@
 			dependencies = (
 				E1AF6C8D206D4461003524BA /* PBXTargetDependency */,
 			);
-			name = Dmeo;
+			name = Demo;
 			productName = Dmeo;
-			productReference = E1C1DCCB206A9CA3003665A9 /* Dmeo.app */;
+			productReference = E1C1DCCB206A9CA3003665A9 /* Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -350,7 +349,7 @@
 			projectRoot = "";
 			targets = (
 				E1C1DC9F206A9C13003665A9 /* DNSPageView */,
-				E1C1DCCA206A9CA3003665A9 /* Dmeo */,
+				E1C1DCCA206A9CA3003665A9 /* Demo */,
 			);
 		};
 /* End PBXProject section */
@@ -367,7 +366,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1C1DD2A206A9D14003665A9 /* Info.plist in Resources */,
 				E1C1DCD8206A9CA3003665A9 /* LaunchScreen.storyboard in Resources */,
 				E1C1DCD5206A9CA3003665A9 /* Assets.xcassets in Resources */,
 				E1C1DCD3206A9CA3003665A9 /* Main.storyboard in Resources */,
@@ -634,10 +632,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LXWRN82SY3;
-				INFOPLIST_FILE = Dmeo/Info.plist;
+				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Daniels.DNSPageView-Dmeo";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Daniels.DNSPageView-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -651,10 +649,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LXWRN82SY3;
-				INFOPLIST_FILE = Dmeo/Info.plist;
+				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Daniels.DNSPageView-Dmeo";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Daniels.DNSPageView-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -682,7 +680,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E1C1DCDA206A9CA3003665A9 /* Build configuration list for PBXNativeTarget "Dmeo" */ = {
+		E1C1DCDA206A9CA3003665A9 /* Build configuration list for PBXNativeTarget "Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E1C1DCDB206A9CA3003665A9 /* Debug */,

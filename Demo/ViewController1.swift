@@ -1,6 +1,6 @@
 //
 //  ViewController1.swift
-//  Example
+//  Demo
 //
 //  Created by Daniels on 2018/2/24.
 //  Copyright © 2018年 Daniels. All rights reserved.
@@ -18,8 +18,8 @@ class ViewController1: UIViewController {
 
         // 创建DNSPageStyle，设置样式
         let style = DNSPageStyle()
-        style.isTitleScrollEnable = true
-        style.isScaleEnable = true
+        style.isTitleViewScrollEnabled = true
+        style.isTitleScaleEnabled = true
 
         // 设置标题内容
         let titles = ["头条", "视频", "娱乐", "要问", "体育" , "科技" , "汽车" , "时尚" , "图片" , "游戏" , "房产"]

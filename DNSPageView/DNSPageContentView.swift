@@ -102,7 +102,7 @@ extension DNSPageContentView {
         addSubview(collectionView)
         
         collectionView.backgroundColor = style.contentViewBackgroundColor
-        collectionView.isScrollEnabled = style.isContentScrollEnable
+        collectionView.isScrollEnabled = style.isContentScrollEnabled
 
     }
 }
@@ -160,9 +160,9 @@ extension DNSPageContentView: UICollectionViewDelegate {
     func collectionViewDidEndScroll(_ scrollView: UIScrollView) {
         let inIndex = Int(round(collectionView.contentOffset.x / collectionView.bounds.width))
         
-        let childVc = childViewControllers[inIndex]
+        let childViewController = childViewControllers[inIndex]
         
-        reloader = childVc as? DNSPageReloadable
+        reloader = childViewController as? DNSPageReloadable
         
         reloader?.contentViewDidEndScroll?()
         

@@ -1,6 +1,6 @@
 //
 //  ViewController4.swift
-//  Dmeo
+//  Demo
 //
 //  Created by Daniels on 2018/9/16.
 //  Copyright © 2018年 Daniels. All rights reserved.
@@ -17,7 +17,7 @@ class ViewController4: UIViewController {
         // 创建DNSPageStyle，设置样式
         let style = DNSPageStyle()
         style.isShowBottomLine = true
-        style.isTitleScrollEnable = true
+        style.isTitleViewScrollEnabled = true
         style.titleViewBackgroundColor = UIColor.clear
         style.titleColor = UIColor.gray
         style.titleSelectedColor = UIColor.black
