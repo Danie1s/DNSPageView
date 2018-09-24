@@ -119,11 +119,11 @@ extension DNSPageContentView: UICollectionViewDataSource {
         for subview in cell.contentView.subviews {
             subview.removeFromSuperview()
         }
-        let childVc = childViewControllers[indexPath.item]
+        let childViewController = childViewControllers[indexPath.item]
 
-        reloader = childVc as? DNSPageReloadable
-        childVc.view.frame = cell.contentView.bounds
-        cell.contentView.addSubview(childVc.view)
+        reloader = childViewController as? DNSPageReloadable
+        childViewController.view.frame = cell.contentView.bounds
+        cell.contentView.addSubview(childViewController.view)
         
         return cell
     }
@@ -148,7 +148,6 @@ extension DNSPageContentView: UICollectionViewDelegate {
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             collectionViewDidEndScroll(scrollView)
-            
         }
     }
     
@@ -158,7 +157,7 @@ extension DNSPageContentView: UICollectionViewDelegate {
     
     
     func collectionViewDidEndScroll(_ scrollView: UIScrollView) {
-        let inIndex = Int(round(collectionView.contentOffset.x / collectionView.bounds.width))
+        let inIndex = Int(round(scrollView.contentOffset.x / scrollView.bounds.width))
         
         let childViewController = childViewControllers[inIndex]
         

@@ -43,7 +43,7 @@ class ViewController4: UIViewController {
         let margin = pageViewManager.style.titleMargin
 
         // 计算titleView需要的宽度
-        // 如果tyle.isTitleScrollEnable = false，则不需要计算宽度，但是titleView的下划线会平分titleView的宽度
+        // 如果style.isTitleScrollEnable = false，则不需要计算宽度，但是titleView的下划线会平分titleView的宽度
         let width: CGFloat = titles.reduce(0) { (width, title) -> CGFloat in
             width + (title as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : pageViewManager.style.titleFont], context: nil).width + margin
         }
