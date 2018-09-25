@@ -35,15 +35,16 @@ open class DNSPageView: UIView {
     private (set) public var style: DNSPageStyle
     private (set) public var titles: [String]
     private (set) public var childViewControllers: [UIViewController]
+    private (set) public var startIndex: Int
+    private (set) public lazy var titleView = DNSPageTitleView(frame: .zero, style: style, titles: titles, currentIndex: startIndex)
+    private (set) public lazy var contentView = DNSPageContentView(frame: .zero, style: style, childViewControllers: childViewControllers, startIndex: startIndex)
 
-    private (set) public lazy var titleView = DNSPageTitleView(frame: .zero, style: style, titles: titles)
-    private (set) public lazy var contentView = DNSPageContentView(frame: .zero, style: style, childViewControllers: childViewControllers)
 
-
-    public init(frame: CGRect, style: DNSPageStyle, titles: [String], childViewControllers: [UIViewController]) {
+    public init(frame: CGRect, style: DNSPageStyle, titles: [String], childViewControllers: [UIViewController], startIndex: Int = 0) {
         self.style = style
         self.titles = titles
         self.childViewControllers = childViewControllers
+        self.startIndex = startIndex
         super.init(frame: frame)
         
         setupUI()
@@ -64,7 +65,6 @@ extension DNSPageView {
         
         let contentFrame = CGRect(x: 0, y: style.titleViewHeight, width: bounds.width, height: bounds.height - style.titleViewHeight)
         contentView.frame = contentFrame
-        contentView.backgroundColor = UIColor.white
         addSubview(contentView)
         
         titleView.delegate = contentView

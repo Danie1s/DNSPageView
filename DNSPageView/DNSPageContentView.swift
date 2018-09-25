@@ -44,7 +44,7 @@ open class DNSPageContentView: UIView {
     public var childViewControllers : [UIViewController]
     
     /// 初始化后，默认显示的页数
-    public var startIndex: Int = 0
+    public var startIndex: Int
     
     private var startOffsetX: CGFloat = 0
     
@@ -71,7 +71,7 @@ open class DNSPageContentView: UIView {
     }()
     
     
-    public init(frame: CGRect, style: DNSPageStyle, childViewControllers: [UIViewController], startIndex: Int = 0) {
+    public init(frame: CGRect, style: DNSPageStyle, childViewControllers: [UIViewController], startIndex: Int) {
         self.childViewControllers = childViewControllers
         self.style = style
         self.startIndex = startIndex
@@ -82,6 +82,7 @@ open class DNSPageContentView: UIView {
     required public init?(coder aDecoder: NSCoder) {
         self.childViewControllers = [UIViewController]()
         self.style = DNSPageStyle()
+        self.startIndex = 0
         super.init(coder: aDecoder)
         
     }

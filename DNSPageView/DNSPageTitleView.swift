@@ -52,7 +52,7 @@ open class DNSPageTitleView: UIView {
     /// 点击标题时调用
     public var clickHandler: TitleClickHandler?
     
-    public var currentIndex: Int = 0
+    public var currentIndex: Int
     
     private (set) public lazy var titleLabels: [UILabel] = [UILabel]()
     
@@ -93,7 +93,7 @@ open class DNSPageTitleView: UIView {
         return coverView
     }()
     
-    public init(frame: CGRect, style: DNSPageStyle, titles: [String], currentIndex: Int = 0) {
+    public init(frame: CGRect, style: DNSPageStyle, titles: [String], currentIndex: Int) {
         self.style = style
         self.titles = titles
         self.currentIndex = currentIndex
@@ -104,6 +104,7 @@ open class DNSPageTitleView: UIView {
     required public init?(coder aDecoder: NSCoder) {
         self.style = DNSPageStyle()
         self.titles = [String]()
+        self.currentIndex = 0
         super.init(coder: aDecoder)
         
     }
@@ -144,7 +145,7 @@ extension DNSPageTitleView {
             label.text = title
             label.textColor = i == currentIndex ? style.titleSelectedColor : style.titleColor
             if let color = style.titleViewSelectedColor {
-                label.backgroundColor = i == currentIndex ? color : style.titleViewBackgroundColor
+                label.backgroundColor = i == currentIndex ? color : nil;
             }
             label.textAlignment = .center
             label.font = style.titleFont
@@ -285,7 +286,7 @@ extension DNSPageTitleView {
         }
         
         if let color = style.titleViewSelectedColor {
-            sourceLabel.backgroundColor = style.titleViewBackgroundColor
+            sourceLabel.backgroundColor = nil
             targetLabel.backgroundColor = color
         }
     }
@@ -316,7 +317,7 @@ extension DNSPageTitleView : DNSPageContentViewDelegate {
         let targetLabel = titleLabels[inIndex]
 
         if let color = style.titleViewSelectedColor {
-            sourceLabel.backgroundColor = style.titleViewBackgroundColor
+            sourceLabel.backgroundColor = nil
             targetLabel.backgroundColor = color
         }
         
