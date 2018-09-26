@@ -61,8 +61,8 @@ open class DNSPageTitleView: UIView {
     public var titles: [String]
     
     
-    private lazy var selectRGB: ColorRGB = self.style.titleSelectedColor.getRGB()
     private lazy var normalRGB: ColorRGB = self.style.titleColor.getRGB()
+    private lazy var selectRGB: ColorRGB = self.style.titleSelectedColor.getRGB()
     private lazy var deltaRGB: ColorRGB = {
         let deltaR = self.selectRGB.red - self.normalRGB.red
         let deltaG = self.selectRGB.green - self.normalRGB.green
@@ -86,7 +86,7 @@ open class DNSPageTitleView: UIView {
         return bottomLine
     }()
     
-    public lazy var coverView: UIView = {
+    private (set) public lazy var coverView: UIView = {
         let coverView = UIView()
         coverView.backgroundColor = self.style.coverViewBackgroundColor
         coverView.alpha = self.style.coverViewAlpha
@@ -144,9 +144,7 @@ extension DNSPageTitleView {
             label.tag = i
             label.text = title
             label.textColor = i == currentIndex ? style.titleSelectedColor : style.titleColor
-            if let color = style.titleViewSelectedColor {
-                label.backgroundColor = i == currentIndex ? color : nil;
-            }
+            label.backgroundColor = i == currentIndex ? style.titleViewSelectedColor : nil;
             label.textAlignment = .center
             label.font = style.titleFont
             let tapGes = UITapGestureRecognizer(target: self, action: #selector(titleLabelClick(_:)))
@@ -228,7 +226,7 @@ extension DNSPageTitleView {
     }
     
     private func setupBottomLineLayout() {
-        guard titleLabels.count - 1 >= currentIndex  else { return }
+        guard titleLabels.count - 1 >= currentIndex else { return }
         let label = titleLabels[currentIndex]
         
         bottomLine.frame.origin.x = label.frame.origin.x
@@ -285,10 +283,8 @@ extension DNSPageTitleView {
             })
         }
         
-        if let color = style.titleViewSelectedColor {
-            sourceLabel.backgroundColor = nil
-            targetLabel.backgroundColor = color
-        }
+        sourceLabel.backgroundColor = nil
+        targetLabel.backgroundColor = style.titleViewSelectedColor
     }
     
     private func adjustLabelPosition(_ targetLabel : UILabel) {
@@ -316,10 +312,8 @@ extension DNSPageTitleView : DNSPageContentViewDelegate {
         let sourceLabel = titleLabels[currentIndex]
         let targetLabel = titleLabels[inIndex]
 
-        if let color = style.titleViewSelectedColor {
-            sourceLabel.backgroundColor = nil
-            targetLabel.backgroundColor = color
-        }
+        sourceLabel.backgroundColor = nil
+        targetLabel.backgroundColor = style.titleViewSelectedColor
         
         currentIndex = inIndex
                 
@@ -337,7 +331,6 @@ extension DNSPageTitleView : DNSPageContentViewDelegate {
         }
         let sourceLabel = titleLabels[sourceIndex]
         let targetLabel = titleLabels[targetIndex]
-        
         sourceLabel.textColor = UIColor(r: selectRGB.red - progress * deltaRGB.red, g: selectRGB.green - progress * deltaRGB.green, b: selectRGB.blue - progress * deltaRGB.blue)
         targetLabel.textColor = UIColor(r: normalRGB.red + progress * deltaRGB.red, g: normalRGB.green + progress * deltaRGB.green, b: normalRGB.blue + progress * deltaRGB.blue)
         
