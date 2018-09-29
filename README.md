@@ -6,7 +6,7 @@
 
 DNSPageView一个纯Swift的轻量级、灵活且易于使用的pageView框架，titleView和contentView可以布局在任意地方，可以纯代码初始化，也可以使用xib或者storyboard初始化，并且提供了常见样式属性进行设置。
 
-如果你的开发语言是Objective-C，请使用[DNSPageView-ObjC](https://github.com/Danie1s/DNSPageView-ObjC)
+如果你使用的开发语言是Objective-C，请使用[DNSPageView-ObjC](https://github.com/Danie1s/DNSPageView-ObjC)
 
 - [Features](#features)
 - [Requirements](#requirements)
