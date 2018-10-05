@@ -3,7 +3,7 @@
 //  DNSPageView
 //
 //  Created by Daniels on 2018/2/24.
-//  Copyright © 2018年 Daniels. All rights reserved.
+//  Copyright © 2018 Daniels. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -244,7 +244,7 @@ extension DNSPageTitleView {
         let count = titleLabels.count
         for (i, titleLabel) in titleLabels.enumerated() {
             if style.isTitleViewScrollEnabled {
-                width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : titleLabel.font], context: nil).width
+                width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : titleLabel.font], context: nil).width
                 x = i == 0 ? style.titleMargin * 0.5 : (titleLabels[i - 1].frame.maxX + style.titleMargin)
             } else {
                 width = bounds.width / CGFloat(count)

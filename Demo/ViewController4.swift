@@ -3,7 +3,7 @@
 //  Demo
 //
 //  Created by Daniels on 2018/9/16.
-//  Copyright © 2018年 Daniels. All rights reserved.
+//  Copyright © 2018 Daniels. All rights reserved.
 //
 
 import UIKit
@@ -45,7 +45,7 @@ class ViewController4: UIViewController {
         // 计算titleView需要的宽度
         // 如果style.isTitleScrollEnable = false，则不需要计算宽度，但是titleView的下划线会平分titleView的宽度
         let width: CGFloat = titles.reduce(0) { (width, title) -> CGFloat in
-            width + (title as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : pageViewManager.style.titleFont], context: nil).width + margin
+            width + (title as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : pageViewManager.style.titleFont], context: nil).width + margin
         }
 
         // 单独设置titleView的大小和位置，可以使用autolayout或者frame
