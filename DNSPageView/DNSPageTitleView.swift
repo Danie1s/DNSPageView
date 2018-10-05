@@ -119,6 +119,63 @@ open class DNSPageTitleView: UIView {
         setupBottomLineLayout()
         setupCoverViewLayout()
     }
+
+
+
+    /// 通过代码实现点了某个位置的titleView
+    ///
+    /// - Parameter index: 需要点击的titleView的下标
+    public func selectedTitle(inIndex index: Int) {
+        if index > titles.count || index < 0 {
+            print("DNSPageTitleView -- selectedTitle: 数组越界了, index的值超出有效范围");
+        }
+
+        clickHandler?(self, index)
+
+        if index == currentIndex {
+            delegate?.reloader??.titleViewDidSelectedSameTitle?()
+            return
+        }
+
+        let sourceLabel = titleLabels[currentIndex]
+        let targetLabel = titleLabels[index]
+
+        sourceLabel.textColor = style.titleColor
+        targetLabel.textColor = style.titleSelectedColor
+
+        currentIndex = index
+
+        adjustLabelPosition(targetLabel)
+
+        delegate?.titleView(self, currentIndex: currentIndex)
+
+
+        if style.isTitleScaleEnabled {
+            UIView.animate(withDuration: 0.25, animations: {
+                sourceLabel.transform = CGAffineTransform.identity
+                targetLabel.transform = CGAffineTransform(scaleX: self.style.titleMaximumScaleFactor, y: self.style.titleMaximumScaleFactor)
+            })
+        }
+
+        if style.isShowBottomLine {
+            UIView.animate(withDuration: 0.25, animations: {
+                self.bottomLine.frame.origin.x = targetLabel.frame.origin.x
+                self.bottomLine.frame.size.width = targetLabel.frame.width
+            })
+        }
+
+        if style.isShowCoverView {
+            let x = style.isTitleViewScrollEnabled ? (targetLabel.frame.origin.x - style.coverMargin) : targetLabel.frame.origin.x
+            let width = style.isTitleViewScrollEnabled ? (targetLabel.frame.width + style.coverMargin * 2) : targetLabel.frame.width
+            UIView.animate(withDuration: 0.25, animations: {
+                self.coverView.frame.origin.x = x
+                self.coverView.frame.size.width = width
+            })
+        }
+
+        sourceLabel.backgroundColor = nil
+        targetLabel.backgroundColor = style.titleViewSelectedColor
+    }
     
 }
 
@@ -131,9 +188,7 @@ extension DNSPageTitleView {
         scrollView.backgroundColor = style.titleViewBackgroundColor
         
         setupTitleLabels()
-        
         setupBottomLine()
-        
         setupCoverView()
     }
     
@@ -197,8 +252,6 @@ extension DNSPageTitleView {
             }
             
             titleLabel.frame = CGRect(x: x, y: y, width: width, height: height)
-            
-            
         }
         
         if style.isTitleScaleEnabled {
@@ -239,53 +292,12 @@ extension DNSPageTitleView {
 // MARK: - 监听label的点击
 extension DNSPageTitleView {
     @objc private func titleLabelClick(_ tapGes : UITapGestureRecognizer) {
-        guard let targetLabel = tapGes.view as? UILabel else { return }
-        
-        clickHandler?(self, targetLabel.tag)
-        
-        if targetLabel.tag == currentIndex {
-            delegate?.reloader??.titleViewDidSelectedSameTitle?()
-            return
-        }
-        
-        let sourceLabel = titleLabels[currentIndex]
-        
-        sourceLabel.textColor = style.titleColor
-        targetLabel.textColor = style.titleSelectedColor
-        
-        currentIndex = targetLabel.tag
-        
-        adjustLabelPosition(targetLabel)
-        
-        delegate?.titleView(self, currentIndex: currentIndex)
-        
-        
-        if style.isTitleScaleEnabled {
-            UIView.animate(withDuration: 0.25, animations: {
-                sourceLabel.transform = CGAffineTransform.identity
-                targetLabel.transform = CGAffineTransform(scaleX: self.style.titleMaximumScaleFactor, y: self.style.titleMaximumScaleFactor)
-            })
-        }
-        
-        if style.isShowBottomLine {
-            UIView.animate(withDuration: 0.25, animations: {
-                self.bottomLine.frame.origin.x = targetLabel.frame.origin.x
-                self.bottomLine.frame.size.width = targetLabel.frame.width
-            })
-        }
-        
-        if style.isShowCoverView {
-            let x = style.isTitleViewScrollEnabled ? (targetLabel.frame.origin.x - style.coverMargin) : targetLabel.frame.origin.x
-            let width = style.isTitleViewScrollEnabled ? (targetLabel.frame.width + style.coverMargin * 2) : targetLabel.frame.width
-            UIView.animate(withDuration: 0.25, animations: {
-                self.coverView.frame.origin.x = x
-                self.coverView.frame.size.width = width
-            })
-        }
-        
-        sourceLabel.backgroundColor = nil
-        targetLabel.backgroundColor = style.titleViewSelectedColor
+        guard let targetIndex = tapGes.view?.tag else { return }
+        selectedTitle(inIndex: targetIndex)
+
     }
+
+
     
     private func adjustLabelPosition(_ targetLabel : UILabel) {
         guard style.isTitleViewScrollEnabled else { return }

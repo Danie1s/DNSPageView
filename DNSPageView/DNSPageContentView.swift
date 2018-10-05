@@ -157,7 +157,7 @@ extension DNSPageContentView: UICollectionViewDelegate {
     }
     
     
-    func collectionViewDidEndScroll(_ scrollView: UIScrollView) {
+    private func collectionViewDidEndScroll(_ scrollView: UIScrollView) {
         let inIndex = Int(round(scrollView.contentOffset.x / scrollView.bounds.width))
         
         let childViewController = childViewControllers[inIndex]
