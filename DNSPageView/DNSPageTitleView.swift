@@ -173,7 +173,7 @@ open class DNSPageTitleView: UIView {
             })
         }
 
-        sourceLabel.backgroundColor = nil
+        sourceLabel.backgroundColor = UIColor.clear
         targetLabel.backgroundColor = style.titleViewSelectedColor
     }
     
@@ -199,7 +199,7 @@ extension DNSPageTitleView {
             label.tag = i
             label.text = title
             label.textColor = i == currentIndex ? style.titleSelectedColor : style.titleColor
-            label.backgroundColor = i == currentIndex ? style.titleViewSelectedColor : nil;
+            label.backgroundColor = i == currentIndex ? style.titleViewSelectedColor : UIColor.clear;
             label.textAlignment = .center
             label.font = style.titleFont
             let tapGes = UITapGestureRecognizer(target: self, action: #selector(titleLabelClick(_:)))
@@ -324,7 +324,7 @@ extension DNSPageTitleView : DNSPageContentViewDelegate {
         let sourceLabel = titleLabels[currentIndex]
         let targetLabel = titleLabels[inIndex]
 
-        sourceLabel.backgroundColor = nil
+        sourceLabel.backgroundColor = UIColor.clear
         targetLabel.backgroundColor = style.titleViewSelectedColor
         
         currentIndex = inIndex
