@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iG0-iW-aYF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iG0-iW-aYF">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -45,7 +44,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="直接使用DNSPageView初始化" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFo-2L-SVO">
-                                                    <rect key="frame" x="16" y="11" width="231" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="231" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -68,7 +67,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="使用xib初始化" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qRy-pp-NVw">
-                                                    <rect key="frame" x="16" y="11" width="109.5" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="109" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -91,7 +90,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="使用DNSPageViewManager分别设置" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wI4-WU-WAN">
-                                                    <rect key="frame" x="16" y="11" width="280.5" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="280.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -114,7 +113,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iOS 11风格" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYe-iN-OFh">
-                                                    <rect key="frame" x="16" y="11" width="81.5" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="81.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -146,7 +145,7 @@
         <!--View Controller2-->
         <scene sceneID="fwP-Tx-6wq">
             <objects>
-                <viewController id="iUn-zH-352" customClass="ViewController2" customModule="Dmeo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="iUn-zH-352" customClass="ViewController2" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YZM-hg-OIl"/>
                         <viewControllerLayoutGuide type="bottom" id="9LD-es-TjZ"/>
@@ -169,11 +168,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="9LD-es-TjZ" firstAttribute="top" secondItem="PvZ-aV-rfr" secondAttribute="bottom" id="63M-fy-8cD"/>
                             <constraint firstItem="bAd-6Z-8ox" firstAttribute="leading" secondItem="2Db-Nm-JJC" secondAttribute="leading" id="MLo-wu-KN8"/>
                             <constraint firstItem="bAd-6Z-8ox" firstAttribute="top" secondItem="YZM-hg-OIl" secondAttribute="bottom" id="PGZ-hE-iUH"/>
                             <constraint firstAttribute="trailing" secondItem="bAd-6Z-8ox" secondAttribute="trailing" id="Y1j-Ie-Kha"/>
                             <constraint firstItem="PvZ-aV-rfr" firstAttribute="top" secondItem="bAd-6Z-8ox" secondAttribute="bottom" id="ZMZ-lc-qTa"/>
+                            <constraint firstAttribute="bottom" secondItem="PvZ-aV-rfr" secondAttribute="bottom" id="eQp-En-f9r"/>
                             <constraint firstItem="PvZ-aV-rfr" firstAttribute="leading" secondItem="2Db-Nm-JJC" secondAttribute="leading" id="pE2-DP-bps"/>
                             <constraint firstAttribute="trailing" secondItem="PvZ-aV-rfr" secondAttribute="trailing" id="pJe-8R-dlQ"/>
                         </constraints>
@@ -190,7 +189,7 @@
         <!--View Controller4-->
         <scene sceneID="lvM-Y3-aHC">
             <objects>
-                <viewController id="dF5-To-mzX" customClass="ViewController4" customModule="Dmeo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="dF5-To-mzX" customClass="ViewController4" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nKB-SO-XiI"/>
                         <viewControllerLayoutGuide type="bottom" id="ve1-Fe-fOH"/>
@@ -208,7 +207,7 @@
         <!--View Controller3-->
         <scene sceneID="fP7-Zb-6me">
             <objects>
-                <viewController id="iGD-vk-wow" customClass="ViewController3" customModule="Dmeo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="iGD-vk-wow" customClass="ViewController3" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5Xy-Zs-mPr"/>
                         <viewControllerLayoutGuide type="bottom" id="CWC-eR-Zbk"/>
@@ -226,7 +225,7 @@
         <!--View Controller1-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController1" customModule="Dmeo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController1" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1VL-Ta-f7c"/>
                         <viewControllerLayoutGuide type="bottom" id="Zvp-AB-PqF"/>

@@ -265,7 +265,7 @@ extension DNSPageTitleView {
     }
     
     private func setupCoverViewLayout() {
-        guard titleLabels.count - 1 >= currentIndex  else { return }
+        guard currentIndex < titleLabels.count else { return }
         let label = titleLabels[currentIndex]
         var width = label.bounds.width
         let height = style.coverViewHeight
@@ -279,7 +279,7 @@ extension DNSPageTitleView {
     }
     
     private func setupBottomLineLayout() {
-        guard titleLabels.count - 1 >= currentIndex else { return }
+        guard currentIndex < titleLabels.count else { return }
         let label = titleLabels[currentIndex]
         
         bottomLine.frame.origin.x = label.frame.origin.x
@@ -335,10 +335,10 @@ extension DNSPageTitleView : DNSPageContentViewDelegate {
     }
     
     public func contentView(_ contentView: DNSPageContentView, sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
-        if sourceIndex > titleLabels.count - 1 || sourceIndex < 0 {
+        if sourceIndex >= titleLabels.count || sourceIndex < 0 {
             return
         }
-        if targetIndex > titleLabels.count - 1 || targetIndex < 0 {
+        if targetIndex >= titleLabels.count || targetIndex < 0 {
             return
         }
         let sourceLabel = titleLabels[sourceIndex]
