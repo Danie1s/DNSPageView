@@ -226,7 +226,7 @@ DNSPageStyle中提供了常见样式的属性，可以按照不同的需求进�
 
 
 
-### 常见问题事件监听
+### 事件监听
 
 DNSPageView提供了常见事件监听的代理，它属于DNSPageTitleViewDelegate的中的可选属性
 
