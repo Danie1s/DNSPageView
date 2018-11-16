@@ -31,14 +31,14 @@ import UIKit
     /// pageContentView的刷新代理
     @objc optional var reloader: DNSPageReloadable? { get }
     
-    func titleView(_ titleView: DNSPageTitleView, currentIndex: Int)
+    func titleView(_ titleView: DNSPageTitleView, didSelectAt index: Int)
 }
 
 /// 如果contentView中的view需要实现某些刷新的方法，请让对应的childViewController遵守这个协议
 @objc public protocol DNSPageReloadable: class {
     
     /// 如果需要双击标题刷新或者作其他处理，请实现这个方法
-    @objc optional func titleViewDidSelectedSameTitle()
+    @objc optional func titleViewDidSelectSameTitle()
     
     /// 如果pageContentView滚动到下一页停下来需要刷新或者作其他处理，请实现这个方法
     @objc optional func contentViewDidEndScroll()
@@ -125,7 +125,7 @@ open class DNSPageTitleView: UIView {
     /// 通过代码实现点了某个位置的titleView
     ///
     /// - Parameter index: 需要点击的titleView的下标
-    public func selectedTitle(inIndex index: Int) {
+    public func selectedTitle(atIndex index: Int) {
         if index > titles.count || index < 0 {
             print("DNSPageTitleView -- selectedTitle: 数组越界了, index的值超出有效范围");
         }
@@ -133,7 +133,7 @@ open class DNSPageTitleView: UIView {
         clickHandler?(self, index)
 
         if index == currentIndex {
-            delegate?.reloader??.titleViewDidSelectedSameTitle?()
+            delegate?.reloader??.titleViewDidSelectSameTitle?()
             return
         }
 
@@ -147,7 +147,7 @@ open class DNSPageTitleView: UIView {
 
         adjustLabelPosition(targetLabel)
 
-        delegate?.titleView(self, currentIndex: currentIndex)
+        delegate?.titleView(self, didSelectAt: currentIndex)
 
 
         if style.isTitleScaleEnabled {
@@ -202,7 +202,7 @@ extension DNSPageTitleView {
             label.backgroundColor = i == currentIndex ? style.titleViewSelectedColor : UIColor.clear;
             label.textAlignment = .center
             label.font = style.titleFont
-            let tapGes = UITapGestureRecognizer(target: self, action: #selector(titleLabelClick(_:)))
+            let tapGes = UITapGestureRecognizer(target: self, action: #selector(tapedTitleLabel(_:)))
             label.addGestureRecognizer(tapGes)
             label.isUserInteractionEnabled = true
             
@@ -291,9 +291,9 @@ extension DNSPageTitleView {
 
 // MARK: - 监听label的点击
 extension DNSPageTitleView {
-    @objc private func titleLabelClick(_ tapGes : UITapGestureRecognizer) {
-        guard let targetIndex = tapGes.view?.tag else { return }
-        selectedTitle(inIndex: targetIndex)
+    @objc private func tapedTitleLabel(_ tapGes : UITapGestureRecognizer) {
+        guard let index = tapGes.view?.tag else { return }
+        selectedTitle(atIndex: index)
 
     }
 

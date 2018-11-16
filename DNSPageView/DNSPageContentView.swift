@@ -194,9 +194,7 @@ extension DNSPageContentView: UICollectionViewDelegate {
         if collectionView.contentOffset.x > startOffsetX { // 左滑动
             sourceIndex = index
             targetIndex = index + 1
-            if targetIndex > childViewControllers.count - 1 {
-                return
-            }
+            guard targetIndex < childViewControllers.count else { return }
         } else {
             sourceIndex = index + 1
             targetIndex = index
@@ -216,14 +214,15 @@ extension DNSPageContentView: UICollectionViewDelegate {
 
 
 extension DNSPageContentView: DNSPageTitleViewDelegate {
-    public func titleView(_ titleView: DNSPageTitleView, currentIndex: Int) {
+    public func titleView(_ titleView: DNSPageTitleView, didSelectAt index: Int) {
         isForbidDelegate = true
         
-        if currentIndex > childViewControllers.count - 1 {
-            return
-        }
-        let indexPath = IndexPath(item: currentIndex, section: 0)
+        guard currentIndex < childViewControllers.count else { return }
+        
+        currentIndex = index
 
+        let indexPath = IndexPath(item: index, section: 0)
+        
         collectionView.scrollToItem(at: indexPath, at: .left, animated: false)
     }
 }

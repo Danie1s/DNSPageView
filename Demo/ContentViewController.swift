@@ -40,7 +40,7 @@ class ContentViewController: UIViewController  {
 }
 
 extension ContentViewController: DNSPageReloadable {
-    func titleViewDidSelectedSameTitle() {
+    func titleViewDidSelectSameTitle() {
         print("重复点击了标题")
     }
 
