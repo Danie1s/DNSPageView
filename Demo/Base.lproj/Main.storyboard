@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iG0-iW-aYF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JEW-vR-vIz">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,10 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Item-->
         <scene sceneID="x0P-FS-fhh">
             <objects>
                 <navigationController id="iG0-iW-aYF" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="Vd9-R4-kvZ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Lkh-1I-2IL">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -23,7 +24,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s31-It-DxE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1622" y="156"/>
+            <point key="canvasLocation" x="-684" y="155.17241379310346"/>
         </scene>
         <!--Demo-->
         <scene sceneID="r6r-Iw-zLV">
@@ -140,7 +141,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZhZ-LJ-Y6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-834" y="162"/>
+            <point key="canvasLocation" x="104.8" y="161.46926536731635"/>
         </scene>
         <!--View Controller2-->
         <scene sceneID="fwP-Tx-6wq">
@@ -184,7 +185,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xzm-bt-kjR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="28" y="511"/>
+            <point key="canvasLocation" x="967.20000000000005" y="510.49475262368821"/>
         </scene>
         <!--View Controller4-->
         <scene sceneID="lvM-Y3-aHC">
@@ -238,7 +239,24 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6" y="-177"/>
+            <point key="canvasLocation" x="944.79999999999995" y="-177.66116941529236"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="gOv-cc-g7j">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="JEW-vR-vIz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="T9O-V4-W7j">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="iG0-iW-aYF" kind="relationship" relationship="viewControllers" id="MvR-lh-BRN"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kje-u2-Ark" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1623.2" y="155.17241379310346"/>
         </scene>
     </scenes>
 </document>

@@ -37,7 +37,7 @@ open class DNSPageViewManager: NSObject {
     private (set) public var childViewControllers: [UIViewController]
     private (set) public var startIndex: Int
     private (set) public lazy var titleView = DNSPageTitleView(frame: .zero, style: style, titles: titles, currentIndex: startIndex)
-    private (set) public lazy var contentView = DNSPageContentView(frame: .zero, style: style, childViewControllers: childViewControllers, startIndex: startIndex)
+    private (set) public lazy var contentView = DNSPageContentView(frame: .zero, style: style, childViewControllers: childViewControllers, currentIndex: startIndex)
 
     public init(style: DNSPageStyle, titles: [String], childViewControllers: [UIViewController], startIndex: Int = 0) {
         self.style = style

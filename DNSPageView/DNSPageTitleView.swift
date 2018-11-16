@@ -255,7 +255,7 @@ extension DNSPageTitleView {
         }
         
         if style.isTitleScaleEnabled {
-            titleLabels.first?.transform = CGAffineTransform(scaleX: style.titleMaximumScaleFactor, y: style.titleMaximumScaleFactor)
+            titleLabels[currentIndex].transform = CGAffineTransform(scaleX: style.titleMaximumScaleFactor, y: style.titleMaximumScaleFactor)
         }
         
         if style.isTitleViewScrollEnabled {
@@ -319,22 +319,22 @@ extension DNSPageTitleView {
 
 
 extension DNSPageTitleView : DNSPageContentViewDelegate {
-    public func contentView(_ contentView: DNSPageContentView, inIndex: Int) {
+    public func contentView(_ contentView: DNSPageContentView, didEndScrollAt index: Int) {
         
         let sourceLabel = titleLabels[currentIndex]
-        let targetLabel = titleLabels[inIndex]
+        let targetLabel = titleLabels[index]
 
         sourceLabel.backgroundColor = UIColor.clear
         targetLabel.backgroundColor = style.titleViewSelectedColor
         
-        currentIndex = inIndex
+        currentIndex = index
                 
         adjustLabelPosition(targetLabel)
         
         fixUI(targetLabel)
     }
     
-    public func contentView(_ contentView: DNSPageContentView, sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
+    public func contentView(_ contentView: DNSPageContentView, scrollingWith sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
         if sourceIndex >= titleLabels.count || sourceIndex < 0 {
             return
         }

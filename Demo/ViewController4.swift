@@ -27,6 +27,8 @@ class ViewController4: UIViewController {
         let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
             let controller = ContentViewController()
             controller.view.backgroundColor = UIColor.randomColor
+            self.addChild(controller)
+
             return controller
         }
 

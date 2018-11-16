@@ -27,8 +27,8 @@
 import UIKit
 
 public protocol DNSPageContentViewDelegate: class {
-    func contentView(_ contentView: DNSPageContentView, inIndex: Int)
-    func contentView(_ contentView: DNSPageContentView, sourceIndex: Int, targetIndex: Int, progress: CGFloat)
+    func contentView(_ contentView: DNSPageContentView, didEndScrollAt index: Int)
+    func contentView(_ contentView: DNSPageContentView, scrollingWith sourceIndex: Int, targetIndex: Int, progress: CGFloat)
 }
 
 
@@ -44,7 +44,7 @@ open class DNSPageContentView: UIView {
     public var childViewControllers : [UIViewController]
     
     /// 初始化后，默认显示的页数
-    public var startIndex: Int
+    public var currentIndex: Int
     
     private var startOffsetX: CGFloat = 0
     
@@ -71,10 +71,10 @@ open class DNSPageContentView: UIView {
     }()
     
     
-    public init(frame: CGRect, style: DNSPageStyle, childViewControllers: [UIViewController], startIndex: Int) {
+    public init(frame: CGRect, style: DNSPageStyle, childViewControllers: [UIViewController], currentIndex: Int) {
         self.childViewControllers = childViewControllers
         self.style = style
-        self.startIndex = startIndex
+        self.currentIndex = currentIndex
         super.init(frame: frame)
         setupUI()
     }
@@ -82,7 +82,7 @@ open class DNSPageContentView: UIView {
     required public init?(coder aDecoder: NSCoder) {
         self.childViewControllers = [UIViewController]()
         self.style = DNSPageStyle()
-        self.startIndex = 0
+        self.currentIndex = 0
         super.init(coder: aDecoder)
         
     }
@@ -93,7 +93,7 @@ open class DNSPageContentView: UIView {
         collectionView.frame = bounds
         let layout = collectionView.collectionViewLayout as! DNSPageCollectionViewFlowLayout
         layout.itemSize = bounds.size
-        layout.offset = CGFloat(startIndex) * bounds.size.width
+        layout.offset = CGFloat(currentIndex) * bounds.size.width
     }
 }
 
@@ -158,15 +158,17 @@ extension DNSPageContentView: UICollectionViewDelegate {
     
     
     private func collectionViewDidEndScroll(_ scrollView: UIScrollView) {
-        let inIndex = Int(round(scrollView.contentOffset.x / scrollView.bounds.width))
+        let index = Int(round(scrollView.contentOffset.x / scrollView.bounds.width))
         
-        let childViewController = childViewControllers[inIndex]
+        currentIndex = index
+        
+        let childViewController = childViewControllers[index]
         
         reloader = childViewController as? DNSPageReloadable
         
         reloader?.contentViewDidEndScroll?()
         
-        delegate?.contentView(self, inIndex: inIndex)
+        delegate?.contentView(self, didEndScrollAt: index)
         
     }
 
@@ -208,7 +210,7 @@ extension DNSPageContentView: UICollectionViewDelegate {
             progress = 1
         }
         
-        delegate?.contentView(self, sourceIndex: sourceIndex, targetIndex: targetIndex, progress: progress)
+        delegate?.contentView(self, scrollingWith: sourceIndex, targetIndex: targetIndex, progress: progress)
     }
 }
 

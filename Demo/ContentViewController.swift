@@ -10,11 +10,31 @@ import UIKit
 import DNSPageView
 
 class ContentViewController: UIViewController  {
+    
+    lazy var button: UIButton = {
+        let button = UIButton()
+        button.setTitle("点击我进行push", for: .normal)
+        button.addTarget(self, action: #selector(push), for: .touchUpInside)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.backgroundColor = UIColor.white
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        view.addSubview(button)
+        button.snp.makeConstraints { (maker) in
+            maker.center.equalToSuperview()
+        }
+    }
+    
+    
+    @objc private func push() {
+        let controller = UIViewController()
+        controller.view.backgroundColor = UIColor.white
+        controller.hidesBottomBarWhenPushed = true;
+        navigationController?.pushViewController(controller, animated: true)
     }
 
 }

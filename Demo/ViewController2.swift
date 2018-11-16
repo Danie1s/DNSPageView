@@ -45,12 +45,14 @@ class ViewController2: UIViewController {
         let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
             let controller = ContentViewController()
             controller.view.backgroundColor = UIColor.randomColor
+            self.addChild(controller)
+
             return controller
         }
 
         // 对contentView进行设置
         contentView.childViewControllers = childViewControllers
-        contentView.startIndex = startIndex
+        contentView.currentIndex = startIndex
         contentView.style = style
 
         // 最后要调用setupUI方法
