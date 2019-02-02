@@ -185,7 +185,7 @@ extension DNSPageContentView: UICollectionViewDelegate {
         
         
         progress = scrollView.contentOffset.x.truncatingRemainder(dividingBy: scrollView.bounds.width) / scrollView.bounds.width
-        if progress == 0 {
+        if progress == 0 || progress.isNaN {
             return
         }
         

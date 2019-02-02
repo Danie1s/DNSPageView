@@ -37,7 +37,10 @@ class ViewController4: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        automaticallyAdjustsScrollViewInsets = false
+        if #available(iOS 11, *) {
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
+        }
 
 
         let titleView = pageViewManager.titleView

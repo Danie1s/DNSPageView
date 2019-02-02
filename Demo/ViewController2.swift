@@ -19,7 +19,10 @@ class ViewController2: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        automaticallyAdjustsScrollViewInsets = false
+        if #available(iOS 11, *) {
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
+        }
 
         // 创建DNSPageStyle，设置样式
         let style = DNSPageStyle()

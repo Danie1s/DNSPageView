@@ -35,7 +35,6 @@ class ViewController3: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        automaticallyAdjustsScrollViewInsets = false
         
 
         // 单独设置titleView的frame
@@ -47,6 +46,12 @@ class ViewController3: UIViewController {
         view.addSubview(pageViewManager.contentView)
         contentView.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
+        }
+        
+        if #available(iOS 11, *) {
+            contentView.collectionView.contentInsetAdjustmentBehavior = .never
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
         }
 
     }

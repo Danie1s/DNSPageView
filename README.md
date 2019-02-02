@@ -256,6 +256,14 @@ DNSPageView提供了常见事件监听的代理，它属于DNSPageTitleViewDeleg
 
   要想实现标签下划线的宽度跟随文字的宽度，需要设置`style.isTitleViewScrollEnabled = true`，结合第一个问题，如果标签比较少，则需要手动计算标签的宽度，设置对应的`titleView`宽度，详细的代码可以参考demo中的第四种样式。
 
+- 由于DNSPageView是基于`UIScrollView`实现，那么就无法避免它的一些特性：
+
+  - 当`navigationBar.isTranslucent = true`的时候，布局是从（0, 0）开始的，所以默认系统会给`UIScrollView`添加offset
+  - iOS 11 以前是`automaticallyAdjustsScrollViewInsets `起作用
+  - iOS 11 以后引入SafeArea概念，由`contentInsetAdjustmentBehavior`管理
+  - `DNSPageContentView`用`UICollectionView`实现，所以这个特性有机会造成`UICollectionView`的高度小于`item`的高度，造成奇怪的bug
+  - 开发者需要明确了解自己需要的布局是怎么样，并且作出对应的调整，注意相关的细节，不能完全参照`demo`
+
 
 ## License
 
