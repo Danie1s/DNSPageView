@@ -300,7 +300,9 @@ extension DNSPageTitleView {
 
     
     private func adjustLabelPosition(_ targetLabel : UILabel) {
-        guard style.isTitleViewScrollEnabled else { return }
+        guard style.isTitleViewScrollEnabled,
+            scrollView.contentSize.width > scrollView.bounds.width
+            else { return }
         
         var offsetX = targetLabel.center.x - bounds.width * 0.5
         

@@ -45,13 +45,7 @@ class ViewController4: UIViewController {
 
         let titleView = pageViewManager.titleView
         view.addSubview(titleView)
-        let margin = pageViewManager.style.titleMargin
 
-        // 计算titleView需要的宽度
-        // 如果style.isTitleScrollEnable = false，则不需要计算宽度，但是titleView的下划线会平分titleView的宽度
-        let width: CGFloat = titles.reduce(0) { (width, title) -> CGFloat in
-            width + (title as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : pageViewManager.style.titleFont], context: nil).width + margin
-        }
 
         // 单独设置titleView的大小和位置，可以使用autolayout或者frame
         titleView.snp.makeConstraints { (maker) in
@@ -60,8 +54,7 @@ class ViewController4: UIViewController {
             } else {
                 maker.top.equalTo(topLayoutGuide.snp.bottom)
             }
-            maker.leading.equalToSuperview()
-            maker.width.equalTo(width)
+            maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(44)
         }
 
