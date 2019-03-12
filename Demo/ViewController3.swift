@@ -21,16 +21,14 @@ class ViewController3: UIViewController {
         // 设置标题内容
         let titles = ["头条", "视频", "娱乐", "要问", "体育"]
 
-        // 创建每一页对应的controller
-        let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
+        for i in 0..<titles.count {
             let controller = ContentViewController()
             controller.view.backgroundColor = UIColor.randomColor
-            self.addChild(controller)
-
-            return controller
+            controller.index = i
+            addChild(controller)
         }
 
-        return DNSPageViewManager(style: style, titles: titles, childViewControllers: childViewControllers)
+        return DNSPageViewManager(style: style, titles: titles, childViewControllers: children)
     }()
 
     override func viewDidLoad() {

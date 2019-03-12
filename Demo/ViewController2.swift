@@ -45,16 +45,15 @@ class ViewController2: UIViewController {
 
 
         // 创建每一页对应的controller
-        let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
+        for i in 0..<titles.count {
             let controller = ContentViewController()
             controller.view.backgroundColor = UIColor.randomColor
-            self.addChild(controller)
-
-            return controller
+            controller.index = i
+            addChild(controller)
         }
 
         // 对contentView进行设置
-        contentView.childViewControllers = childViewControllers
+        contentView.childViewControllers = children
         contentView.currentIndex = startIndex
         contentView.style = style
 

@@ -27,18 +27,18 @@ class ViewController1: UIViewController {
         let titles = ["头条", "视频", "娱乐", "要问", "体育" , "科技" , "汽车" , "时尚" , "图片" , "游戏" , "房产"]
 
         // 创建每一页对应的controller
-        let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
+        for i in 0..<titles.count {
             let controller = ContentViewController()
             controller.view.backgroundColor = UIColor.randomColor
-            self.addChild(controller)
-            return controller
+            controller.index = i
+            addChild(controller)
         }
 
         let y = UIApplication.shared.statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 0)
         let size = UIScreen.main.bounds.size
 
         // 创建对应的DNSPageView，并设置它的frame
-        let pageView = DNSPageView(frame: CGRect(x: 0, y: y, width: size.width, height: size.height), style: style, titles: titles, childViewControllers: childViewControllers)
+        let pageView = DNSPageView(frame: CGRect(x: 0, y: y, width: size.width, height: size.height), style: style, titles: titles, childViewControllers: children)
         view.addSubview(pageView)
     }
 

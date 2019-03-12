@@ -37,7 +37,7 @@ open class DNSPageContentView: UIView {
     
     public weak var delegate: DNSPageContentViewDelegate?
     
-    public weak var reloader: DNSPageReloadable?
+    public weak var eventHandler: DNSPageEventHandleable?
     
     public var style: DNSPageStyle
     
@@ -122,7 +122,7 @@ extension DNSPageContentView: UICollectionViewDataSource {
         }
         let childViewController = childViewControllers[indexPath.item]
 
-        reloader = childViewController as? DNSPageReloadable
+        eventHandler = childViewController as? DNSPageEventHandleable
         childViewController.view.frame = cell.contentView.bounds
         cell.contentView.addSubview(childViewController.view)
         
@@ -160,15 +160,18 @@ extension DNSPageContentView: UICollectionViewDelegate {
     private func collectionViewDidEndScroll(_ scrollView: UIScrollView) {
         let index = Int(round(scrollView.contentOffset.x / scrollView.bounds.width))
         
+        delegate?.contentView(self, didEndScrollAt: index)
+        
+        if index != currentIndex {
+            let childViewController = childViewControllers[currentIndex]
+            (childViewController as? DNSPageEventHandleable)?.contentViewDidDisappear?()
+        }
+        
         currentIndex = index
         
-        let childViewController = childViewControllers[index]
+        eventHandler = childViewControllers[currentIndex] as? DNSPageEventHandleable
         
-        reloader = childViewController as? DNSPageReloadable
-        
-        reloader?.contentViewDidEndScroll?()
-        
-        delegate?.contentView(self, didEndScrollAt: index)
+        eventHandler?.contentViewDidEndScroll?()
         
     }
 

@@ -23,16 +23,14 @@ class ViewController4: UIViewController {
         style.titleSelectedColor = UIColor.black
         style.bottomLineColor = UIColor(red: 0 / 255, green: 143 / 255, blue: 223 / 255, alpha: 1.0)
 
-        // 创建每一页对应的controller
-        let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
+        for i in 0..<titles.count {
             let controller = ContentViewController()
             controller.view.backgroundColor = UIColor.randomColor
-            self.addChild(controller)
-
-            return controller
+            controller.index = i
+            addChild(controller)
         }
 
-        return DNSPageViewManager(style: style, titles: titles, childViewControllers: childViewControllers)
+        return DNSPageViewManager(style: style, titles: titles, childViewControllers: children)
     }()
 
     override func viewDidLoad() {

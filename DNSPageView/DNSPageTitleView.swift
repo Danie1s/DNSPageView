@@ -29,19 +29,24 @@ import UIKit
 @objc public protocol DNSPageTitleViewDelegate: class {
     
     /// pageContentView的刷新代理
-    @objc optional var reloader: DNSPageReloadable? { get }
+    @objc optional var eventHandler: DNSPageEventHandleable? { get }
     
     func titleView(_ titleView: DNSPageTitleView, didSelectAt index: Int)
 }
 
-/// 如果contentView中的view需要实现某些刷新的方法，请让对应的childViewController遵守这个协议
-@objc public protocol DNSPageReloadable: class {
+/// DNSPageView的事件回调，如果有需要，请让对应的childViewController遵守这个协议
+@objc public protocol DNSPageEventHandleable: class {
     
-    /// 如果需要双击标题刷新或者作其他处理，请实现这个方法
+    /// 重复点击pageTitleView后调用
     @objc optional func titleViewDidSelectSameTitle()
     
-    /// 如果pageContentView滚动到下一页停下来需要刷新或者作其他处理，请实现这个方法
+    /// pageContentView的上一页消失的时候调用
+    @objc optional func contentViewDidDisappear()
+    
+    /// pageContentView滚动到下一页停下来的时候调用
     @objc optional func contentViewDidEndScroll()
+    
+
 }
 
 
@@ -125,7 +130,7 @@ open class DNSPageTitleView: UIView {
     /// 通过代码实现点了某个位置的titleView
     ///
     /// - Parameter index: 需要点击的titleView的下标
-    public func selectedTitle(atIndex index: Int) {
+    public func selectedTitle(at index: Int) {
         if index > titles.count || index < 0 {
             print("DNSPageTitleView -- selectedTitle: 数组越界了, index的值超出有效范围");
         }
@@ -133,7 +138,7 @@ open class DNSPageTitleView: UIView {
         clickHandler?(self, index)
 
         if index == currentIndex {
-            delegate?.reloader??.titleViewDidSelectSameTitle?()
+            delegate?.eventHandler??.titleViewDidSelectSameTitle?()
             return
         }
 
@@ -142,13 +147,14 @@ open class DNSPageTitleView: UIView {
 
         sourceLabel.textColor = style.titleColor
         targetLabel.textColor = style.titleSelectedColor
+        
+        delegate?.eventHandler??.contentViewDidDisappear?()
 
         currentIndex = index
 
-        adjustLabelPosition(targetLabel)
-
         delegate?.titleView(self, didSelectAt: currentIndex)
-
+        
+        adjustLabelPosition(targetLabel)
 
         if style.isTitleScaleEnabled {
             UIView.animate(withDuration: 0.25, animations: {
@@ -175,6 +181,7 @@ open class DNSPageTitleView: UIView {
 
         sourceLabel.backgroundColor = UIColor.clear
         targetLabel.backgroundColor = style.titleViewSelectedColor
+                
     }
     
 }
@@ -293,7 +300,7 @@ extension DNSPageTitleView {
 extension DNSPageTitleView {
     @objc private func tapedTitleLabel(_ tapGes : UITapGestureRecognizer) {
         guard let index = tapGes.view?.tag else { return }
-        selectedTitle(atIndex: index)
+        selectedTitle(at: index)
 
     }
 

@@ -11,6 +11,8 @@ import DNSPageView
 
 class ContentViewController: UIViewController  {
     
+    var index: Int = 0
+    
     lazy var button: UIButton = {
         let button = UIButton()
         button.setTitle("点击我进行push", for: .normal)
@@ -30,6 +32,19 @@ class ContentViewController: UIViewController  {
     }
     
     
+    // pop或者cell复用的时候调用
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+//        print("viewDidDisappear，index：\(index)")
+    }
+    
+    // 出现的时候马上调用
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        print("viewDidAppear，index：\(index)")
+    }
+    
+    
     @objc private func push() {
         let controller = UIViewController()
         controller.view.backgroundColor = UIColor.white
@@ -39,12 +54,18 @@ class ContentViewController: UIViewController  {
 
 }
 
-extension ContentViewController: DNSPageReloadable {
+extension ContentViewController: DNSPageEventHandleable {
+    
     func titleViewDidSelectSameTitle() {
-        print("重复点击了标题")
+        print("重复点击了标题，index：\(index)")
     }
 
+    // 当前controller滑动结束的时候调用
     func contentViewDidEndScroll() {
-        print("contentView滑动结束")
+        print("contentView滑动结束，index：\(index)")
+    }
+    
+    func contentViewDidDisappear() {
+        print("我消失了，index：\(index)")
     }
 }
