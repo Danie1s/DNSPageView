@@ -250,20 +250,20 @@ contentView.snp.makeConstraints { (maker) in
   
   Recommend to set `style.isTitleViewScrollEnabled = false` when there's too many titles to avoid `titleView` scrolling.
   
-  **In lasted version, even thought `style.isTitleViewScrollEnabled = true`, if there isn't too many titles, `titleView` won't be scrollable.**
+  **In lastest version, even thought `style.isTitleViewScrollEnabled = true`, if there isn't too many titles, `titleView` won't be scrollable.**
 
 
 - Make title bottom indicator line's width same as title text width
 
   when `style.isTitleViewScrollEnabled = false`, that indicates there isn't too many titles, by default each title's width shares `titleView`'s width, and bottom indicator line's width follows title text width, which is a commonly seen situation.
 
-  要想实现标签下划线的宽度跟随文字的宽度，需要设置`style.isTitleViewScrollEnabled = true`，可以参考demo中的第四种样式。
+  If you want the title bottom indicator's with follow title text's, you need to set `style.isTitleViewScrollEnabled = true`, for more detail please refer to the forth style in the demo project.
 
-- 由于DNSPageView是基于`UIScrollView`实现，那么就无法避免它的一些特性：
+- DNSPageView is built on `UIScrollView`, so it can't avoid inheriting some features from it:
 
-  - 当`navigationBar.isTranslucent = true`的时候，布局是从（0, 0）开始的，所以默认系统会给`UIScrollView`添加offset
-  - iOS 11 以前是`automaticallyAdjustsScrollViewInsets `起作用
-  - iOS 11 以后引入SafeArea概念，由`contentInsetAdjustmentBehavior`管理
+  - When `navigationBar.isTranslucent = true`, layout starts from (0, 0), by default `iOS` will add offset for `UIScrollView`
+  - Prior to iOS 11, `automaticallyAdjustsScrollViewInsets` would take effect
+  - After iOS 11, we have `SafeArea`, `contentInsetAdjustmentBehavior` takes charge
   - `DNSPageContentView`用`UICollectionView`实现，所以这个特性有机会造成`UICollectionView`的高度小于`item`的高度，造成奇怪的bug
   - 开发者需要明确了解自己需要的布局是怎么样，并且作出对应的调整，注意相关的细节，不能完全参照`demo`
 
