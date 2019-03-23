@@ -177,22 +177,22 @@ contentView.delegate = titleView
 
 
 
-### 使用DNSPageViewManager初始化，再分别对titleView和contentView进行布局
+### Initialize from DNSPageViewManager，then setup `titleView` and `contentView` layout
 
-创建DNSPageViewManager
+Create `DNSPageViewManager`
 
 ```swift
 private lazy var pageViewManager: DNSPageViewManager = {
-    // 创建DNSPageStyle，设置样式
+    // Create DNSPageStyle
     let style = DNSPageStyle()
     style.isShowBottomLine = true
     style.isTitleScrollEnable = true
     style.titleViewBackgroundColor = UIColor.clear
 
-    // 设置标题内容
+    // Setup titles
     let titles = ["头条", "视频", "娱乐", "要问", "体育"]
 
-    // 创建每一页对应的controller
+    // Setup child controller for each title
     let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
         let controller = ContentViewController()
         controller.view.backgroundColor = UIColor.randomColor
@@ -203,14 +203,14 @@ private lazy var pageViewManager: DNSPageViewManager = {
 }()
 ```
 
-布局titleView和contentView
+Setup layout of `titleView` and `contentView`
 
 ```swift
-// 单独设置titleView的frame
+// Setup titleView's frame
 navigationItem.titleView = pageViewManager.titleView
 pageViewManager.titleView.frame = CGRect(x: 0, y: 0, width: 180, height: 44)
 
-// 单独设置contentView的大小和位置，可以使用autolayout或者frame
+// Setup contentView's size and position with either autolayout or frame
 let contentView = pageViewManager.contentView
 view.addSubview(pageViewManager.contentView)
 contentView.snp.makeConstraints { (maker) in
@@ -220,21 +220,21 @@ contentView.snp.makeConstraints { (maker) in
 
 
 
-### 样式
+### Styles
 
-DNSPageStyle中提供了常见样式的属性，可以按照不同的需求进行设置，包括可以设置初始显示的页面
+`DNSPageStyle` provides some commonly used styles. You can also configure it as your needs, e.g. setup starting index.
 
 
 
-### 事件监听
+### Event Listener
 
-DNSPageView提供了常见事件监听的代理，它属于DNSPageTitleViewDelegate的中的可选属性
+`DNSPageView`提供了常见事件监听的代理，它属于DNSPageTitleViewDelegate的中的可选属性
 
 ```swift
-/// 如果contentView中的view需要实现某些刷新的方法，请让对应的childViewController遵守这个协议
+/// If the `view` of `contentView` need to be refresed，please make its childViewController conform to the following protocol.
 @objc public protocol DNSPageReloadable: class {
     
-    /// 如果需要双击标题刷新或者作其他处理，请实现这个方法
+    /// If you want double tap to refresh feature
     @objc optional func titleViewDidSelectedSameTitle()
     
     /// 如果pageContentView滚动到下一页停下来需要刷新或者作其他处理，请实现这个方法
@@ -244,17 +244,18 @@ DNSPageView提供了常见事件监听的代理，它属于DNSPageTitleViewDeleg
 
 
 
-### 常见问题
+### FAQ
 
-- 标签比较少时，`titleView`不固定、会滑动
+- When there's only a few titles，`titleView` would be scrollable.
+  
+  Recommend to set `style.isTitleViewScrollEnabled = false` when there's too many titles to avoid `titleView` scrolling.
+  
+  **In lasted version, even thought `style.isTitleViewScrollEnabled = true`, if there isn't too many titles, `titleView` won't be scrollable.**
 
-  当`style.isTitleViewScrollEnabled = true`时，代表标签会比较多，所以默认会滑动。如果标签比较少，建议设置`style.isTitleViewScrollEnabled = false`。
 
-  **在最新版中，当`style.isTitleViewScrollEnabled = true`时，如果标签比较少也不会滑动。**
+- Make title bottom indicator line's width same as title text width
 
-- 标签下划线的宽度跟随文字的宽度
-
-  当`style.isTitleViewScrollEnabled = false`时，表示标签比较少，默认每个标签平分整个`titleView`的宽度，而下划线的宽度等于标签的宽度，这种样式的需求也很常见。
+  when `style.isTitleViewScrollEnabled = false`, that indicates there isn't too many titles, by default each title's width shares `titleView`'s width, and bottom indicator line's width follows title text width, which is a commonly seen situation.
 
   要想实现标签下划线的宽度跟随文字的宽度，需要设置`style.isTitleViewScrollEnabled = true`，可以参考demo中的第四种样式。
 
