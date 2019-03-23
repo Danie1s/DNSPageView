@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/cocoapods/l/DNSPageView.svg?style=flat)](http://cocoapods.org/pods/DNSPageView)
 [![Platform](https://img.shields.io/cocoapods/p/DNSPageView.svg?style=flat)](http://cocoapods.org/pods/DNSPageView)
 
-DNSPageView is a light-weight and intuitive `PageView` framework. It could be initialized programatically or by `storyboard` or `xib`, `titleView` and `contentView` are flexible to be layed out anywhere. It also provides some common styles which could be easily configured.
+DNSPageView is a light-weight and intuitive `PageView` framework. It could be initialized programmatically or by `storyboard` or `xib`, `titleView` and `contentView` are flexible to be layed out anywhere. We also provide some commonly used styles which could be easily configured.
 
 __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageView-ObjC) for Objective-C version
 
@@ -13,12 +13,12 @@ __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageV
 - [Installation](#installation)
 - [Example](#example)
 - [Usage](#usage)
-  - [直接使用DNSPageView初始化](#直接使用dnspageview初始化)
-  - [使用xib或者storyboard初始化](#使用xib或者storyboard初始化)
-  - [使用DNSPageViewManager初始化，再分别对titleView和contentView进行布局](#使用dnspageviewmanager初始化，再分别对titleview和contentview进行布局)
-  - [样式](#样式)
-  - [事件监听](#事件监听)
-  - [常见问题](#常见问题)
+  - [Initialize DNSPageView Programmatically](#直接使用dnspageview初始化)
+  - [Initialize by xib or storyboard](#使用xib或者storyboard初始化)
+  - [Initialize by DNSPageViewManager，then setup layout with titleView and contentView](#使用dnspageviewmanager初始化，再分别对titleview和contentview进行布局)
+  - [Styles](#样式)
+  - [Event Listener](#事件监听)
+  - [FAQ](#常见问题)
 - [License](#license)
 
 ## Features:
