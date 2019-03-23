@@ -23,8 +23,8 @@ __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageV
 
 ## Features:
 
-- [x] Easy to use
-- [x] Multiple Initialization 
+- [x] Easy to Use
+- [x] Multiple Ways to Initialize 
 - [x] Flexible Layout
 - [x] Commonly Used Styles
 - [x] Double Tap `titleView` Callback
@@ -94,7 +94,7 @@ To run the example project, clone the repo, and run `DNSPageView.xcodeproj` .
 
 ## Usage
 
-### 直接使用DNSPageView初始化
+### Initialize with DNSPageView
 
 ```swift
 // Create DNSPageStyle
@@ -122,9 +122,9 @@ view.addSubview(pageView)
 
 
 
-### 使用xib或者storyboard初始化
+### Initialize from xib or storyboard
 
- 在xib或者storyboard中拖出2个UIView，让它们分别继承DNSPageTitleView和DNSPageContentView，拖线到代码中
+Creat two `UIView` in `Xib` or `storyboard`, make them inherit from `DNSPageTitleView` and `DNSPageContentView`, drag them into controller class
 
 ```swift
 @IBOutlet weak var titleView: DNSPageTitleView!
@@ -132,45 +132,45 @@ view.addSubview(pageView)
 @IBOutlet weak var contentView: DNSPageContentView!
 ```
 
-对DNSPageTitleView和DNSPageContentView进行设置
+Setup `DNSPageTitleView` and `DNSPageContentView`
 
 ```swift
-// 创建DNSPageStyle，设置样式
+// Create DNSPageStyle
 let style = DNSPageStyle()
 style.titleViewBackgroundColor = UIColor.red
 style.isShowCoverView = true
 
-// 设置标题内容
+// Setup titles
 let titles = ["头条", "视频", "娱乐", "要问", "体育"]
 
-// 设置默认的起始位置
+// Setup staring index
 let startIndex = 2
 
-// 对titleView进行设置
+// Setup titleView
 titleView.titles = titles
 titleView.style = style
 titleView.currentIndex = startIndex
 
-// 最后要调用setupUI方法
+// At last, `setupUI()`
 titleView.setupUI()
 
 
-// 创建每一页对应的controller
+// Create child controller for each title
 let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
     let controller = ContentViewController()
     controller.view.backgroundColor = UIColor.randomColor
     return controller
 }
 
-// 对contentView进行设置
+// Setup contentView
 contentView.childViewControllers = childViewControllers
 contentView.startIndex = startIndex
 contentView.style = style
 
-// 最后要调用setupUI方法
+// Call `setupUI()`
 contentView.setupUI()
 
-// 让titleView和contentView进行联系起来
+// Setup delegate
 titleView.delegate = contentView
 contentView.delegate = titleView
 ```
