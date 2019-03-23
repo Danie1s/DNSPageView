@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/cocoapods/l/DNSPageView.svg?style=flat)](http://cocoapods.org/pods/DNSPageView)
 [![Platform](https://img.shields.io/cocoapods/p/DNSPageView.svg?style=flat)](http://cocoapods.org/pods/DNSPageView)
 
-DNSPageView is a light-weight and intuitive `PageView` framework. It could be initialized programmatically or by `storyboard` or `xib`, `titleView` and `contentView` are flexible to be layed out anywhere. We also provide some commonly used styles which could be easily configured.
+DNSPageView is a light-weight and intuitive `PageView` framework. It could be initialized programmatically or by `storyboard` or `xib`, `titleView` and `contentView` are flexible to be layed out anywhere. It also provides some commonly used styles which could be easily configured.
 
 __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageView-ObjC) for Objective-C version
 
@@ -23,12 +23,12 @@ __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageV
 
 ## Features:
 
-- [x] 使用简单
-- [x] 多种初始化方式
-- [x] 灵活布局
-- [x] 常见的样式
-- [x] 双击titleView的回调
-- [x] contentView滑动监听
+- [x] Easy to use
+- [x] Multiple Initialization 
+- [x] Flexible Layout
+- [x] Commonly Used Styles
+- [x] Double Tap `titleView` Callback
+- [x] `contentView` Scroll Listener
 
 ## Requirements
 
