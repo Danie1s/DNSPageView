@@ -15,7 +15,7 @@ __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageV
 - [Usage](#usage)
   - [Initialize DNSPageView Programmatically](#直接使用dnspageview初始化)
   - [Initialize by xib or storyboard](#使用xib或者storyboard初始化)
-  - [Initialize by DNSPageViewManager，then setup layout with titleView and contentView](#使用dnspageviewmanager初始化，再分别对titleview和contentview进行布局)
+  - [Initialize by DNSPageViewManager, then setup titleView and contentView's layout](#使用dnspageviewmanager初始化，再分别对titleview和contentview进行布局)
   - [Styles](#样式)
   - [Event Listener](#事件监听)
   - [FAQ](#常见问题)
@@ -97,15 +97,15 @@ To run the example project, clone the repo, and run `DNSPageView.xcodeproj` .
 ### 直接使用DNSPageView初始化
 
 ```swift
-// 创建DNSPageStyle，设置样式
+// Create DNSPageStyle
 let style = DNSPageStyle()
 style.isTitleScrollEnable = true
 style.isScaleEnable = true
 
-// 设置标题内容
+// Setup titles
 let titles = ["头条", "视频", "娱乐", "要问", "体育" , "科技" , "汽车" , "时尚" , "图片" , "游戏" , "房产"]
 
-// 创建每一页对应的controller
+// Setup child controller for each title
 let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
     let controller = ContentViewController()
     controller.view.backgroundColor = UIColor.randomColor
@@ -114,8 +114,8 @@ let childViewControllers: [ContentViewController] = titles.map { _ -> ContentVie
 
 let size = UIScreen.main.bounds.size
 
-// 创建对应的DNSPageView，并设置它的frame
-// titleView和contentView会连在一起
+// Setup DNSPageView and its frame
+// titleView and contentView are connected
 let pageView = DNSPageView(frame: CGRect(x: 0, y: 64, width: size.width, height: size.height), style: style, titles: titles, childViewControllers: childViewControllers)
 view.addSubview(pageView)
 ```
