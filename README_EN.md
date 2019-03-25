@@ -99,19 +99,20 @@ To run the example project, clone the repo, and run `DNSPageView.xcodeproj` .
 ```swift
 // Create DNSPageStyle
 let style = DNSPageStyle()
-style.isTitleScrollEnable = true
-style.isScaleEnable = true
+style.isTitleViewScrollEnabled = true
+style.isTitleScaleEnabled = true
 
 // Setup titles
 let titles = ["头条", "视频", "娱乐", "要问", "体育" , "科技" , "汽车" , "时尚" , "图片" , "游戏" , "房产"]
 
 // Setup child controller for each title
-let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
-    let controller = ContentViewController()
-    controller.view.backgroundColor = UIColor.randomColor
+let childViewControllers: [UIViewController] = titles.map { _ -> UIViewController in
+    let controller = UIViewController()
+    addChild(controller)
     return controller
 }
 
+let y = UIApplication.shared.statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 0)
 let size = UIScreen.main.bounds.size
 
 // Setup DNSPageView and its frame
@@ -156,9 +157,9 @@ titleView.setupUI()
 
 
 // Create child controller for each title
-let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
-    let controller = ContentViewController()
-    controller.view.backgroundColor = UIColor.randomColor
+let childViewControllers: [UIViewController] = titles.map { _ -> UIViewController in
+    let controller = UIViewController()
+    addChild(controller)
     return controller
 }
 
@@ -186,7 +187,7 @@ private lazy var pageViewManager: DNSPageViewManager = {
     // Create DNSPageStyle
     let style = DNSPageStyle()
     style.isShowBottomLine = true
-    style.isTitleScrollEnable = true
+    style.isTitleViewScrollEnabled = true
     style.titleViewBackgroundColor = UIColor.clear
 
     // Setup titles
@@ -194,8 +195,8 @@ private lazy var pageViewManager: DNSPageViewManager = {
 
     // Setup child controller for each title
     let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
-        let controller = ContentViewController()
-        controller.view.backgroundColor = UIColor.randomColor
+        let controller = UIViewController()
+        addChild(controller)
         return controller
     }
 
@@ -228,17 +229,21 @@ contentView.snp.makeConstraints { (maker) in
 
 ### Event Listener
 
-`DNSPageView`提供了常见事件监听的代理，它属于DNSPageTitleViewDelegate的中的可选属性
+DNSPageView提供了常见事件监听的代理，它属于`DNSPageTitleViewDelegate`的中的可选属性
 
 ```swift
-/// If the `view` of `contentView` need to be refresed，please make its childViewController conform to the following protocol.
-@objc public protocol DNSPageReloadable: class {
+/// DNSPageView的事件回调，如果有需要，请让对应的childViewController遵守这个协议
+@objc public protocol DNSPageEventHandleable: class {
     
-    /// If you want double tap to refresh feature
-    @objc optional func titleViewDidSelectedSameTitle()
+    /// 重复点击pageTitleView后调用
+    @objc optional func titleViewDidSelectSameTitle()
     
-    /// 如果pageContentView滚动到下一页停下来需要刷新或者作其他处理，请实现这个方法
+    /// pageContentView的上一页消失的时候，上一页对应的controller调用
+    @objc optional func contentViewDidDisappear()
+    
+    /// pageContentView滚动停止的时候，当前页对应的controller调用
     @objc optional func contentViewDidEndScroll()
+
 }
 ```
 
@@ -246,26 +251,24 @@ contentView.snp.makeConstraints { (maker) in
 
 ### FAQ
 
-- When there's only a few titles，`titleView` would be scrollable.
-  
-  Recommend to set `style.isTitleViewScrollEnabled = false` when there's too many titles to avoid `titleView` scrolling.
-  
-  **In lastest version, even thought `style.isTitleViewScrollEnabled = true`, if there isn't too many titles, `titleView` won't be scrollable.**
+- `style.isTitleViewScrollEnabled`
 
+  如果标签比较少，建议设置`style.isTitleViewScrollEnabled = false`，`titleView`会固定，`style.titleMargin`不起作用，每个标签平分整个`titleView`的宽度，下划线的宽度等于标签的宽度。
 
-- Make title bottom indicator line's width same as title text width
+  如果标签比较多，建议设置`style.isTitleViewScrollEnabled = true`，`titleView`会滑动，下划线的宽度随着标签文字的宽度变化而变化
 
-  when `style.isTitleViewScrollEnabled = false`, that indicates there isn't too many titles, by default each title's width shares `titleView`'s width, and bottom indicator line's width follows title text width, which is a commonly seen situation.
+- 标签下划线的宽度跟随文字的宽度
 
-  If you want the title bottom indicator's with follow title text's, you need to set `style.isTitleViewScrollEnabled = true`, for more detail please refer to the forth style in the demo project.
+  设置`style.isTitleViewScrollEnabled = true`，可以参考demo中的第四种样式。
 
-- DNSPageView is built on `UIScrollView`, so it can't avoid inheriting some features from it:
+- 由于`DNSPageView`是基于`UIScrollView`实现，那么就无法避免它的一些特性：
 
-  - When `navigationBar.isTranslucent = true`, layout starts from (0, 0), by default `iOS` will add offset for `UIScrollView`
-  - Prior to iOS 11, `automaticallyAdjustsScrollViewInsets` would take effect
-  - After iOS 11, we have `SafeArea`, `contentInsetAdjustmentBehavior` takes charge
-  - `DNSPageContentView`用`UICollectionView`实现，所以这个特性有机会造成`UICollectionView`的高度小于`item`的高度，造成奇怪的bug
-  - 开发者需要明确了解自己需要的布局是怎么样，并且作出对应的调整，注意相关的细节，不能完全参照`demo`
+  - 当控制器被`UINavigationController`管理，且`navigationBar.isTranslucent = true`的时候，当前控制器的`view`是从`y = 0`开始布局的，所以为了防止部分内容被`navigationBar`遮挡，系统默认会给`UIScrollView`添加offset。如果想取消这个特性：
+    - iOS 11 以前，在控制器中设置`automaticallyAdjustsScrollViewInsets = false `
+    - iOS 11 以后引入`SafeArea`概念，设置`UIScrollView`的属性`contentInsetAdjustmentBehavior = .never`
+    - 其实这个效果还与`UIViewController`的其他属性有关系，但因为各种组合的情景过于复杂，所以不在此一一描述
+  - `DNSPageContentView`用`UICollectionView`实现，所以这个特性有机会造成`UICollectionView`的高度小于它的`item`的高度，造成奇怪的Bug。
+  - 以上只是可能出现的Bug之一，由于`Demo`不能覆盖所有的场景，不同的布局需求可能会引起不同的Bug，开发者需要明确了解自己的布局需求，注意细节，了解iOS布局特性，并且作出对应的调整，不能完全参照`Demo`。
 
 
 ## License

@@ -27,8 +27,8 @@ DNSPageView一个纯Swift的轻量级、灵活且易于使用的`PageView`框架
 - [x] 多种初始化方式
 - [x] 灵活布局
 - [x] 常见的样式
-- [x] 双击titleView的回调
-- [x] contentView滑动监听
+- [x] 双击`titleView`的回调
+- [x] `contentView`滑动监听
 
 ## Requirements
 
@@ -125,7 +125,7 @@ view.addSubview(pageView)
 
 ### 使用xib或者storyboard初始化
 
- 在xib或者storyboard中拖出2个UIView，让它们分别继承DNSPageTitleView和DNSPageContentView，拖线到代码中
+ 在`xib`或者`storyboard`中拖出2个`UIView`，让它们分别继承`DNSPageTitleView`和`DNSPageContentView`，拖线到代码中
 
 ```swift
 @IBOutlet weak var titleView: DNSPageTitleView!
@@ -223,13 +223,13 @@ contentView.snp.makeConstraints { (maker) in
 
 ### 样式
 
-DNSPageStyle中提供了常见样式的属性，可以按照不同的需求进行设置，包括可以设置初始显示的页面
+`DNSPageStyle`中提供了常见样式的属性，可以按照不同的需求进行设置，包括可以设置初始显示的页面
 
 
 
 ### 事件监听
 
-DNSPageView提供了常见事件监听的代理，它属于DNSPageTitleViewDelegate的中的可选属性
+DNSPageView提供了常见事件监听的代理，它属于`DNSPageTitleViewDelegate`的中的可选属性
 
 ```swift
 /// DNSPageView的事件回调，如果有需要，请让对应的childViewController遵守这个协议
