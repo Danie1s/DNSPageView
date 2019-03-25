@@ -28,7 +28,7 @@ import UIKit
 
 @objc public protocol DNSPageTitleViewDelegate: class {
     
-    /// pageContentView的刷新代理
+    /// DNSPageView的事件回调处理者
     @objc optional var eventHandler: DNSPageEventHandleable? { get }
     
     func titleView(_ titleView: DNSPageTitleView, didSelectAt index: Int)
@@ -40,13 +40,12 @@ import UIKit
     /// 重复点击pageTitleView后调用
     @objc optional func titleViewDidSelectSameTitle()
     
-    /// pageContentView的上一页消失的时候调用
+    /// pageContentView的上一页消失的时候，上一页对应的controller调用
     @objc optional func contentViewDidDisappear()
     
-    /// pageContentView滚动到下一页停下来的时候调用
+    /// pageContentView滚动停止的时候，当前页对应的controller调用
     @objc optional func contentViewDidEndScroll()
     
-
 }
 
 
