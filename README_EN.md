@@ -263,9 +263,9 @@ contentView.snp.makeConstraints { (maker) in
 
   - When `navigationBar.isTranslucent = true`, layout starts from (0, 0), by default `iOS` will add offset for `UIScrollView`
   - Prior to iOS 11, `automaticallyAdjustsScrollViewInsets` would take effect
-  - After iOS 11, we have `SafeArea`, `contentInsetAdjustmentBehavior` takes charge
+  - After iOS 11, Apple introduced `SafeArea`. `contentInsetAdjustmentBehavior` takes charge
   - `DNSPageContentView` is built on top of `UICollectionView`, you might have a chance to receive some weird bug.
-  > The behavior of the UICollectionViewFlowLayout is not defined because: 
+    > The behavior of the UICollectionViewFlowLayout is not defined because: 
 the item height must be less than the height of the UICollectionView minus the section insets top and bottom values, minus the content insets top and bottom values.
   - Please note that the `Demo` projects may not cover all the cases/situations. Please make ajustments considering your own needs.
 
