@@ -250,7 +250,7 @@ extension DNSPageTitleView {
         let count = titleLabels.count
         for (i, titleLabel) in titleLabels.enumerated() {
             if style.isTitleViewScrollEnabled {
-                width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : titleLabel.font], context: nil).width
+                width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : style.titleFont], context: nil).width
                 x = i == 0 ? style.titleMargin * 0.5 : (titleLabels[i - 1].frame.maxX + style.titleMargin)
             } else {
                 width = bounds.width / CGFloat(count)
