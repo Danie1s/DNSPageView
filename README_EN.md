@@ -267,7 +267,7 @@ contentView.snp.makeConstraints { (maker) in
   - `DNSPageContentView` is built on top of `UICollectionView`, you might have a chance to receive some weird bug.
     > The behavior of the UICollectionViewFlowLayout is not defined because: 
 the item height must be less than the height of the UICollectionView minus the section insets top and bottom values, minus the content insets top and bottom values.
-  - Please note that the `Demo` projects may not cover all the cases/situations. Please make ajustments considering your own needs.
+  - Please note that the `Demo` projects may not cover all the cases/situations. Please make ajustments based on your own needs.
 
 
 ## License
