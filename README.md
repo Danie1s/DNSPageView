@@ -259,7 +259,7 @@ DNSPageView提供了常见事件监听回调，它属于`DNSPageTitleViewDelegat
 
 - 标签下划线的宽度跟随文字的宽度
 
-  设置`style.isTitleViewScrollEnabled = true`，可以参考demo中的第四种样式。
+  设置`style.isTitleViewScrollEnabled = true`，可以参考`Demo`中的第四种样式。
 
 - 由于`DNSPageView`是基于`UIScrollView`实现，那么就无法避免它的一些特性：
 
