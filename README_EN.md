@@ -151,7 +151,7 @@ titleView.titles = titles
 titleView.style = style
 titleView.currentIndex = startIndex
 
-// At last, `setupUI()`
+// At last, setupUI()
 titleView.setupUI()
 
 
@@ -167,7 +167,7 @@ contentView.childViewControllers = childViewControllers
 contentView.startIndex = startIndex
 contentView.style = style
 
-// Call `setupUI()`
+// Call setupUI()
 contentView.setupUI()
 
 // Setup delegate
@@ -228,16 +228,16 @@ contentView.snp.makeConstraints { (maker) in
 
 ### Event Listener
 
-`DNSPageView`提供了常见事件监听的代理，它属于DNSPageTitleViewDelegate的中的可选属性
+`DNSPageView` provides two optional delegate functions: `titleViewDidSelectedSameTitle()` and `contentViewDidEndScroll()`
 
 ```swift
 /// If the `view` of `contentView` need to be refresed，please make its childViewController conform to the following protocol.
 @objc public protocol DNSPageReloadable: class {
     
-    /// If you want double tap to refresh feature
+    /// Double tap to refresh feature
     @objc optional func titleViewDidSelectedSameTitle()
     
-    /// 如果pageContentView滚动到下一页停下来需要刷新或者作其他处理，请实现这个方法
+    /// Detect pageContentView scrolls to the end
     @objc optional func contentViewDidEndScroll()
 }
 ```
@@ -253,7 +253,7 @@ contentView.snp.makeConstraints { (maker) in
   **In lastest version, even thought `style.isTitleViewScrollEnabled = true`, if there isn't too many titles, `titleView` won't be scrollable.**
 
 
-- Make title bottom indicator line's width same as title text width
+- Make title bottom indicator bar's width same as title text width
 
   when `style.isTitleViewScrollEnabled = false`, that indicates there isn't too many titles, by default each title's width shares `titleView`'s width, and bottom indicator line's width follows title text width, which is a commonly seen situation.
 
@@ -264,8 +264,10 @@ contentView.snp.makeConstraints { (maker) in
   - When `navigationBar.isTranslucent = true`, layout starts from (0, 0), by default `iOS` will add offset for `UIScrollView`
   - Prior to iOS 11, `automaticallyAdjustsScrollViewInsets` would take effect
   - After iOS 11, we have `SafeArea`, `contentInsetAdjustmentBehavior` takes charge
-  - `DNSPageContentView`用`UICollectionView`实现，所以这个特性有机会造成`UICollectionView`的高度小于`item`的高度，造成奇怪的bug
-  - 开发者需要明确了解自己需要的布局是怎么样，并且作出对应的调整，注意相关的细节，不能完全参照`demo`
+  - `DNSPageContentView` is built on top of `UICollectionView`, you might have a chance to receive some weird bug.
+  > The behavior of the UICollectionViewFlowLayout is not defined because: 
+the item height must be less than the height of the UICollectionView minus the section insets top and bottom values, minus the content insets top and bottom values.
+  - Please note that the `Demo` projects may not cover all the cases/situations. Please make ajustments considering your own needs.
 
 
 ## License
