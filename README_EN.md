@@ -231,7 +231,7 @@ contentView.snp.makeConstraints { (maker) in
 `DNSPageView` provides two optional delegate functions: `titleViewDidSelectedSameTitle()` and `contentViewDidEndScroll()`
 
 ```swift
-/// If the `view` of `contentView` need to be refresed，please make its childViewController conform to the following protocol.
+/// If the view of contentView need to be refresed，please make its childViewController conform to the following protocol.
 @objc public protocol DNSPageReloadable: class {
     
     /// Double tap to refresh feature
