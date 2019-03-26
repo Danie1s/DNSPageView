@@ -229,7 +229,7 @@ contentView.snp.makeConstraints { (maker) in
 
 ### 事件监听
 
-DNSPageView提供了常见事件监听的代理，它属于`DNSPageTitleViewDelegate`的中的可选属性
+DNSPageView提供了常见事件监听回调，它属于`DNSPageTitleViewDelegate`的中的可选属性
 
 ```swift
 /// DNSPageView的事件回调，如果有需要，请让对应的childViewController遵守这个协议
@@ -267,7 +267,15 @@ DNSPageView提供了常见事件监听的代理，它属于`DNSPageTitleViewDele
     - iOS 11 以前，在控制器中设置`automaticallyAdjustsScrollViewInsets = false `
     - iOS 11 以后引入`SafeArea`概念，设置`UIScrollView`的属性`contentInsetAdjustmentBehavior = .never`
     - 其实这个效果还与`UIViewController`的其他属性有关系，但因为各种组合的情景过于复杂，所以不在此一一描述
-  - `DNSPageContentView`用`UICollectionView`实现，所以这个特性有机会造成`UICollectionView`的高度小于它的`item`的高度，造成奇怪的Bug。
+
+  - `DNSPageContentView`用`UICollectionView`实现，所以这个特性有机会造成`UICollectionView`的经典警告：
+
+    > The behavior of the UICollectionViewFlowLayout is not defined because:
+    >
+    > the item height must be less than the height of the UICollectionView minus the section insets top and bottom values, minus the content insets top and bottom values
+
+    从而引发一些Bug
+
   - 以上只是可能出现的Bug之一，由于`Demo`不能覆盖所有的场景，不同的布局需求可能会引起不同的Bug，开发者需要明确了解自己的布局需求，注意细节，了解iOS布局特性，并且作出对应的调整，不能完全参照`Demo`。
 
 
