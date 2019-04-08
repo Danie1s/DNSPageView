@@ -33,10 +33,8 @@ DNSPageView一个纯Swift的轻量级、灵活且易于使用的`PageView`框架
 ## Requirements
 
 - iOS 8.0+
-
-- Xcode 10.0+
-
-- Swift 4.2+
+- Xcode 10.2+
+- Swift 5.0+
 
 
 ## Installation
