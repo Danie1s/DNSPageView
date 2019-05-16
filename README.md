@@ -225,7 +225,7 @@ contentView.snp.makeConstraints { (maker) in
 
 
 
-### 事件监听
+### 事件回调
 
 DNSPageView提供了常见事件监听回调，它属于`DNSPageTitleViewDelegate`的中的可选属性
 
@@ -251,9 +251,9 @@ DNSPageView提供了常见事件监听回调，它属于`DNSPageTitleViewDelegat
 
 - `style.isTitleViewScrollEnabled`
 
-  如果标签比较少，建议设置`style.isTitleViewScrollEnabled = false`，`titleView`会固定，`style.titleMargin`不起作用，每个标签平分整个`titleView`的宽度，下划线的宽度等于标签的宽度。
+  如果`titles`的数量比较少，建议设置`style.isTitleViewScrollEnabled = false`，`titleView`会固定，`style.titleMargin`不起作用，每个`title`平分整个`titleView`的宽度，下划线的宽度等于`title`的宽度。
 
-  如果标签比较多，建议设置`style.isTitleViewScrollEnabled = true`，`titleView`会滑动，下划线的宽度随着标签文字的宽度变化而变化
+  如果标签比较多，建议设置`style.isTitleViewScrollEnabled = true`，`titleView`会滑动，下划线的宽度随着`title`文字的宽度变化而变化
 
 - 标签下划线的宽度跟随文字的宽度
 
