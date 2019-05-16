@@ -4,6 +4,8 @@
 [![License](https://img.shields.io/cocoapods/l/DNSPageView.svg?style=flat)](http://cocoapods.org/pods/DNSPageView)
 [![Platform](https://img.shields.io/cocoapods/p/DNSPageView.svg?style=flat)](http://cocoapods.org/pods/DNSPageView)
 
+[中文说明](https://github.com/Danie1s/DNSPageView/blob/master/README.md)
+
 DNSPageView is a light-weight and intuitive `PageView` framework. It could be initialized programmatically or by `storyboard` or `xib`, `titleView` and `contentView` are flexible to be layed out anywhere. It also provides some commonly used styles which could be easily configured.
 
 __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageView-ObjC) for Objective-C version
@@ -268,10 +270,10 @@ contentView.snp.makeConstraints { (maker) in
     - In fact, this effect is also related to other attributes of `UIViewController`, but because the scenarios of various combinations are too complex, they are not described here one by one
   
   - `DNSPageContentView` is implemented with `UICollectionView`, so this feature has the opportunity to cause the classic warning of UICollectionView:
-     
+    
     > The behavior of the UICollectionViewFlowLayout is not defined because: 
   the item height must be less than the height of the UICollectionView minus the section insets top and bottom values, minus the content insets top and bottom values.
-     
+    
   - The above is just one of the possible Bugs. Because `Demo` can not cover all scenarios, different layout requirements may lead to different Bugs. Developers need to clearly understand their layout requirements, pay attention to details, understand the layout characteristics of `iOS`, and make corresponding adjustments, so they can not refer to `Demo` completely.
 
 

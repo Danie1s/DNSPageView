@@ -4,6 +4,8 @@
 [![License](https://img.shields.io/cocoapods/l/DNSPageView.svg?style=flat)](http://cocoapods.org/pods/DNSPageView)
 [![Platform](https://img.shields.io/cocoapods/p/DNSPageView.svg?style=flat)](http://cocoapods.org/pods/DNSPageView)
 
+[English Introduction](https://github.com/Danie1s/DNSPageView/blob/master/README_EN.md)
+
 DNSPageView一个纯Swift的轻量级、灵活且易于使用的`PageView`框架，`titleView`和`contentView`可以布局在任意地方，可以纯代码初始化，也可以使用`xib`或者`storyboard`初始化，并且提供了常见样式属性进行设置。
 
 如果你使用的开发语言是Objective-C，请使用[DNSPageView-ObjC](https://github.com/Danie1s/DNSPageView-ObjC)
