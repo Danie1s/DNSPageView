@@ -45,13 +45,14 @@ public class DNSPageStyle {
     public var isShowBottomLine: Bool = false
     public var bottomLineColor: UIColor = UIColor.blue
     public var bottomLineHeight: CGFloat = 2
+    public var bottomLineWidth: CGFloat = 0
     public var bottomLineRadius: CGFloat = 1
 
     
     /// title缩放
     public var isTitleScaleEnabled: Bool = false
     public var titleMaximumScaleFactor: CGFloat = 1.2
-    
+
     /// title遮罩
     public var isShowCoverView: Bool = false
     public var coverViewBackgroundColor: UIColor = UIColor.black

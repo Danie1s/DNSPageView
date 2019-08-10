@@ -11,7 +11,7 @@ import DNSPageView
 
 class ViewController4: UIViewController {
 
-    private lazy var titles = ["头条", "视频"]
+    private lazy var titles = ["微信支付", "支付宝"]
 
     private lazy var pageViewManager: DNSPageViewManager = {
         // 创建DNSPageStyle，设置样式
@@ -22,6 +22,7 @@ class ViewController4: UIViewController {
         style.titleColor = UIColor.gray
         style.titleSelectedColor = UIColor.black
         style.bottomLineColor = UIColor(red: 0 / 255, green: 143 / 255, blue: 223 / 255, alpha: 1.0)
+        style.bottomLineWidth = 20
 
         for i in 0..<titles.count {
             let controller = ContentViewController()
