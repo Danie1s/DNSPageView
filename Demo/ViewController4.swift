@@ -13,9 +13,9 @@ class ViewController4: UIViewController {
 
     private lazy var titles = ["微信支付", "支付宝"]
 
-    private lazy var pageViewManager: DNSPageViewManager = {
-        // 创建DNSPageStyle，设置样式
-        let style = DNSPageStyle()
+    private lazy var pageViewManager: PageViewManager = {
+        // 创建PageStyle，设置样式
+        let style = PageStyle()
         style.isShowBottomLine = true
         style.isTitleViewScrollEnabled = true
         style.titleViewBackgroundColor = UIColor.clear
@@ -31,7 +31,7 @@ class ViewController4: UIViewController {
             addChild(controller)
         }
 
-        return DNSPageViewManager(style: style, titles: titles, childViewControllers: children)
+        return PageViewManager(style: style, titles: titles, childViewControllers: children)
     }()
 
     override func viewDidLoad() {

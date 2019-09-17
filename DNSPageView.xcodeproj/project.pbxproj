@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		E185A50521674B6100225A9F /* DNSPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = E185A50321674B6100225A9F /* DNSPageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E185A51221674B9400225A9F /* DNSPageCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A50B21674B9400225A9F /* DNSPageCollectionViewFlowLayout.swift */; };
-		E185A51321674B9400225A9F /* DNSPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A50C21674B9400225A9F /* DNSPageContentView.swift */; };
-		E185A51421674B9400225A9F /* DNSPageViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A50D21674B9400225A9F /* DNSPageViewManager.swift */; };
-		E185A51521674B9400225A9F /* DNSPageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A50E21674B9400225A9F /* DNSPageStyle.swift */; };
-		E185A51621674B9400225A9F /* DNSPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A50F21674B9400225A9F /* DNSPageView.swift */; };
-		E185A51721674B9400225A9F /* DNSPageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A51021674B9400225A9F /* DNSPageTitleView.swift */; };
-		E185A51821674B9400225A9F /* DNSPageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A51121674B9400225A9F /* DNSPageHelper.swift */; };
+		E185A51221674B9400225A9F /* PageCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A50B21674B9400225A9F /* PageCollectionViewFlowLayout.swift */; };
+		E185A51321674B9400225A9F /* PageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A50C21674B9400225A9F /* PageContentView.swift */; };
+		E185A51421674B9400225A9F /* PageViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A50D21674B9400225A9F /* PageViewManager.swift */; };
+		E185A51521674B9400225A9F /* PageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A50E21674B9400225A9F /* PageStyle.swift */; };
+		E185A51621674B9400225A9F /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A50F21674B9400225A9F /* PageView.swift */; };
+		E185A51721674B9400225A9F /* PageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A51021674B9400225A9F /* PageTitleView.swift */; };
+		E185A51821674B9400225A9F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A51121674B9400225A9F /* Helper.swift */; };
 		E185A52021674C7700225A9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A51F21674C7700225A9F /* AppDelegate.swift */; };
 		E185A52521674C7700225A9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E185A52321674C7700225A9F /* Main.storyboard */; };
 		E185A52721674C7800225A9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E185A52621674C7800225A9F /* Assets.xcassets */; };
@@ -91,13 +91,13 @@
 		E185A50021674B6100225A9F /* DNSPageView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DNSPageView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E185A50321674B6100225A9F /* DNSPageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DNSPageView.h; sourceTree = "<group>"; };
 		E185A50421674B6100225A9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E185A50B21674B9400225A9F /* DNSPageCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSPageCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
-		E185A50C21674B9400225A9F /* DNSPageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSPageContentView.swift; sourceTree = "<group>"; };
-		E185A50D21674B9400225A9F /* DNSPageViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSPageViewManager.swift; sourceTree = "<group>"; };
-		E185A50E21674B9400225A9F /* DNSPageStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSPageStyle.swift; sourceTree = "<group>"; };
-		E185A50F21674B9400225A9F /* DNSPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSPageView.swift; sourceTree = "<group>"; };
-		E185A51021674B9400225A9F /* DNSPageTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSPageTitleView.swift; sourceTree = "<group>"; };
-		E185A51121674B9400225A9F /* DNSPageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSPageHelper.swift; sourceTree = "<group>"; };
+		E185A50B21674B9400225A9F /* PageCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		E185A50C21674B9400225A9F /* PageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageContentView.swift; sourceTree = "<group>"; };
+		E185A50D21674B9400225A9F /* PageViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewManager.swift; sourceTree = "<group>"; };
+		E185A50E21674B9400225A9F /* PageStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageStyle.swift; sourceTree = "<group>"; };
+		E185A50F21674B9400225A9F /* PageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
+		E185A51021674B9400225A9F /* PageTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTitleView.swift; sourceTree = "<group>"; };
+		E185A51121674B9400225A9F /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E185A51D21674C7700225A9F /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E185A51F21674C7700225A9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E185A52421674C7700225A9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -190,13 +190,13 @@
 			isa = PBXGroup;
 			children = (
 				E185A50321674B6100225A9F /* DNSPageView.h */,
-				E185A51121674B9400225A9F /* DNSPageHelper.swift */,
-				E185A50E21674B9400225A9F /* DNSPageStyle.swift */,
-				E185A51021674B9400225A9F /* DNSPageTitleView.swift */,
-				E185A50B21674B9400225A9F /* DNSPageCollectionViewFlowLayout.swift */,
-				E185A50C21674B9400225A9F /* DNSPageContentView.swift */,
-				E185A50F21674B9400225A9F /* DNSPageView.swift */,
-				E185A50D21674B9400225A9F /* DNSPageViewManager.swift */,
+				E185A51121674B9400225A9F /* Helper.swift */,
+				E185A50E21674B9400225A9F /* PageStyle.swift */,
+				E185A51021674B9400225A9F /* PageTitleView.swift */,
+				E185A50B21674B9400225A9F /* PageCollectionViewFlowLayout.swift */,
+				E185A50C21674B9400225A9F /* PageContentView.swift */,
+				E185A50F21674B9400225A9F /* PageView.swift */,
+				E185A50D21674B9400225A9F /* PageViewManager.swift */,
 				E185A50421674B6100225A9F /* Info.plist */,
 			);
 			path = DNSPageView;
@@ -378,13 +378,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E185A51521674B9400225A9F /* DNSPageStyle.swift in Sources */,
-				E185A51621674B9400225A9F /* DNSPageView.swift in Sources */,
-				E185A51221674B9400225A9F /* DNSPageCollectionViewFlowLayout.swift in Sources */,
-				E185A51321674B9400225A9F /* DNSPageContentView.swift in Sources */,
-				E185A51721674B9400225A9F /* DNSPageTitleView.swift in Sources */,
-				E185A51421674B9400225A9F /* DNSPageViewManager.swift in Sources */,
-				E185A51821674B9400225A9F /* DNSPageHelper.swift in Sources */,
+				E185A51521674B9400225A9F /* PageStyle.swift in Sources */,
+				E185A51621674B9400225A9F /* PageView.swift in Sources */,
+				E185A51221674B9400225A9F /* PageCollectionViewFlowLayout.swift in Sources */,
+				E185A51321674B9400225A9F /* PageContentView.swift in Sources */,
+				E185A51721674B9400225A9F /* PageTitleView.swift in Sources */,
+				E185A51421674B9400225A9F /* PageViewManager.swift in Sources */,
+				E185A51821674B9400225A9F /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

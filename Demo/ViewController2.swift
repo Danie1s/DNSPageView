@@ -11,9 +11,9 @@ import DNSPageView
 
 class ViewController2: UIViewController {
 
-    @IBOutlet weak var titleView: DNSPageTitleView!
+    @IBOutlet weak var titleView: PageTitleView!
 
-    @IBOutlet weak var contentView: DNSPageContentView!
+    @IBOutlet weak var contentView: PageContentView!
 
 
     override func viewDidLoad() {
@@ -24,8 +24,8 @@ class ViewController2: UIViewController {
             automaticallyAdjustsScrollViewInsets = false
         }
 
-        // 创建DNSPageStyle，设置样式
-        let style = DNSPageStyle()
+        // 创建PageStyle，设置样式
+        let style = PageStyle()
         style.titleViewBackgroundColor = UIColor.red
         style.isShowCoverView = true
 

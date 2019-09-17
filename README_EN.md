@@ -15,9 +15,9 @@ __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageV
 - [Installation](#installation)
 - [Example](#example)
 - [Usage](#usage)
-  - [Initialize DNSPageView Programmatically](#直接使用dnspageview初始化)
+  - [Initialize PageView Programmatically](#直接使用pageview初始化)
   - [Initialize by xib or storyboard](#使用xib或者storyboard初始化)
-  - [Initialize by DNSPageViewManager, then setup titleView and contentView's layout](#使用dnspageviewmanager初始化，再分别对titleview和contentview进行布局)
+  - [Initialize by PageViewManager, then setup titleView and contentView's layout](#使用pageviewmanager初始化，再分别对titleview和contentview进行布局)
   - [Styles](#样式)
   - [Event Listener](#事件监听)
   - [FAQ](#常见问题)
@@ -38,7 +38,7 @@ __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageV
 
 - Xcode 10.0+
 
-- Swift 4.2+
+- Swift 5.0+
 
 
 ## Installation
@@ -96,11 +96,11 @@ To run the example project, clone the repo, and run `DNSPageView.xcodeproj` .
 
 ## Usage
 
-### Initialize with DNSPageView
+### Initialize with PageView
 
 ```swift
-// Create DNSPageStyle
-let style = DNSPageStyle()
+// Create PageStyle
+let style = PageStyle()
 style.isTitleScrollEnable = true
 style.isScaleEnable = true
 
@@ -116,9 +116,9 @@ let childViewControllers: [ContentViewController] = titles.map { _ -> ContentVie
 
 let size = UIScreen.main.bounds.size
 
-// Setup DNSPageView and its frame
+// Setup PageView and its frame
 // titleView and contentView are connected
-let pageView = DNSPageView(frame: CGRect(x: 0, y: 64, width: size.width, height: size.height), style: style, titles: titles, childViewControllers: childViewControllers)
+let pageView = PageView(frame: CGRect(x: 0, y: 64, width: size.width, height: size.height), style: style, titles: titles, childViewControllers: childViewControllers)
 view.addSubview(pageView)
 ```
 
@@ -126,19 +126,19 @@ view.addSubview(pageView)
 
 ### Initialize from xib or storyboard
 
-Creat two `UIView` in `Xib` or `storyboard`, make them inherit from `DNSPageTitleView` and `DNSPageContentView`, drag them into controller class
+Creat two `UIView` in `Xib` or `storyboard`, make them inherit from `PageTitleView` and `PageContentView`, drag them into controller class
 
 ```swift
-@IBOutlet weak var titleView: DNSPageTitleView!
+@IBOutlet weak var titleView: PageTitleView!
 
-@IBOutlet weak var contentView: DNSPageContentView!
+@IBOutlet weak var contentView: PageContentView!
 ```
 
-Setup `DNSPageTitleView` and `DNSPageContentView`
+Setup `PageTitleView` and `PageContentView`
 
 ```swift
-// Create DNSPageStyle
-let style = DNSPageStyle()
+// Create PageStyle
+let style = PageStyle()
 style.titleViewBackgroundColor = UIColor.red
 style.isShowCoverView = true
 
@@ -179,14 +179,14 @@ contentView.delegate = titleView
 
 
 
-### Initialize from DNSPageViewManager，then setup `titleView` and `contentView` layout
+### Initialize from PageViewManager，then setup `titleView` and `contentView` layout
 
-Create `DNSPageViewManager`
+Create `PageViewManager`
 
 ```swift
-private lazy var pageViewManager: DNSPageViewManager = {
-    // Create DNSPageStyle
-    let style = DNSPageStyle()
+private lazy var pageViewManager: PageViewManager = {
+    // Create PageStyle
+    let style = PageStyle()
     style.isShowBottomLine = true
     style.isTitleScrollEnable = true
     style.titleViewBackgroundColor = UIColor.clear
@@ -201,7 +201,7 @@ private lazy var pageViewManager: DNSPageViewManager = {
         return controller
     }
 
-    return DNSPageViewManager(style: style, titles: titles, childViewControllers: childViewControllers)
+    return PageViewManager(style: style, titles: titles, childViewControllers: childViewControllers)
 }()
 ```
 
@@ -224,17 +224,17 @@ contentView.snp.makeConstraints { (maker) in
 
 ### Styles
 
-`DNSPageStyle` provides some commonly used styles. You can also configure it as your needs, e.g. setup starting index.
+`PageStyle` provides some commonly used styles. You can also configure it as your needs, e.g. setup starting index.
 
 
 
 ### Event Callbacks
 
-`DNSPageView` provides common optional delegate functions, which are optional property in `DNSPageTitleViewDelegate`
+`DNSPageView` provides common optional delegate functions, which are optional property in `PageTitleViewDelegate`
 
 ```swift
 /// DNSPageView event callback, if necessary, let the corresponding childViewController comply with this protocol
-@objc public protocol DNSPageEventHandleable: class {
+@objc public protocol PageEventHandleable: class {
     
     /// Call after repeatedly clicking pageTitleView
     @objc optional func titleViewDidSelectSameTitle()
@@ -269,7 +269,7 @@ contentView.snp.makeConstraints { (maker) in
     - After iOS 11, the concept of `SafeArea` was introduced, set the `UIScrollView` property `contentInsetAdjustmentBehavior = never`
     - In fact, this effect is also related to other attributes of `UIViewController`, but because the scenarios of various combinations are too complex, they are not described here one by one
   
-  - `DNSPageContentView` is implemented with `UICollectionView`, so this feature has the opportunity to cause the classic warning of UICollectionView:
+  - `PageContentView` is implemented with `UICollectionView`, so this feature has the opportunity to cause the classic warning of UICollectionView:
     
     > The behavior of the UICollectionViewFlowLayout is not defined because: 
   the item height must be less than the height of the UICollectionView minus the section insets top and bottom values, minus the content insets top and bottom values.

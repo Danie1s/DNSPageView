@@ -1,5 +1,5 @@
 //
-//  DNSPageView.swift
+//  PageView.swift
 //  DNSPageView
 //
 //  Created by Daniels on 2018/2/24.
@@ -30,17 +30,17 @@ import UIKit
  通过这个类创建的pageView，默认titleView和contentView连在一起，效果类似于网易新闻
  只能用代码创建，不能在xib或者storyboard里面使用
  */
-open class DNSPageView: UIView {
+open class PageView: UIView {
     
-    private (set) public var style: DNSPageStyle
+    private (set) public var style: PageStyle
     private (set) public var titles: [String]
     private (set) public var childViewControllers: [UIViewController]
     private (set) public var startIndex: Int
-    private (set) public lazy var titleView = DNSPageTitleView(frame: .zero, style: style, titles: titles, currentIndex: startIndex)
-    private (set) public lazy var contentView = DNSPageContentView(frame: .zero, style: style, childViewControllers: childViewControllers, currentIndex: startIndex)
+    private (set) public lazy var titleView = PageTitleView(frame: .zero, style: style, titles: titles, currentIndex: startIndex)
+    private (set) public lazy var contentView = PageContentView(frame: .zero, style: style, childViewControllers: childViewControllers, currentIndex: startIndex)
 
 
-    public init(frame: CGRect, style: DNSPageStyle, titles: [String], childViewControllers: [UIViewController], startIndex: Int = 0) {
+    public init(frame: CGRect, style: PageStyle, titles: [String], childViewControllers: [UIViewController], startIndex: Int = 0) {
         self.style = style
         self.titles = titles
         self.childViewControllers = childViewControllers
@@ -57,7 +57,7 @@ open class DNSPageView: UIView {
 }
 
 
-extension DNSPageView {
+extension PageView {
     private func setupUI() {
         let titleFrame = CGRect(x: 0, y: 0, width: bounds.width, height: style.titleViewHeight)
         titleView.frame = titleFrame

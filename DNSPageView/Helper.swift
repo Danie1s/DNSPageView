@@ -1,5 +1,5 @@
 //
-//  DNSPageHelper.swift
+//  Helper.swift
 //  DNSPageView
 //
 //  Created by Daniels on 2018/2/24.
@@ -26,7 +26,7 @@
 
 import UIKit
 
-public typealias TitleClickHandler = (DNSPageTitleView, Int) -> ()
+public typealias TitleClickHandler = (PageTitleView, Int) -> ()
 typealias ColorRGB = (red: CGFloat, green: CGFloat, blue: CGFloat)
 
 

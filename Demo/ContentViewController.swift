@@ -54,7 +54,7 @@ class ContentViewController: UIViewController  {
 
 }
 
-extension ContentViewController: DNSPageEventHandleable {
+extension ContentViewController: PageEventHandleable {
     
     func titleViewDidSelectSameTitle() {
         print("重复点击了标题，index：\(index)")

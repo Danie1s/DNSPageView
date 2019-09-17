@@ -1,5 +1,5 @@
 //
-//  DNSPageViewManager.swift
+//  PageViewManager.swift
 //  DNSPageView
 //
 //  Created by Daniels on 2018/2/24.
@@ -30,16 +30,16 @@ import UIKit
  通过这个类创建的pageView，titleView和contentView的frame是不确定的，适合于titleView和contentView分开布局的情况
  需要给titleView和contentView布局，可以用frame或者Autolayout布局
  */
-open class DNSPageViewManager: NSObject {
+open class PageViewManager: NSObject {
         
-    private (set) public var style: DNSPageStyle
+    private (set) public var style: PageStyle
     private (set) public var titles: [String]
     private (set) public var childViewControllers: [UIViewController]
     private (set) public var startIndex: Int
-    private (set) public lazy var titleView = DNSPageTitleView(frame: .zero, style: style, titles: titles, currentIndex: startIndex)
-    private (set) public lazy var contentView = DNSPageContentView(frame: .zero, style: style, childViewControllers: childViewControllers, currentIndex: startIndex)
+    private (set) public lazy var titleView = PageTitleView(frame: .zero, style: style, titles: titles, currentIndex: startIndex)
+    private (set) public lazy var contentView = PageContentView(frame: .zero, style: style, childViewControllers: childViewControllers, currentIndex: startIndex)
 
-    public init(style: DNSPageStyle, titles: [String], childViewControllers: [UIViewController], startIndex: Int = 0) {
+    public init(style: PageStyle, titles: [String], childViewControllers: [UIViewController], startIndex: Int = 0) {
         self.style = style
         self.titles = titles
         self.childViewControllers = childViewControllers
@@ -56,7 +56,7 @@ open class DNSPageViewManager: NSObject {
 }
 
 
-extension DNSPageViewManager {
+extension PageViewManager {
     private func setupUI() {
         
         titleView.delegate = contentView

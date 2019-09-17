@@ -15,9 +15,9 @@ DNSPageView一个纯Swift的轻量级、灵活且易于使用的`PageView`框架
 - [Installation](#installation)
 - [Example](#example)
 - [Usage](#usage)
-  - [直接使用DNSPageView初始化](#直接使用dnspageview初始化)
+  - [直接使用PageView初始化](#直接使用pageview初始化)
   - [使用xib或者storyboard初始化](#使用xib或者storyboard初始化)
-  - [使用DNSPageViewManager初始化，再分别对titleView和contentView进行布局](#使用dnspageviewmanager初始化，再分别对titleview和contentview进行布局)
+  - [使用PageViewManager初始化，再分别对titleView和contentView进行布局](#使用pageviewmanager初始化，再分别对titleview和contentview进行布局)
   - [样式](#样式)
   - [事件监听](#事件监听)
   - [常见问题](#常见问题)
@@ -94,11 +94,11 @@ To run the example project, clone the repo, and run `DNSPageView.xcodeproj` .
 
 ## Usage
 
-### 直接使用DNSPageView初始化
+### 直接使用PageView初始化
 
 ```swift
-// 创建DNSPageStyle，设置样式
-let style = DNSPageStyle()
+// 创建PageStyle，设置样式
+let style = PageStyle()
 style.isTitleViewScrollEnabled = true
 style.isTitleScaleEnabled = true
 
@@ -115,9 +115,9 @@ let childViewControllers: [UIViewController] = titles.map { _ -> UIViewControlle
 let y = UIApplication.shared.statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 0)
 let size = UIScreen.main.bounds.size
 
-// 创建对应的DNSPageView，并设置它的frame
+// 创建对应的PageView，并设置它的frame
 // titleView和contentView会连在一起
-let pageView = DNSPageView(frame: CGRect(x: 0, y: y, width: size.width, height: size.height), style: style, titles: titles, childViewControllers: childViewControllers)
+let pageView = PageView(frame: CGRect(x: 0, y: y, width: size.width, height: size.height), style: style, titles: titles, childViewControllers: childViewControllers)
 view.addSubview(pageView)
 ```
 
@@ -125,19 +125,19 @@ view.addSubview(pageView)
 
 ### 使用xib或者storyboard初始化
 
- 在`xib`或者`storyboard`中拖出2个`UIView`，让它们分别继承`DNSPageTitleView`和`DNSPageContentView`，拖线到代码中
+ 在`xib`或者`storyboard`中拖出2个`UIView`，让它们分别继承`PageTitleView`和`PageContentView`，拖线到代码中
 
 ```swift
-@IBOutlet weak var titleView: DNSPageTitleView!
+@IBOutlet weak var titleView: PageTitleView!
 
-@IBOutlet weak var contentView: DNSPageContentView!
+@IBOutlet weak var contentView: PageContentView!
 ```
 
-对DNSPageTitleView和DNSPageContentView进行设置
+对PageTitleView和PageContentView进行设置
 
 ```swift
-// 创建DNSPageStyle，设置样式
-let style = DNSPageStyle()
+// 创建PageStyle，设置样式
+let style = PageStyle()
 style.titleViewBackgroundColor = UIColor.red
 style.isShowCoverView = true
 
@@ -178,14 +178,14 @@ contentView.delegate = titleView
 
 
 
-### 使用DNSPageViewManager初始化，再分别对titleView和contentView进行布局
+### 使用PageViewManager初始化，再分别对titleView和contentView进行布局
 
 创建DNSPageViewManager
 
 ```swift
-private lazy var pageViewManager: DNSPageViewManager = {
-    // 创建DNSPageStyle，设置样式
-    let style = DNSPageStyle()
+private lazy var pageViewManager: PageViewManager = {
+    // 创建PageStyle，设置样式
+    let style = PageStyle()
     style.isShowBottomLine = true
     style.isTitleViewScrollEnabled = true
     style.titleViewBackgroundColor = UIColor.clear
@@ -200,7 +200,7 @@ private lazy var pageViewManager: DNSPageViewManager = {
         return controller
     }
 
-    return DNSPageViewManager(style: style, titles: titles, childViewControllers: childViewControllers)
+    return PageViewManager(style: style, titles: titles, childViewControllers: childViewControllers)
 }()
 ```
 
@@ -223,17 +223,17 @@ contentView.snp.makeConstraints { (maker) in
 
 ### 样式
 
-`DNSPageStyle`中提供了常见样式的属性，可以按照不同的需求进行设置，包括可以设置初始显示的页面
+`PageStyle`中提供了常见样式的属性，可以按照不同的需求进行设置，包括可以设置初始显示的页面
 
 
 
 ### 事件回调
 
-DNSPageView提供了常见事件监听回调，它属于`DNSPageTitleViewDelegate`的中的可选属性
+DNSPageView提供了常见事件监听回调，它属于`PageTitleViewDelegate`的中的可选属性
 
 ```swift
 /// DNSPageView的事件回调，如果有需要，请让对应的childViewController遵守这个协议
-@objc public protocol DNSPageEventHandleable: class {
+@objc public protocol PageEventHandleable: class {
     
     /// 重复点击pageTitleView后调用
     @objc optional func titleViewDidSelectSameTitle()
@@ -268,7 +268,7 @@ DNSPageView提供了常见事件监听回调，它属于`DNSPageTitleViewDelegat
     - iOS 11 以后引入`SafeArea`概念，设置`UIScrollView`的属性`contentInsetAdjustmentBehavior = .never`
     - 其实这个效果还与`UIViewController`的其他属性有关系，但因为各种组合的情景过于复杂，所以不在此一一描述
 
-  - `DNSPageContentView`用`UICollectionView`实现，所以这个特性有机会造成`UICollectionView`的经典警告：
+  - `PageContentView`用`UICollectionView`实现，所以这个特性有机会造成`UICollectionView`的经典警告：
 
     > The behavior of the UICollectionViewFlowLayout is not defined because:
     >

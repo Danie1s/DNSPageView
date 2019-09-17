@@ -1,5 +1,5 @@
 //
-//  DNSPageTitleView.swift
+//  PageTitleView.swift
 //  DNSPageView
 //
 //  Created by Daniels on 2018/2/24.
@@ -26,16 +26,16 @@
 
 import UIKit
 
-@objc public protocol DNSPageTitleViewDelegate: class {
+@objc public protocol PageTitleViewDelegate: class {
     
     /// DNSPageView的事件回调处理者
-    @objc optional var eventHandler: DNSPageEventHandleable? { get }
+    @objc optional var eventHandler: PageEventHandleable? { get }
     
-    func titleView(_ titleView: DNSPageTitleView, didSelectAt index: Int)
+    func titleView(_ titleView: PageTitleView, didSelectAt index: Int)
 }
 
 /// DNSPageView的事件回调，如果有需要，请让对应的childViewController遵守这个协议
-@objc public protocol DNSPageEventHandleable: class {
+@objc public protocol PageEventHandleable: class {
     
     /// 重复点击pageTitleView后调用
     @objc optional func titleViewDidSelectSameTitle()
@@ -49,9 +49,9 @@ import UIKit
 }
 
 
-open class DNSPageTitleView: UIView {
+open class PageTitleView: UIView {
     
-    public weak var delegate: DNSPageTitleViewDelegate?
+    public weak var delegate: PageTitleViewDelegate?
     
     /// 点击标题时调用
     public var clickHandler: TitleClickHandler?
@@ -60,7 +60,7 @@ open class DNSPageTitleView: UIView {
     
     private (set) public lazy var titleLabels: [UILabel] = [UILabel]()
     
-    public var style: DNSPageStyle
+    public var style: PageStyle
     
     public var titles: [String]
     
@@ -97,7 +97,7 @@ open class DNSPageTitleView: UIView {
         return coverView
     }()
     
-    public init(frame: CGRect, style: DNSPageStyle, titles: [String], currentIndex: Int) {
+    public init(frame: CGRect, style: PageStyle, titles: [String], currentIndex: Int) {
         self.style = style
         self.titles = titles
         self.currentIndex = currentIndex
@@ -106,7 +106,7 @@ open class DNSPageTitleView: UIView {
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        self.style = DNSPageStyle()
+        self.style = PageStyle()
         self.titles = [String]()
         self.currentIndex = 0
         super.init(coder: aDecoder)
@@ -164,15 +164,15 @@ open class DNSPageTitleView: UIView {
 
         if style.isShowBottomLine {
             UIView.animate(withDuration: 0.25, animations: {
-                self.bottomLine.center.x = targetLabel.center.x
                 self.bottomLine.frame.size.width = self.style.bottomLineWidth > 0 ? self.style.bottomLineWidth : targetLabel.frame.width
+                self.bottomLine.center.x = targetLabel.center.x
             })
         }
 
         if style.isShowCoverView {
             UIView.animate(withDuration: 0.25, animations: {
-                self.coverView.center.x = targetLabel.center.x
                 self.coverView.frame.size.width = self.style.isTitleViewScrollEnabled ? (targetLabel.frame.width + self.style.coverMargin * 2) : targetLabel.frame.width
+                self.coverView.center.x = targetLabel.center.x
             })
         }
 
@@ -185,7 +185,7 @@ open class DNSPageTitleView: UIView {
 
 
 // MARK: - 设置UI界面
-extension DNSPageTitleView {
+extension PageTitleView {
     public func setupUI() {
         addSubview(scrollView)
         
@@ -237,7 +237,7 @@ extension DNSPageTitleView {
 
 
 // MARK: - Layout
-extension DNSPageTitleView {
+extension PageTitleView {
     private func setupLabelsLayout() {
         
         var x: CGFloat = 0
@@ -292,7 +292,7 @@ extension DNSPageTitleView {
 }
 
 // MARK: - 监听label的点击
-extension DNSPageTitleView {
+extension PageTitleView {
     @objc private func tapedTitleLabel(_ tapGes : UITapGestureRecognizer) {
         guard let index = tapGes.view?.tag else { return }
         selectedTitle(at: index)
@@ -322,8 +322,8 @@ extension DNSPageTitleView {
 
 
 
-extension DNSPageTitleView : DNSPageContentViewDelegate {
-    public func contentView(_ contentView: DNSPageContentView, didEndScrollAt index: Int) {
+extension PageTitleView: PageContentViewDelegate {
+    public func contentView(_ contentView: PageContentView, didEndScrollAt index: Int) {
         
         let sourceLabel = titleLabels[currentIndex]
         let targetLabel = titleLabels[index]
@@ -338,7 +338,7 @@ extension DNSPageTitleView : DNSPageContentViewDelegate {
         fixUI(targetLabel)
     }
     
-    public func contentView(_ contentView: DNSPageContentView, scrollingWith sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
+    public func contentView(_ contentView: PageContentView, scrollingWith sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
         if sourceIndex >= titleLabels.count || sourceIndex < 0 {
             return
         }
@@ -357,21 +357,20 @@ extension DNSPageTitleView : DNSPageContentViewDelegate {
         }
         
         if style.isShowBottomLine {
-            let deltaCenterX = targetLabel.center.x - sourceLabel.center.x
-            let deltaWidth = targetLabel.frame.width - sourceLabel.frame.width
-            bottomLine.center.x = sourceLabel.center.x + progress * deltaCenterX
             if style.bottomLineWidth <= 0 {
+                let deltaWidth = targetLabel.frame.width - sourceLabel.frame.width
                 bottomLine.frame.size.width = sourceLabel.frame.width + progress * deltaWidth
             }
+            let deltaCenterX = targetLabel.center.x - sourceLabel.center.x
+            bottomLine.center.x = sourceLabel.center.x + progress * deltaCenterX
         }
 
         if style.isShowCoverView {
-            let deltaCenterX = targetLabel.center.x - sourceLabel.center.x
             let deltaWidth = targetLabel.frame.width - sourceLabel.frame.width
             coverView.frame.size.width = style.isTitleViewScrollEnabled ? (sourceLabel.frame.width + 2 * style.coverMargin + deltaWidth * progress) : (sourceLabel.frame.width + deltaWidth * progress)
+            let deltaCenterX = targetLabel.center.x - sourceLabel.center.x
             coverView.center.x = sourceLabel.center.x + deltaCenterX * progress
         }
-        
     }
     
     private func fixUI(_ targetLabel: UILabel) {
@@ -383,10 +382,10 @@ extension DNSPageTitleView : DNSPageContentViewDelegate {
             }
             
             if self.style.isShowBottomLine {
-                self.bottomLine.center.x = targetLabel.center.x
                 if self.style.bottomLineWidth <= 0 {
                     self.bottomLine.frame.size.width = targetLabel.frame.width
                 }
+                self.bottomLine.center.x = targetLabel.center.x
             }
             
             if self.style.isShowCoverView {

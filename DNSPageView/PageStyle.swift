@@ -1,5 +1,5 @@
 //
-//  DNSPageStyle.swift
+//  PageStyle.swift
 //  DNSPageView
 //
 //  Created by Daniels on 2018/2/24.
@@ -26,7 +26,7 @@
 
 import UIKit
 
-public class DNSPageStyle {
+public class PageStyle {
     
     /// titleView
     public var titleViewHeight: CGFloat = 44

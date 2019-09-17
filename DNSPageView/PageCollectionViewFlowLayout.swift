@@ -1,5 +1,5 @@
 //
-//  DNSPageCollectionViewFlowLayout.swift
+//  PageCollectionViewFlowLayout.swift
 //  DNSPageView
 //
 //  Created by Daniels on 2018/2/24.
@@ -29,7 +29,7 @@ import UIKit
 /*
  通过设置offset的值，达到初始化的pageView默认显示某一页的效果，默认显示第一页
  */
-open class DNSPageCollectionViewFlowLayout: UICollectionViewFlowLayout {
+open class PageCollectionViewFlowLayout: UICollectionViewFlowLayout {
     var offset: CGFloat?
     
     override open func prepare() {

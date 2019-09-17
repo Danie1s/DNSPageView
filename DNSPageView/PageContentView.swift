@@ -1,5 +1,5 @@
 //
-//  DNSPageContentView.swift
+//  PageContentView.swift
 //  DNSPageView
 //
 //  Created by Daniels on 2018/2/24.
@@ -26,20 +26,20 @@
 
 import UIKit
 
-public protocol DNSPageContentViewDelegate: class {
-    func contentView(_ contentView: DNSPageContentView, didEndScrollAt index: Int)
-    func contentView(_ contentView: DNSPageContentView, scrollingWith sourceIndex: Int, targetIndex: Int, progress: CGFloat)
+public protocol PageContentViewDelegate: class {
+    func contentView(_ contentView: PageContentView, didEndScrollAt index: Int)
+    func contentView(_ contentView: PageContentView, scrollingWith sourceIndex: Int, targetIndex: Int, progress: CGFloat)
 }
 
 
 private let CellID = "CellID"
-open class DNSPageContentView: UIView {
+open class PageContentView: UIView {
     
-    public weak var delegate: DNSPageContentViewDelegate?
+    public weak var delegate: PageContentViewDelegate?
     
-    public weak var eventHandler: DNSPageEventHandleable?
+    public weak var eventHandler: PageEventHandleable?
     
-    public var style: DNSPageStyle
+    public var style: PageStyle
     
     public var childViewControllers : [UIViewController]
     
@@ -51,7 +51,7 @@ open class DNSPageContentView: UIView {
     private var isForbidDelegate: Bool = false
     
     private (set) public lazy var collectionView: UICollectionView = {
-        let layout = DNSPageCollectionViewFlowLayout()
+        let layout = PageCollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
@@ -71,7 +71,7 @@ open class DNSPageContentView: UIView {
     }()
     
     
-    public init(frame: CGRect, style: DNSPageStyle, childViewControllers: [UIViewController], currentIndex: Int) {
+    public init(frame: CGRect, style: PageStyle, childViewControllers: [UIViewController], currentIndex: Int) {
         self.childViewControllers = childViewControllers
         self.style = style
         self.currentIndex = currentIndex
@@ -81,7 +81,7 @@ open class DNSPageContentView: UIView {
     
     required public init?(coder aDecoder: NSCoder) {
         self.childViewControllers = [UIViewController]()
-        self.style = DNSPageStyle()
+        self.style = PageStyle()
         self.currentIndex = 0
         super.init(coder: aDecoder)
         
@@ -91,14 +91,14 @@ open class DNSPageContentView: UIView {
     override open func layoutSubviews() {
         super.layoutSubviews()
         collectionView.frame = bounds
-        let layout = collectionView.collectionViewLayout as! DNSPageCollectionViewFlowLayout
+        let layout = collectionView.collectionViewLayout as! PageCollectionViewFlowLayout
         layout.itemSize = bounds.size
         layout.offset = CGFloat(currentIndex) * bounds.size.width
     }
 }
 
 
-extension DNSPageContentView {
+extension PageContentView {
     public func setupUI() {
         addSubview(collectionView)
         
@@ -109,7 +109,7 @@ extension DNSPageContentView {
 }
 
 
-extension DNSPageContentView: UICollectionViewDataSource {
+extension PageContentView: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return childViewControllers.count
     }
@@ -122,7 +122,7 @@ extension DNSPageContentView: UICollectionViewDataSource {
         }
         let childViewController = childViewControllers[indexPath.item]
 
-        eventHandler = childViewController as? DNSPageEventHandleable
+        eventHandler = childViewController as? PageEventHandleable
         childViewController.view.frame = cell.contentView.bounds
         cell.contentView.addSubview(childViewController.view)
         
@@ -131,7 +131,7 @@ extension DNSPageContentView: UICollectionViewDataSource {
 }
 
 
-extension DNSPageContentView: UICollectionViewDelegate {
+extension PageContentView: UICollectionViewDelegate {
     
     
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -164,12 +164,12 @@ extension DNSPageContentView: UICollectionViewDelegate {
         
         if index != currentIndex {
             let childViewController = childViewControllers[currentIndex]
-            (childViewController as? DNSPageEventHandleable)?.contentViewDidDisappear?()
+            (childViewController as? PageEventHandleable)?.contentViewDidDisappear?()
         }
         
         currentIndex = index
         
-        eventHandler = childViewControllers[currentIndex] as? DNSPageEventHandleable
+        eventHandler = childViewControllers[currentIndex] as? PageEventHandleable
         
         eventHandler?.contentViewDidEndScroll?()
         
@@ -216,8 +216,8 @@ extension DNSPageContentView: UICollectionViewDelegate {
 }
 
 
-extension DNSPageContentView: DNSPageTitleViewDelegate {
-    public func titleView(_ titleView: DNSPageTitleView, didSelectAt index: Int) {
+extension PageContentView: PageTitleViewDelegate {
+    public func titleView(_ titleView: PageTitleView, didSelectAt index: Int) {
         isForbidDelegate = true
         
         guard currentIndex < childViewControllers.count else { return }
