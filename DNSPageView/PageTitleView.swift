@@ -26,26 +26,34 @@
 
 import UIKit
 
-@objc public protocol PageTitleViewDelegate: class {
+public protocol PageTitleViewDelegate: class {
     
     /// DNSPageView的事件回调处理者
-    @objc optional var eventHandler: PageEventHandleable? { get }
+    var eventHandler: PageEventHandleable? { get }
     
     func titleView(_ titleView: PageTitleView, didSelectAt index: Int)
 }
 
 /// DNSPageView的事件回调，如果有需要，请让对应的childViewController遵守这个协议
-@objc public protocol PageEventHandleable: class {
+public protocol PageEventHandleable: class {
     
     /// 重复点击pageTitleView后调用
-    @objc optional func titleViewDidSelectSameTitle()
+    func titleViewDidSelectSameTitle()
     
     /// pageContentView的上一页消失的时候，上一页对应的controller调用
-    @objc optional func contentViewDidDisappear()
+    func contentViewDidDisappear()
     
     /// pageContentView滚动停止的时候，当前页对应的controller调用
-    @objc optional func contentViewDidEndScroll()
+    func contentViewDidEndScroll()
     
+}
+
+extension PageEventHandleable {
+    func titleViewDidSelectSameTitle() {}
+    
+    func contentViewDidDisappear() {}
+    
+    func contentViewDidEndScroll() {}
 }
 
 
@@ -137,7 +145,7 @@ open class PageTitleView: UIView {
         clickHandler?(self, index)
 
         if index == currentIndex {
-            delegate?.eventHandler??.titleViewDidSelectSameTitle?()
+            delegate?.eventHandler?.titleViewDidSelectSameTitle()
             return
         }
 
@@ -147,7 +155,7 @@ open class PageTitleView: UIView {
         sourceLabel.textColor = style.titleColor
         targetLabel.textColor = style.titleSelectedColor
         
-        delegate?.eventHandler??.contentViewDidDisappear?()
+        delegate?.eventHandler?.contentViewDidDisappear()
 
         currentIndex = index
 

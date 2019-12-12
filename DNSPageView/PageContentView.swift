@@ -164,14 +164,14 @@ extension PageContentView: UICollectionViewDelegate {
         
         if index != currentIndex {
             let childViewController = childViewControllers[currentIndex]
-            (childViewController as? PageEventHandleable)?.contentViewDidDisappear?()
+            (childViewController as? PageEventHandleable)?.contentViewDidDisappear()
         }
         
         currentIndex = index
         
         eventHandler = childViewControllers[currentIndex] as? PageEventHandleable
         
-        eventHandler?.contentViewDidEndScroll?()
+        eventHandler?.contentViewDidEndScroll()
         
     }
 
