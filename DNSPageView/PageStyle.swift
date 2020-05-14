@@ -33,9 +33,10 @@ public class PageStyle {
     public var titleColor: UIColor = UIColor.black
     public var titleSelectedColor: UIColor = UIColor.blue
     public var titleFont: UIFont = UIFont.systemFont(ofSize: 15)
+    public var titleSelectedFont: UIFont?
     public var titleViewBackgroundColor: UIColor = UIColor.white
-    public var titleMargin: CGFloat = 30
     public var titleViewSelectedColor: UIColor = UIColor.clear
+    public var titleMargin: CGFloat = 30
 
     
     /// titleView滑动

@@ -21,7 +21,9 @@ class ViewController1: UIViewController {
         // 创建PageStyle，设置样式
         let style = PageStyle()
         style.isTitleViewScrollEnabled = true
-        style.isTitleScaleEnabled = true
+        style.titleSelectedFont = UIFont.systemFont(ofSize: 11)
+//        style.isTitleScaleEnabled = true
+
 
         // 设置标题内容
         let titles = ["头条", "视频", "娱乐", "要问", "体育" , "科技" , "汽车" , "时尚" , "图片" , "游戏" , "房产"]

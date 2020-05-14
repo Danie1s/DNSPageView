@@ -162,6 +162,11 @@ open class PageTitleView: UIView {
         delegate?.titleView(self, didSelectAt: currentIndex)
         
         adjustLabelPosition(targetLabel)
+        
+        if let font = style.titleSelectedFont {
+            sourceLabel.font = style.titleFont
+            targetLabel.font = font
+        }
 
         if style.isTitleScaleEnabled {
             UIView.animate(withDuration: 0.25, animations: {
@@ -256,7 +261,10 @@ extension PageTitleView {
         let count = titleLabels.count
         for (i, titleLabel) in titleLabels.enumerated() {
             if style.isTitleViewScrollEnabled {
-                width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : style.titleFont], context: nil).width
+                width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0),
+                                                             options: .usesLineFragmentOrigin,
+                                                             attributes: [NSAttributedString.Key.font : style.titleFont],
+                                                             context: nil).width
                 x = i == 0 ? style.titleMargin * 0.5 : (titleLabels[i - 1].frame.maxX + style.titleMargin)
             } else {
                 width = frame.width / CGFloat(count)
@@ -264,6 +272,9 @@ extension PageTitleView {
             }
             titleLabel.transform = CGAffineTransform.identity
             titleLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+        }
+        if let font = style.titleSelectedFont {
+            titleLabels[currentIndex].font = font
         }
         
         if style.isTitleScaleEnabled {
@@ -335,6 +346,11 @@ extension PageTitleView: PageContentViewDelegate {
         
         let sourceLabel = titleLabels[currentIndex]
         let targetLabel = titleLabels[index]
+        
+        if let font = style.titleSelectedFont {
+            sourceLabel.font = style.titleFont
+            targetLabel.font = font
+        }
 
         sourceLabel.backgroundColor = UIColor.clear
         targetLabel.backgroundColor = style.titleViewSelectedColor
