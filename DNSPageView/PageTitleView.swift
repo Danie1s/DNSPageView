@@ -176,15 +176,18 @@ open class PageTitleView: UIView {
         }
 
         if style.isShowBottomLine {
+            let titleInset = style.isTitleViewScrollEnabled ? style.titleInset : 0
             UIView.animate(withDuration: 0.25, animations: {
-                self.bottomLine.frame.size.width = self.style.bottomLineWidth > 0 ? self.style.bottomLineWidth : targetLabel.frame.width
+                self.bottomLine.frame.size.width = self.style.bottomLineWidth > 0 ?
+                    self.style.bottomLineWidth : targetLabel.frame.width - titleInset
                 self.bottomLine.center.x = targetLabel.center.x
             })
         }
 
         if style.isShowCoverView {
             UIView.animate(withDuration: 0.25, animations: {
-                self.coverView.frame.size.width = self.style.isTitleViewScrollEnabled ? (targetLabel.frame.width + self.style.coverMargin * 2) : targetLabel.frame.width
+                self.coverView.frame.size.width = self.style.isTitleViewScrollEnabled ?
+                    (targetLabel.frame.width + self.style.coverMargin * 2) : targetLabel.frame.width
                 self.coverView.center.x = targetLabel.center.x
             })
         }
@@ -264,7 +267,7 @@ extension PageTitleView {
                 width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0),
                                                              options: .usesLineFragmentOrigin,
                                                              attributes: [NSAttributedString.Key.font : style.titleFont],
-                                                             context: nil).width
+                                                             context: nil).width + style.titleInset
                 x = i == 0 ? style.titleMargin * 0.5 : (titleLabels[i - 1].frame.maxX + style.titleMargin)
             } else {
                 width = frame.width / CGFloat(count)
@@ -303,7 +306,8 @@ extension PageTitleView {
         guard currentIndex < titleLabels.count else { return }
         let label = titleLabels[currentIndex]
         
-        bottomLine.frame.size.width = style.bottomLineWidth > 0 ? style.bottomLineWidth : label.frame.width
+        let titleInset = style.isTitleViewScrollEnabled ? style.titleInset : 0
+        bottomLine.frame.size.width = style.bottomLineWidth > 0 ? style.bottomLineWidth : label.frame.width - titleInset
         bottomLine.frame.size.height = style.bottomLineHeight
         bottomLine.center.x = label.center.x
         bottomLine.frame.origin.y = frame.height - bottomLine.frame.height
@@ -382,8 +386,9 @@ extension PageTitleView: PageContentViewDelegate {
         
         if style.isShowBottomLine {
             if style.bottomLineWidth <= 0 {
+                let titleInset = style.isTitleViewScrollEnabled ? style.titleInset : 0
                 let deltaWidth = targetLabel.frame.width - sourceLabel.frame.width
-                bottomLine.frame.size.width = sourceLabel.frame.width + progress * deltaWidth
+                bottomLine.frame.size.width = sourceLabel.frame.width - titleInset + progress * deltaWidth
             }
             let deltaCenterX = targetLabel.center.x - sourceLabel.center.x
             bottomLine.center.x = sourceLabel.center.x + progress * deltaCenterX
@@ -391,7 +396,9 @@ extension PageTitleView: PageContentViewDelegate {
 
         if style.isShowCoverView {
             let deltaWidth = targetLabel.frame.width - sourceLabel.frame.width
-            coverView.frame.size.width = style.isTitleViewScrollEnabled ? (sourceLabel.frame.width + 2 * style.coverMargin + deltaWidth * progress) : (sourceLabel.frame.width + deltaWidth * progress)
+            coverView.frame.size.width = style.isTitleViewScrollEnabled ?
+                (sourceLabel.frame.width + 2 * style.coverMargin + deltaWidth * progress) :
+                (sourceLabel.frame.width + deltaWidth * progress)
             let deltaCenterX = targetLabel.center.x - sourceLabel.center.x
             coverView.center.x = sourceLabel.center.x + deltaCenterX * progress
         }
@@ -407,13 +414,16 @@ extension PageTitleView: PageContentViewDelegate {
             
             if self.style.isShowBottomLine {
                 if self.style.bottomLineWidth <= 0 {
-                    self.bottomLine.frame.size.width = targetLabel.frame.width
+                    let titleInset = self.style.isTitleViewScrollEnabled ? self.style.titleInset : 0
+                    self.bottomLine.frame.size.width = targetLabel.frame.width - titleInset
                 }
                 self.bottomLine.center.x = targetLabel.center.x
             }
             
             if self.style.isShowCoverView {
-                self.coverView.frame.size.width = self.style.isTitleViewScrollEnabled ? (targetLabel.frame.width + 2 * self.style.coverMargin) : targetLabel.frame.width
+                self.coverView.frame.size.width = self.style.isTitleViewScrollEnabled ?
+                    (targetLabel.frame.width + 2 * self.style.coverMargin) :
+                    targetLabel.frame.width
                 self.coverView.center.x = targetLabel.center.x
             }
         }
