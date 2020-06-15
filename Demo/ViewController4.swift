@@ -19,8 +19,14 @@ class ViewController4: UIViewController {
         style.isShowBottomLine = true
         style.isTitleViewScrollEnabled = true
         style.titleViewBackgroundColor = UIColor.clear
-        style.titleColor = UIColor.gray
-        style.titleSelectedColor = UIColor.black
+        // 适配dark mode
+        if #available(iOS 13.0, *) {
+            style.titleSelectedColor = UIColor.dns.dynamic(UIColor.red, dark: UIColor.blue)
+            style.titleColor = UIColor.dns.dynamic(UIColor.green, dark: UIColor.orange)
+        } else {
+            style.titleSelectedColor = UIColor.black
+            style.titleColor = UIColor.gray
+        }
         style.bottomLineColor = UIColor(red: 0 / 255, green: 143 / 255, blue: 223 / 255, alpha: 1.0)
         style.bottomLineWidth = 20
 

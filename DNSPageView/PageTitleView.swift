@@ -56,6 +56,7 @@ extension PageEventHandleable {
     func contentViewDidEndScroll() {}
 }
 
+public typealias TitleClickHandler = (PageTitleView, Int) -> ()
 
 open class PageTitleView: UIView {
     
@@ -73,12 +74,12 @@ open class PageTitleView: UIView {
     public var titles: [String]
     
     
-    private lazy var normalRGB: ColorRGB = self.style.titleColor.getRGB()
-    private lazy var selectRGB: ColorRGB = self.style.titleSelectedColor.getRGB()
+    private lazy var normalRGB: ColorRGB = style.titleColor.getRGB()
+    private lazy var selectRGB: ColorRGB = style.titleSelectedColor.getRGB()
     private lazy var deltaRGB: ColorRGB = {
-        let deltaR = self.selectRGB.red - self.normalRGB.red
-        let deltaG = self.selectRGB.green - self.normalRGB.green
-        let deltaB = self.selectRGB.blue - self.normalRGB.blue
+        let deltaR = selectRGB.red - normalRGB.red
+        let deltaG = selectRGB.green - normalRGB.green
+        let deltaB = selectRGB.blue - normalRGB.blue
         return (deltaR, deltaG, deltaB)
     }()
     
@@ -130,6 +131,15 @@ open class PageTitleView: UIView {
         setupLabelsLayout()
         setupBottomLineLayout()
         setupCoverViewLayout()
+    }
+    
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        normalRGB = style.titleColor.getRGB()
+        selectRGB = style.titleSelectedColor.getRGB()
+        let deltaR = selectRGB.red - normalRGB.red
+        let deltaG = selectRGB.green - normalRGB.green
+        let deltaB = selectRGB.blue - normalRGB.blue
+        deltaRGB = (deltaR, deltaG, deltaB)
     }
 
 
@@ -356,6 +366,7 @@ extension PageTitleView: PageContentViewDelegate {
             targetLabel.font = font
         }
 
+        sourceLabel.textColor = style.titleColor
         sourceLabel.backgroundColor = UIColor.clear
         targetLabel.backgroundColor = style.titleViewSelectedColor
         
@@ -375,13 +386,18 @@ extension PageTitleView: PageContentViewDelegate {
         }
         let sourceLabel = titleLabels[sourceIndex]
         let targetLabel = titleLabels[targetIndex]
-        sourceLabel.textColor = UIColor(r: selectRGB.red - progress * deltaRGB.red, g: selectRGB.green - progress * deltaRGB.green, b: selectRGB.blue - progress * deltaRGB.blue)
-        targetLabel.textColor = UIColor(r: normalRGB.red + progress * deltaRGB.red, g: normalRGB.green + progress * deltaRGB.green, b: normalRGB.blue + progress * deltaRGB.blue)
-        
+        sourceLabel.textColor = UIColor((selectRGB.red - progress * deltaRGB.red,
+                                         selectRGB.green - progress * deltaRGB.green,
+                                         selectRGB.blue - progress * deltaRGB.blue))
+        targetLabel.textColor = UIColor((normalRGB.red + progress * deltaRGB.red,
+                                         normalRGB.green + progress * deltaRGB.green,
+                                         normalRGB.blue + progress * deltaRGB.blue))
         if style.isTitleScaleEnabled {
             let deltaScale = style.titleMaximumScaleFactor - 1.0
-            sourceLabel.transform = CGAffineTransform(scaleX: style.titleMaximumScaleFactor - progress * deltaScale, y: style.titleMaximumScaleFactor - progress * deltaScale)
-            targetLabel.transform = CGAffineTransform(scaleX: 1.0 + progress * deltaScale, y: 1.0 + progress * deltaScale)
+            sourceLabel.transform = CGAffineTransform(scaleX: style.titleMaximumScaleFactor - progress * deltaScale,
+                                                      y: style.titleMaximumScaleFactor - progress * deltaScale)
+            targetLabel.transform = CGAffineTransform(scaleX: 1.0 + progress * deltaScale,
+                                                      y: 1.0 + progress * deltaScale)
         }
         
         if style.isShowBottomLine {
