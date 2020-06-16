@@ -31,6 +31,7 @@ __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageV
 - [x] Commonly Used Styles
 - [x] Double Tap `titleView` Callback
 - [x] `contentView` Scroll Listener
+- [x] iOS 13 Dark Mode Support
 
 ## Requirements
 

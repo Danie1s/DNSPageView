@@ -31,6 +31,7 @@ DNSPageView一个纯Swift的轻量级、灵活且易于使用的`PageView`框架
 - [x] 常见的样式
 - [x] 双击`titleView`的回调
 - [x] `contentView`滑动监听
+- [x] 适配 iOS 13 Dark Mode
 
 ## Requirements
 
