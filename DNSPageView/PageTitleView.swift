@@ -278,7 +278,7 @@ extension PageTitleView {
                                                              options: .usesLineFragmentOrigin,
                                                              attributes: [NSAttributedString.Key.font : style.titleFont],
                                                              context: nil).width + style.titleInset
-                x = i == 0 ? style.titleMargin * 0.5 : (titleLabels[i - 1].frame.maxX + style.titleMargin)
+                x = i == 0 ? style.titleMargin  : (titleLabels[i - 1].frame.maxX + style.titleMargin)
             } else {
                 width = frame.width / CGFloat(count)
                 x = width * CGFloat(i)
