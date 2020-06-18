@@ -49,7 +49,8 @@ public class PageStyle {
     public var bottomLineHeight: CGFloat = 2
     public var bottomLineWidth: CGFloat = 0
     public var bottomLineRadius: CGFloat = 1
-
+    ///下划线距离底部距离
+    public var bottomLineSnpBottom: CGFloat = 0
     
     /// title缩放
     public var isTitleScaleEnabled: Bool = false

@@ -320,7 +320,7 @@ extension PageTitleView {
         bottomLine.frame.size.width = style.bottomLineWidth > 0 ? style.bottomLineWidth : label.frame.width - titleInset
         bottomLine.frame.size.height = style.bottomLineHeight
         bottomLine.center.x = label.center.x
-        bottomLine.frame.origin.y = frame.height - bottomLine.frame.height
+        bottomLine.frame.origin.y = frame.height - bottomLine.frame.height-style.bottomLineSnpBottom
     }
 }
 
