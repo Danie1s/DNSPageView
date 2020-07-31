@@ -19,7 +19,7 @@ class ViewController3: UIViewController {
         style.titleViewBackgroundColor = UIColor.clear
 
         // 设置标题内容
-        let titles = ["头条", "视频", "娱乐", "要问", "体育"]
+        let titles = ["头条", "视频", "娱乐", "要问", "体育","测试mydev"]
 
         for i in 0..<titles.count {
             let controller = ContentViewController()
