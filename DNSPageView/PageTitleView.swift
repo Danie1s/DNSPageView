@@ -125,7 +125,7 @@ open class PageTitleView: UIView {
     override open func layoutSubviews() {
         super.layoutSubviews()
         
-        scrollView.frame = self.bounds
+        scrollView.frame = CGRect(origin: CGPoint.zero, size: frame.size)
         
         setupLabelsLayout()
         setupBottomLineLayout()

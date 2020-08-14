@@ -90,10 +90,10 @@ open class PageContentView: UIView {
 
     override open func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = bounds
+        collectionView.frame = CGRect(origin: CGPoint.zero, size: frame.size)
         let layout = collectionView.collectionViewLayout as! PageCollectionViewFlowLayout
-        layout.itemSize = bounds.size
-        layout.offset = CGFloat(currentIndex) * bounds.size.width
+        layout.itemSize = frame.size
+        layout.offset = CGFloat(currentIndex) * frame.size.width
     }
 }
 
@@ -123,7 +123,8 @@ extension PageContentView: UICollectionViewDataSource {
         let childViewController = childViewControllers[indexPath.item]
 
         eventHandler = childViewController as? PageEventHandleable
-        childViewController.view.frame = cell.contentView.bounds
+        childViewController.view.frame = CGRect(origin: CGPoint.zero, size: cell.contentView.frame.size)
+            
         cell.contentView.addSubview(childViewController.view)
         
         return cell
@@ -158,7 +159,7 @@ extension PageContentView: UICollectionViewDelegate {
     
     
     private func collectionViewDidEndScroll(_ scrollView: UIScrollView) {
-        let index = Int(round(scrollView.contentOffset.x / scrollView.bounds.width))
+        let index = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
         
         delegate?.contentView(self, didEndScrollAt: index)
         
@@ -187,12 +188,12 @@ extension PageContentView: UICollectionViewDelegate {
         var sourceIndex = 0
         
         
-        progress = scrollView.contentOffset.x.truncatingRemainder(dividingBy: scrollView.bounds.width) / scrollView.bounds.width
+        progress = scrollView.contentOffset.x.truncatingRemainder(dividingBy: scrollView.frame.width) / scrollView.frame.width
         if progress == 0 || progress.isNaN {
             return
         }
         
-        let index = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+        let index = Int(scrollView.contentOffset.x / scrollView.frame.width)
         
         if collectionView.contentOffset.x > startOffsetX { // 左滑动
             sourceIndex = index

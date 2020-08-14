@@ -59,11 +59,11 @@ open class PageView: UIView {
 
 extension PageView {
     private func setupUI() {
-        let titleFrame = CGRect(x: 0, y: 0, width: bounds.width, height: style.titleViewHeight)
+        let titleFrame = CGRect(x: 0, y: 0, width: frame.width, height: style.titleViewHeight)
         titleView.frame = titleFrame
         addSubview(titleView)
         
-        let contentFrame = CGRect(x: 0, y: style.titleViewHeight, width: bounds.width, height: bounds.height - style.titleViewHeight)
+        let contentFrame = CGRect(x: 0, y: style.titleViewHeight, width: frame.width, height: frame.height - style.titleViewHeight)
         contentView.frame = contentFrame
         addSubview(contentView)
         
