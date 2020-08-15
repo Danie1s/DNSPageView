@@ -168,8 +168,8 @@ let pageViewManager = PageViewManager(style: style,
 
 
 
-### 使用 pageviewmanager 初始化
-创建 DNSPageViewManager
+### 使用 PageViewManager 初始化
+创建 PageViewManager
 
 ```swift
 private lazy var pageViewManager: PageViewManager = {
