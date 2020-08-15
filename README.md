@@ -17,9 +17,9 @@ DNSPageView 一个纯 Swift 的轻量级、灵活且易于使用的 `PageView` �
 - [Usage](#usage)
   - [直接使用 PageView 初始化](#直接使用pageview初始化)
   - [使用 xib 或者 storyboard 初始化](#使用xib或者storyboard初始化)
-  - [使用 PageViewManager 初始化，再分别对 titleView 和 contentView 进行布局](#使用PageViewManager初始化，再分别对titleView和contentView进行布局)
+  - [使用 PageViewManager 初始化，再分别对 titleView 和 contentView 进行布局](#使用pageViewmanager初始化，再分别对titleview和contentview进行布局)
   - [样式 ](#样式)
-  - [事件监听](#事件监听)
+  - [事件回调](#事件回调)
   - [常见问题](#常见问题)
 - [License](#license)
 
