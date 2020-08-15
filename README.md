@@ -15,10 +15,10 @@ DNSPageView 一个纯 Swift 的轻量级、灵活且易于使用的 `PageView` �
 - [Installation](#installation)
 - [Example](#example)
 - [Usage](#usage)
-  - [直接使用 PageView 初始化](#直接使用 pageview 初始化)
-  - [使用 xib 或者 storyboard 初始化](#使用 xib 或者 storyboard 初始化)
-  - [使用 PageViewManager 初始化，再分别对 titleView 和 contentView 进行布局](#使用 pageviewmanager 初始化，再分别对 titleview 和 contentview 进行布局)
-  - [样式](#样式)
+  - [直接使用 PageView 初始化](#直接使用pageview初始化)
+  - [使用 xib 或者 storyboard 初始化](#使用xib或者storyboard初始化)
+  - [使用 PageViewManager 初始化，再分别对 titleView 和 contentView 进行布局](#使用PageViewManager初始化，再分别对titleView和contentView进行布局)
+  - [样式 ](#样式)
   - [事件监听](#事件监听)
   - [常见问题](#常见问题)
 - [License](#license)
@@ -96,7 +96,7 @@ To run the example project, clone the repo, and run `DNSPageView.xcodeproj` .
 
 ## Usage
 
-### 直接使用 PageView 初始化
+### 直接使用PageView初始化
 
 ```swift
 // 创建 PageStyle，设置样式
@@ -125,7 +125,7 @@ view.addSubview(pageView)
 
 
 
-### 使用 xib 或者 storyboard 初始化
+### 使用xib或者storyboard初始化
 
  在 `xib` 或者 `storyboard` 中拖出 2 个 `UIView`，让它们分别继承 `PageTitleView` 和 `PageContentView`，拖线到代码中
 
@@ -168,7 +168,7 @@ let pageViewManager = PageViewManager(style: style,
 
 
 
-### 使用 PageViewManager 初始化，再分别对 titleView 和 contentView 进行布局
+### 使用PageViewManager初始化，再分别对titleView和contentView进行布局
 
 创建 DNSPageViewManager
 
