@@ -28,22 +28,22 @@ import UIKit
 
 public protocol PageTitleViewDelegate: class {
     
-    /// DNSPageView的事件回调处理者
+    /// DNSPageView 的事件回调处理者
     var eventHandler: PageEventHandleable? { get }
     
     func titleView(_ titleView: PageTitleView, didSelectAt index: Int)
 }
 
-/// DNSPageView的事件回调，如果有需要，请让对应的childViewController遵守这个协议
+/// DNSPageView 的事件回调，如果有需要，请让对应的 childViewController 遵守这个协议
 public protocol PageEventHandleable: class {
     
-    /// 重复点击pageTitleView后调用
+    /// 重复点击 pageTitleView 后调用
     func titleViewDidSelectSameTitle()
     
-    /// pageContentView的上一页消失的时候，上一页对应的controller调用
+    /// pageContentView 的上一页消失的时候，上一页对应的 controller 调用
     func contentViewDidDisappear()
     
-    /// pageContentView滚动停止的时候，当前页对应的controller调用
+    /// pageContentView 滚动停止的时候，当前页对应的 controller 调用
     func contentViewDidEndScroll()
     
 }
@@ -58,20 +58,26 @@ extension PageEventHandleable {
 
 public typealias TitleClickHandler = (PageTitleView, Int) -> ()
 
-open class PageTitleView: UIView {
+public class PageTitleView: UIView {
     
     public weak var delegate: PageTitleViewDelegate?
+    
+    public weak var container: PageViewContainer?
     
     /// 点击标题时调用
     public var clickHandler: TitleClickHandler?
     
-    public var currentIndex: Int
+    private (set) public var currentIndex: Int = 0 {
+        didSet {
+            container?.updateCurrentIndex(currentIndex)
+        }
+    }
     
     private (set) public lazy var titleLabels: [UILabel] = [UILabel]()
     
-    public var style: PageStyle
+    private (set) public var style: PageStyle = PageStyle()
     
-    public var titles: [String]
+    private (set) public var titles: [String] = [String]()
     
     
     private lazy var normalRGB: ColorRGB = style.titleColor.getRGB()
@@ -83,57 +89,45 @@ open class PageTitleView: UIView {
         return (deltaR, deltaG, deltaB)
     }()
     
-    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.scrollsToTop = false
         return scrollView
     }()
     
-    private lazy var bottomLine: UIView = {
-        let bottomLine = UIView()
-        bottomLine.backgroundColor = self.style.bottomLineColor
-        bottomLine.layer.cornerRadius = self.style.bottomLineRadius
-        return bottomLine
-    }()
+    private lazy var bottomLine: UIView = UIView()
     
-    private (set) public lazy var coverView: UIView = {
-        let coverView = UIView()
-        coverView.backgroundColor = self.style.coverViewBackgroundColor
-        coverView.alpha = self.style.coverViewAlpha
-        return coverView
-    }()
+    private (set) public lazy var coverView: UIView = UIView()
     
-    public init(frame: CGRect, style: PageStyle, titles: [String], currentIndex: Int) {
-        self.style = style
-        self.titles = titles
-        self.currentIndex = currentIndex
+    public init(frame: CGRect, style: PageStyle, titles: [String], currentIndex: Int = 0) {
+        assert(currentIndex >= 0 && currentIndex < titles.count,
+               "currentIndex < 0 or currentIndex >= titles.count")
         super.init(frame: frame)
-        setupUI()
+        addSubview(scrollView)
+        configure(titles: titles, style: style, currentIndex: currentIndex)
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        self.style = PageStyle()
-        self.titles = [String]()
-        self.currentIndex = 0
         super.init(coder: aDecoder)
-        
+        addSubview(scrollView)
     }
     
     
-    override open func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
-        
         scrollView.frame = CGRect(origin: CGPoint.zero, size: frame.size)
-        
-        setupLabelsLayout()
-        setupBottomLineLayout()
-        setupCoverViewLayout()
+        guard titles.count > 0 else { return }
+        layoutLabels()
+        layoutBottomLine()
+        layoutCoverView()
     }
     
-    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateColors()
+    }
+
+    private func updateColors() {
         normalRGB = style.titleColor.getRGB()
         selectRGB = style.titleSelectedColor.getRGB()
         let deltaR = selectRGB.red - normalRGB.red
@@ -142,14 +136,12 @@ open class PageTitleView: UIView {
         deltaRGB = (deltaR, deltaG, deltaB)
     }
 
-
-
-    /// 通过代码实现点了某个位置的titleView
+    /// 通过代码实现点了某个位置的 titleView
     ///
-    /// - Parameter index: 需要点击的titleView的下标
-    public func selectedTitle(at index: Int) {
+    /// - Parameter index: 需要点击的 titleView 的索引
+    public func selectedTitle(at index: Int, animated: Bool = true) {
         if index > titles.count || index < 0 {
-            print("DNSPageTitleView -- selectedTitle: 数组越界了, index的值超出有效范围");
+            print("PageTitleView -- selectedTitle: 数组越界了, index的值超出有效范围");
         }
 
         clickHandler?(self, index)
@@ -171,7 +163,7 @@ open class PageTitleView: UIView {
 
         delegate?.titleView(self, didSelectAt: currentIndex)
         
-        adjustLabelPosition(targetLabel)
+        adjustLabelPosition(targetLabel, animated: animated)
         
         if let font = style.titleSelectedFont {
             sourceLabel.font = style.titleFont
@@ -204,68 +196,94 @@ open class PageTitleView: UIView {
 
         sourceLabel.backgroundColor = UIColor.clear
         targetLabel.backgroundColor = style.titleViewSelectedColor
-                
     }
     
 }
 
 
-// MARK: - 设置UI界面
+// MARK: - 构建 UI
 extension PageTitleView {
-    public func setupUI() {
-        addSubview(scrollView)
-        
-        scrollView.backgroundColor = style.titleViewBackgroundColor
-        
-        setupTitleLabels()
-        setupBottomLine()
-        setupCoverView()
+    internal func configure(titles: [String]? = nil, style: PageStyle? = nil, currentIndex: Int? = nil) {
+        if let titles = titles {
+            self.titles = titles
+        }
+        if let style = style {
+            self.style = style
+            updateColors()
+        }
+        if let currentIndex = currentIndex {
+            self.currentIndex = currentIndex
+        }
+        configureSubViews()
+        setNeedsLayout()
     }
     
-    private func setupTitleLabels() {
-        for (i, title) in titles.enumerated() {
-            let label = UILabel()
-            
-            label.tag = i
-            label.text = title
-            label.textColor = i == currentIndex ? style.titleSelectedColor : style.titleColor
-            label.backgroundColor = i == currentIndex ? style.titleViewSelectedColor : UIColor.clear;
-            label.textAlignment = .center
-            label.font = style.titleFont
-            let tapGes = UITapGestureRecognizer(target: self, action: #selector(tapedTitleLabel(_:)))
-            label.addGestureRecognizer(tapGes)
-            label.isUserInteractionEnabled = true
-            
-            scrollView.addSubview(label)
     
-            titleLabels.append(label)
+    private func configureSubViews() {
+        scrollView.backgroundColor = style.titleViewBackgroundColor
+        guard titles.count > 0 else { return }
+        configureLabels()
+        configureBottomLine()
+        configureCoverView()
+    }
+    
+
+    private func configureLabels() {
+        if titles.count == titleLabels.count {
+            for (i, title) in titles.enumerated() {
+                configureLabel(titleLabels[i], i, title)
+            }
+        } else {
+            titleLabels.forEach { $0.removeFromSuperview() }
+            titleLabels = []
+            for (i, title) in titles.enumerated() {
+                let label = UILabel()
+                let tapGes = UITapGestureRecognizer(target: self, action: #selector(tapedTitleLabel(_:)))
+                label.addGestureRecognizer(tapGes)
+                label.isUserInteractionEnabled = true
+                configureLabel(label, i, title)
+                scrollView.addSubview(label)
+                titleLabels.append(label)
+            }
         }
     }
     
-    private func setupBottomLine() {
-        guard style.isShowBottomLine else { return }
-        
+    private func configureLabel(_ label: UILabel, _ i: Int, _ title: String) {
+        label.tag = i
+        label.text = title
+        label.textColor = i == currentIndex ? style.titleSelectedColor : style.titleColor
+        label.backgroundColor = i == currentIndex ? style.titleViewSelectedColor : UIColor.clear;
+        label.textAlignment = .center
+        label.font = style.titleFont
+    }
+    
+    private func configureBottomLine() {
+        guard style.isShowBottomLine else {
+            bottomLine.removeFromSuperview()
+            return
+        }
+        bottomLine.backgroundColor = self.style.bottomLineColor
+        bottomLine.layer.cornerRadius = self.style.bottomLineRadius
         scrollView.addSubview(bottomLine)
     }
     
-    
-    private func setupCoverView() {
-        
-        guard style.isShowCoverView else { return }
-        
-        scrollView.insertSubview(coverView, at: 0)
-        
+    private func configureCoverView() {
+        guard style.isShowCoverView else {
+            coverView.removeFromSuperview()
+            return
+        }
+        coverView.backgroundColor = self.style.coverViewBackgroundColor
+        coverView.alpha = self.style.coverViewAlpha
         coverView.layer.cornerRadius = style.coverViewRadius
         coverView.layer.masksToBounds = true
+        scrollView.insertSubview(coverView, at: 0)
     }
-    
 }
 
 
 // MARK: - Layout
 extension PageTitleView {
-    private func setupLabelsLayout() {
-        
+    private func layoutLabels() {
         var x: CGFloat = 0
         let y: CGFloat = 0
         var width: CGFloat = 0
@@ -289,18 +307,19 @@ extension PageTitleView {
         if let font = style.titleSelectedFont {
             titleLabels[currentIndex].font = font
         }
-        
         if style.isTitleScaleEnabled {
             titleLabels[currentIndex].transform = CGAffineTransform(scaleX: style.titleMaximumScaleFactor, y: style.titleMaximumScaleFactor)
         }
-        
         if style.isTitleViewScrollEnabled {
             guard let titleLabel = titleLabels.last else { return }
             scrollView.contentSize.width = titleLabel.frame.maxX + style.titleMargin * 0.5
         }
+        
+        adjustLabelPosition(titleLabels[currentIndex], animated: false)
+        fixUI(titleLabels[currentIndex])
     }
     
-    private func setupCoverViewLayout() {
+    private func layoutCoverView() {
         guard currentIndex < titleLabels.count else { return }
         let label = titleLabels[currentIndex]
         var width = label.frame.width
@@ -312,7 +331,7 @@ extension PageTitleView {
         coverView.center = label.center
     }
     
-    private func setupBottomLineLayout() {
+    private func layoutBottomLine() {
         guard currentIndex < titleLabels.count else { return }
         let label = titleLabels[currentIndex]
         
@@ -324,17 +343,15 @@ extension PageTitleView {
     }
 }
 
-// MARK: - 监听label的点击
+// MARK: - 监听 label 的点击
 extension PageTitleView {
     @objc private func tapedTitleLabel(_ tapGes : UITapGestureRecognizer) {
         guard let index = tapGes.view?.tag else { return }
         selectedTitle(at: index)
-
     }
 
 
-    
-    private func adjustLabelPosition(_ targetLabel : UILabel) {
+    private func adjustLabelPosition(_ targetLabel : UILabel, animated: Bool) {
         guard style.isTitleViewScrollEnabled,
             scrollView.contentSize.width > scrollView.frame.width
             else { return }
@@ -347,9 +364,7 @@ extension PageTitleView {
         if offsetX > scrollView.contentSize.width - scrollView.frame.width {
             offsetX = scrollView.contentSize.width - scrollView.frame.width
         }
-        
-        scrollView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
-        
+        scrollView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: animated)
     }
 }
 
@@ -372,7 +387,7 @@ extension PageTitleView: PageContentViewDelegate {
         
         currentIndex = index
                 
-        adjustLabelPosition(targetLabel)
+        adjustLabelPosition(targetLabel, animated: true)
         
         fixUI(targetLabel)
     }

@@ -26,40 +26,81 @@
 
 import UIKit
 
-/*
- 通过这个类创建的pageView，titleView和contentView的frame是不确定的，适合于titleView和contentView分开布局的情况
- 需要给titleView和contentView布局，可以用frame或者Autolayout布局
- */
-open class PageViewManager: NSObject {
+public protocol PageViewContainer: class {
+    
+    func updateCurrentIndex(_ index: Int)
+}
+
+
+/// 通过这个类创建的 pageView，titleView 和 contentView 的 frame 是不确定的，适合于 titleView 和 contentView 分开布局的情况
+/// 需要给 titleView 和 contentView 布局，可以使用 frame 或者 Autolayout
+public class PageViewManager {
         
     private (set) public var style: PageStyle
     private (set) public var titles: [String]
     private (set) public var childViewControllers: [UIViewController]
-    private (set) public var startIndex: Int
-    private (set) public lazy var titleView = PageTitleView(frame: .zero, style: style, titles: titles, currentIndex: startIndex)
-    private (set) public lazy var contentView = PageContentView(frame: .zero, style: style, childViewControllers: childViewControllers, currentIndex: startIndex)
+    private (set) public var currentIndex: Int
+    public let titleView: PageTitleView
+    public let contentView: PageContentView
 
-    public init(style: PageStyle, titles: [String], childViewControllers: [UIViewController], startIndex: Int = 0) {
+    public init(style: PageStyle,
+                titles: [String],
+                childViewControllers: [UIViewController],
+                currentIndex: Int = 0,
+                titleView: PageTitleView? = nil,
+                contentView: PageContentView? = nil) {
+        
+        assert(titles.count == childViewControllers.count,
+               "titles.count != childViewControllers.count")
+        assert(currentIndex >= 0 && currentIndex < titles.count,
+               "currentIndex < 0 or currentIndex >= titles.count")
+
         self.style = style
         self.titles = titles
         self.childViewControllers = childViewControllers
-        self.startIndex = startIndex
-        super.init()
+        self.currentIndex = currentIndex
         
-        setupUI()
+        if let titleView = titleView {
+            self.titleView = titleView
+            self.titleView.configure(titles: titles, style: style, currentIndex: currentIndex)
+        } else {
+            self.titleView = PageTitleView(frame: .zero, style: style, titles: titles, currentIndex: currentIndex)
+        }
+        if let contentView = contentView {
+            self.contentView = contentView
+            self.contentView.configure(childViewControllers: childViewControllers, style: style, currentIndex: currentIndex)
+        } else {
+            self.contentView = PageContentView(frame: .zero, style: style, childViewControllers: childViewControllers, currentIndex: currentIndex)
+        }
+        self.titleView.container = self
+        self.contentView.container = self
+        self.titleView.delegate = self.contentView
+        self.contentView.delegate = self.titleView
     }
     
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    public func configure(titles: [String]? = nil,
+                          childViewControllers: [UIViewController]? = nil,
+                          style: PageStyle? = nil) {
+        if let titles = titles {
+           self.titles = titles
+        }
+        if let childViewControllers = childViewControllers {
+           self.childViewControllers = childViewControllers
+        }
+        if let style = style {
+           self.style = style
+        }
+        assert(self.titles.count == self.childViewControllers.count,
+               "titles.count != childViewControllers.count")
+        assert(currentIndex >= 0 && currentIndex < self.titles.count,
+                 "currentIndex < 0 or currentIndex >= titles.count")
+        titleView.configure(titles: titles, style: style)
+        contentView.configure(childViewControllers: childViewControllers, style: style)
     }
-    
 }
 
-
-extension PageViewManager {
-    private func setupUI() {
-        
-        titleView.delegate = contentView
-        contentView.delegate = titleView
+extension PageViewManager: PageViewContainer {
+    public func updateCurrentIndex(_ index: Int) {
+        currentIndex = index
     }
 }

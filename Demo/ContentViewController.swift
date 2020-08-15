@@ -32,7 +32,7 @@ class ContentViewController: UIViewController  {
     }
     
     
-    // pop或者cell复用的时候调用
+    // pop 或者 cell 复用的时候调用
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 //        print("viewDidDisappear，index：\(index)")
@@ -60,7 +60,7 @@ extension ContentViewController: PageEventHandleable {
         print("重复点击了标题，index：\(index)")
     }
 
-    // 当前controller滑动结束的时候调用
+    // 当前 controller 滑动结束的时候调用
     func contentViewDidEndScroll() {
         print("contentView滑动结束，index：\(index)")
     }

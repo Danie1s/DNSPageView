@@ -32,6 +32,7 @@ __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageV
 - [x] Double Tap `titleView` Callback
 - [x] `contentView` Scroll Listener
 - [x] iOS 13 Dark Mode Support
+- [x] Changing styles dynamically
 
 ## Requirements
 
@@ -149,14 +150,6 @@ let titles = ["头条", "视频", "娱乐", "要问", "体育"]
 // Setup staring index
 let startIndex = 2
 
-// Setup titleView
-titleView.titles = titles
-titleView.style = style
-titleView.currentIndex = startIndex
-
-// At last, setupUI()
-titleView.setupUI()
-
 
 // Create child controller for each title
 let childViewControllers: [ContentViewController] = titles.map { _ -> ContentViewController in
@@ -165,17 +158,13 @@ let childViewControllers: [ContentViewController] = titles.map { _ -> ContentVie
     return controller
 }
 
-// Setup contentView
-contentView.childViewControllers = childViewControllers
-contentView.startIndex = startIndex
-contentView.style = style
-
-// Call setupUI()
-contentView.setupUI()
-
-// Setup delegate
-titleView.delegate = contentView
-contentView.delegate = titleView
+// Create PageViewManager
+let pageViewManager = PageViewManager(style: style,
+                                  titles: titles,
+                                  childViewControllers: children,
+                                  currentIndex: currentIndex,
+                                  titleView: titleView,
+                                  contentView: contentView)
 ```
 
 

@@ -33,19 +33,26 @@ public protocol PageContentViewDelegate: class {
 
 
 private let CellID = "CellID"
-open class PageContentView: UIView {
+public class PageContentView: UIView {
     
     public weak var delegate: PageContentViewDelegate?
     
+    public weak var container: PageViewContainer?
+
     public weak var eventHandler: PageEventHandleable?
     
-    public var style: PageStyle
-    
-    public var childViewControllers : [UIViewController]
+    private (set) public var style: PageStyle = PageStyle()
+
+    private (set) public var childViewControllers : [UIViewController] = [UIViewController]()
     
     /// 初始化后，默认显示的页数
-    public var currentIndex: Int
-    
+    private (set) public var currentIndex: Int = 0 {
+        didSet {
+            guard delegate == nil else { return }
+            container?.updateCurrentIndex(currentIndex)
+        }
+    }
+
     private var startOffsetX: CGFloat = 0
     
     private var isForbidDelegate: Bool = false
@@ -72,23 +79,19 @@ open class PageContentView: UIView {
     
     
     public init(frame: CGRect, style: PageStyle, childViewControllers: [UIViewController], currentIndex: Int) {
-        self.childViewControllers = childViewControllers
-        self.style = style
-        self.currentIndex = currentIndex
+        assert(currentIndex >= 0 && currentIndex < childViewControllers.count,
+               "currentIndex < 0 or currentIndex >= childViewControllers.count")
         super.init(frame: frame)
-        setupUI()
+        addSubview(collectionView)
+        configure(childViewControllers: childViewControllers, style: style, currentIndex: currentIndex)
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        self.childViewControllers = [UIViewController]()
-        self.style = PageStyle()
-        self.currentIndex = 0
         super.init(coder: aDecoder)
-        
+        addSubview(collectionView)
     }
     
-
-    override open func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         collectionView.frame = CGRect(origin: CGPoint.zero, size: frame.size)
         let layout = collectionView.collectionViewLayout as! PageCollectionViewFlowLayout
@@ -99,12 +102,25 @@ open class PageContentView: UIView {
 
 
 extension PageContentView {
-    public func setupUI() {
-        addSubview(collectionView)
-        
+    internal func configure(childViewControllers: [UIViewController]? = nil, style: PageStyle? = nil, currentIndex: Int? = nil) {
+        if let childViewControllers = childViewControllers {
+            self.childViewControllers = childViewControllers
+        }
+        if let style = style {
+            self.style = style
+        }
+        if let currentIndex = currentIndex {
+            collectionView.collectionViewLayout.invalidateLayout()
+            self.currentIndex = currentIndex
+        }
+        configureSubViews()
+        collectionView.reloadData()
+        setNeedsLayout()
+    }
+    
+    private func configureSubViews() {
         collectionView.backgroundColor = style.contentViewBackgroundColor
         collectionView.isScrollEnabled = style.isContentScrollEnabled
-
     }
 }
 

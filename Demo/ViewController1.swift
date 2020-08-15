@@ -18,7 +18,7 @@ class ViewController1: UIViewController {
             automaticallyAdjustsScrollViewInsets = false
         }
 
-        // 创建PageStyle，设置样式
+        // 创建 PageStyle，设置样式
         let style = PageStyle()
         style.isTitleViewScrollEnabled = true
         style.titleMargin = 10
@@ -28,9 +28,9 @@ class ViewController1: UIViewController {
 
 
         // 设置标题内容
-        let titles = ["头条", "视频", "娱乐", "要问", "体育" , "科技" , "汽车" , "时尚" , "图片" , "游戏" , "房产"]
+        let titles = ["头条", "视频", "娱乐", "要问", "体育", "科技", "汽车", "时尚", "图片", "游戏", "房产"]
 
-        // 创建每一页对应的controller
+        // 创建每一页对应的 controller
         for i in 0..<titles.count {
             let controller = ContentViewController()
             controller.view.backgroundColor = UIColor.randomColor
@@ -41,8 +41,12 @@ class ViewController1: UIViewController {
         let y = UIApplication.shared.statusBarFrame.height + (navigationController?.navigationBar.frame.height ?? 0)
         let size = UIScreen.main.bounds.size
 
-        // 创建对应的DNSPageView，并设置它的frame
-        let pageView = PageView(frame: CGRect(x: 0, y: y, width: size.width, height: size.height - y), style: style, titles: titles, childViewControllers: children)
+        // 创建对应的 PageView，并设置它的 frame
+        let pageView = PageView(frame: CGRect(x: 0, y: y, width: size.width, height: size.height - y),
+                                style: style,
+                                titles: titles,
+                                childViewControllers: children,
+                                currentIndex: 7)
         view.addSubview(pageView)
     }
 

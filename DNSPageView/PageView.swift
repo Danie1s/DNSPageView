@@ -26,48 +26,87 @@
 
 import UIKit
 
-/*
- 通过这个类创建的pageView，默认titleView和contentView连在一起，效果类似于网易新闻
- 只能用代码创建，不能在xib或者storyboard里面使用
- */
-open class PageView: UIView {
+
+/// 通过这个类创建的 pageView，默认 titleView 和 contentView 连在一起，效果类似于网易新闻
+/// 只能用代码创建，不能在 xib 或者 storyboard 里面使用
+public class PageView: UIView {
     
     private (set) public var style: PageStyle
     private (set) public var titles: [String]
     private (set) public var childViewControllers: [UIViewController]
-    private (set) public var startIndex: Int
-    private (set) public lazy var titleView = PageTitleView(frame: .zero, style: style, titles: titles, currentIndex: startIndex)
-    private (set) public lazy var contentView = PageContentView(frame: .zero, style: style, childViewControllers: childViewControllers, currentIndex: startIndex)
+    private (set) public var currentIndex: Int
+    public let titleView: PageTitleView
+    public let contentView: PageContentView
 
-
-    public init(frame: CGRect, style: PageStyle, titles: [String], childViewControllers: [UIViewController], startIndex: Int = 0) {
+    public init(frame: CGRect,
+                style: PageStyle,
+                titles: [String],
+                childViewControllers: [UIViewController],
+                currentIndex: Int = 0) {
+        assert(titles.count == childViewControllers.count,
+               "titles.count != childViewControllers.count")
+        assert(currentIndex >= 0 && currentIndex < titles.count,
+               "currentIndex < 0 or currentIndex >= titles.count")
         self.style = style
         self.titles = titles
         self.childViewControllers = childViewControllers
-        self.startIndex = startIndex
+        self.currentIndex = currentIndex
+        self.titleView = PageTitleView(frame: CGRect(x: 0,
+                                                     y: 0,
+                                                     width: frame.width,
+                                                     height: style.titleViewHeight),
+                                       style: style,
+                                       titles: titles,
+                                       currentIndex: currentIndex)
+        self.contentView = PageContentView(frame: CGRect(x: 0,
+                                                         y: style.titleViewHeight,
+                                                         width: frame.width,
+                                                         height: frame.height - style.titleViewHeight),
+                                           style: style,
+                                           childViewControllers: childViewControllers,
+                                           currentIndex: currentIndex)
+
         super.init(frame: frame)
-        
-        setupUI()
+
+        addSubview(titleView)
+        addSubview(contentView)
+        titleView.container = self
+        contentView.container = self
+        titleView.delegate = contentView
+        contentView.delegate = titleView
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 
 extension PageView {
-    private func setupUI() {
-        let titleFrame = CGRect(x: 0, y: 0, width: frame.width, height: style.titleViewHeight)
-        titleView.frame = titleFrame
-        addSubview(titleView)
-        
-        let contentFrame = CGRect(x: 0, y: style.titleViewHeight, width: frame.width, height: frame.height - style.titleViewHeight)
-        contentView.frame = contentFrame
-        addSubview(contentView)
-        
-        titleView.delegate = contentView
-        contentView.delegate = titleView
+    public func configure(titles: [String]? = nil,
+                          childViewControllers: [UIViewController]? = nil,
+                          style: PageStyle? = nil) {
+        if let titles = titles {
+           self.titles = titles
+        }
+        if let childViewControllers = childViewControllers {
+           self.childViewControllers = childViewControllers
+        }
+        if let style = style {
+           self.style = style
+        }
+        assert(self.titles.count == self.childViewControllers.count,
+               "titles.count != childViewControllers.count")
+        assert(currentIndex >= 0 && currentIndex < self.titles.count,
+                 "currentIndex < 0 or currentIndex >= titles.count")
+        titleView.configure(titles: titles, style: style)
+        contentView.configure(childViewControllers: childViewControllers, style: style)
+    }
+}
+
+
+extension PageView: PageViewContainer {
+    public func updateCurrentIndex(_ index: Int) {
+        currentIndex = index
     }
 }

@@ -12,7 +12,7 @@ import DNSPageView
 class ViewController3: UIViewController {
 
     private lazy var pageViewManager: PageViewManager = {
-        // 创建PageStyle，设置样式
+        // 创建 PageStyle，设置样式
         let style = PageStyle()
         style.isShowBottomLine = true
         style.isTitleViewScrollEnabled = true
@@ -35,11 +35,11 @@ class ViewController3: UIViewController {
         super.viewDidLoad()
         
 
-        // 单独设置titleView的frame
+        // 单独设置 titleView 的 frame
         navigationItem.titleView = pageViewManager.titleView
         pageViewManager.titleView.frame = CGRect(x: 0, y: 0, width: 180, height: 44)
 
-        // 单独设置contentView的大小和位置，可以使用autolayout或者frame
+        // 单独设置 contentView 的大小和位置，可以使用 autolayout 或者 frame
         let contentView = pageViewManager.contentView
         view.addSubview(pageViewManager.contentView)
         contentView.snp.makeConstraints { (maker) in

@@ -61,6 +61,7 @@
 		E185A58521674E6300225A9F /* ConstraintLayoutGuide+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A56221674E6300225A9F /* ConstraintLayoutGuide+Extensions.swift */; };
 		E185A58621674E6300225A9F /* ConstraintLayoutSupportDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A56321674E6300225A9F /* ConstraintLayoutSupportDSL.swift */; };
 		E185A58721674E6300225A9F /* ConstraintMakerRelatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A56421674E6300225A9F /* ConstraintMakerRelatable.swift */; };
+		E1EBF41924E8364A00697485 /* ViewController5.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBF41824E8364A00697485 /* ViewController5.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +147,7 @@
 		E185A56221674E6300225A9F /* ConstraintLayoutGuide+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConstraintLayoutGuide+Extensions.swift"; sourceTree = "<group>"; };
 		E185A56321674E6300225A9F /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
 		E185A56421674E6300225A9F /* ConstraintMakerRelatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintMakerRelatable.swift; sourceTree = "<group>"; };
+		E1EBF41824E8364A00697485 /* ViewController5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController5.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 				E185A53121674D3700225A9F /* ViewController2.swift */,
 				E185A52F21674D3600225A9F /* ViewController3.swift */,
 				E185A53221674D3700225A9F /* ViewController4.swift */,
+				E1EBF41824E8364A00697485 /* ViewController5.swift */,
 				E185A53721674D4B00225A9F /* ContentViewController.swift */,
 				E185A52321674C7700225A9F /* Main.storyboard */,
 				E185A52621674C7800225A9F /* Assets.xcassets */,
@@ -426,6 +429,7 @@
 				E185A57021674E6300225A9F /* ConstraintPriority.swift in Sources */,
 				E185A57421674E6300225A9F /* ConstraintView.swift in Sources */,
 				E185A58221674E6300225A9F /* ConstraintRelatableTarget.swift in Sources */,
+				E1EBF41924E8364A00697485 /* ViewController5.swift in Sources */,
 				E185A57921674E6300225A9F /* ConstraintOffsetTarget.swift in Sources */,
 				E185A56921674E6300225A9F /* ConstraintAttributes.swift in Sources */,
 				E185A53621674D3700225A9F /* ViewController4.swift in Sources */,
@@ -607,7 +611,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Daniels.DNSPageView;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -637,7 +641,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Daniels.DNSPageView;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
