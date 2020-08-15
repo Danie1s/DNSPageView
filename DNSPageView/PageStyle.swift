@@ -37,6 +37,7 @@ public class PageStyle {
     public var titleViewBackgroundColor: UIColor = UIColor.white
     public var titleViewSelectedColor: UIColor = UIColor.clear
     public var titleMargin: CGFloat = 30
+    public var titleInset: CGFloat = 0
 
     
     /// titleView滑动

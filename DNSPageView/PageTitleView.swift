@@ -56,6 +56,7 @@ extension PageEventHandleable {
     func contentViewDidEndScroll() {}
 }
 
+public typealias TitleClickHandler = (PageTitleView, Int) -> ()
 
 open class PageTitleView: UIView {
     
@@ -73,12 +74,12 @@ open class PageTitleView: UIView {
     public var titles: [String]
     
     
-    private lazy var normalRGB: ColorRGB = self.style.titleColor.getRGB()
-    private lazy var selectRGB: ColorRGB = self.style.titleSelectedColor.getRGB()
+    private lazy var normalRGB: ColorRGB = style.titleColor.getRGB()
+    private lazy var selectRGB: ColorRGB = style.titleSelectedColor.getRGB()
     private lazy var deltaRGB: ColorRGB = {
-        let deltaR = self.selectRGB.red - self.normalRGB.red
-        let deltaG = self.selectRGB.green - self.normalRGB.green
-        let deltaB = self.selectRGB.blue - self.normalRGB.blue
+        let deltaR = selectRGB.red - normalRGB.red
+        let deltaG = selectRGB.green - normalRGB.green
+        let deltaB = selectRGB.blue - normalRGB.blue
         return (deltaR, deltaG, deltaB)
     }()
     
@@ -131,6 +132,15 @@ open class PageTitleView: UIView {
         setupBottomLineLayout()
         setupCoverViewLayout()
     }
+    
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        normalRGB = style.titleColor.getRGB()
+        selectRGB = style.titleSelectedColor.getRGB()
+        let deltaR = selectRGB.red - normalRGB.red
+        let deltaG = selectRGB.green - normalRGB.green
+        let deltaB = selectRGB.blue - normalRGB.blue
+        deltaRGB = (deltaR, deltaG, deltaB)
+    }
 
 
 
@@ -176,15 +186,18 @@ open class PageTitleView: UIView {
         }
 
         if style.isShowBottomLine {
+            let titleInset = style.isTitleViewScrollEnabled ? style.titleInset : 0
             UIView.animate(withDuration: 0.25, animations: {
-                self.bottomLine.frame.size.width = self.style.bottomLineWidth > 0 ? self.style.bottomLineWidth : targetLabel.frame.width
+                self.bottomLine.frame.size.width = self.style.bottomLineWidth > 0 ?
+                    self.style.bottomLineWidth : targetLabel.frame.width - titleInset
                 self.bottomLine.center.x = targetLabel.center.x
             })
         }
 
         if style.isShowCoverView {
             UIView.animate(withDuration: 0.25, animations: {
-                self.coverView.frame.size.width = self.style.isTitleViewScrollEnabled ? (targetLabel.frame.width + self.style.coverMargin * 2) : targetLabel.frame.width
+                self.coverView.frame.size.width = self.style.isTitleViewScrollEnabled ?
+                    (targetLabel.frame.width + self.style.coverMargin * 2) : targetLabel.frame.width
                 self.coverView.center.x = targetLabel.center.x
             })
         }
@@ -264,7 +277,7 @@ extension PageTitleView {
                 width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0),
                                                              options: .usesLineFragmentOrigin,
                                                              attributes: [NSAttributedString.Key.font : style.titleFont],
-                                                             context: nil).width
+                                                             context: nil).width + style.titleInset
                 x = i == 0 ? style.titleMargin * 0.5 : (titleLabels[i - 1].frame.maxX + style.titleMargin)
             } else {
                 width = frame.width / CGFloat(count)
@@ -303,7 +316,8 @@ extension PageTitleView {
         guard currentIndex < titleLabels.count else { return }
         let label = titleLabels[currentIndex]
         
-        bottomLine.frame.size.width = style.bottomLineWidth > 0 ? style.bottomLineWidth : label.frame.width
+        let titleInset = style.isTitleViewScrollEnabled ? style.titleInset : 0
+        bottomLine.frame.size.width = style.bottomLineWidth > 0 ? style.bottomLineWidth : label.frame.width - titleInset
         bottomLine.frame.size.height = style.bottomLineHeight
         bottomLine.center.x = label.center.x
         bottomLine.frame.origin.y = frame.height - bottomLine.frame.height
@@ -352,6 +366,7 @@ extension PageTitleView: PageContentViewDelegate {
             targetLabel.font = font
         }
 
+        sourceLabel.textColor = style.titleColor
         sourceLabel.backgroundColor = UIColor.clear
         targetLabel.backgroundColor = style.titleViewSelectedColor
         
@@ -371,19 +386,25 @@ extension PageTitleView: PageContentViewDelegate {
         }
         let sourceLabel = titleLabels[sourceIndex]
         let targetLabel = titleLabels[targetIndex]
-        sourceLabel.textColor = UIColor(r: selectRGB.red - progress * deltaRGB.red, g: selectRGB.green - progress * deltaRGB.green, b: selectRGB.blue - progress * deltaRGB.blue)
-        targetLabel.textColor = UIColor(r: normalRGB.red + progress * deltaRGB.red, g: normalRGB.green + progress * deltaRGB.green, b: normalRGB.blue + progress * deltaRGB.blue)
-        
+        sourceLabel.textColor = UIColor((selectRGB.red - progress * deltaRGB.red,
+                                         selectRGB.green - progress * deltaRGB.green,
+                                         selectRGB.blue - progress * deltaRGB.blue))
+        targetLabel.textColor = UIColor((normalRGB.red + progress * deltaRGB.red,
+                                         normalRGB.green + progress * deltaRGB.green,
+                                         normalRGB.blue + progress * deltaRGB.blue))
         if style.isTitleScaleEnabled {
             let deltaScale = style.titleMaximumScaleFactor - 1.0
-            sourceLabel.transform = CGAffineTransform(scaleX: style.titleMaximumScaleFactor - progress * deltaScale, y: style.titleMaximumScaleFactor - progress * deltaScale)
-            targetLabel.transform = CGAffineTransform(scaleX: 1.0 + progress * deltaScale, y: 1.0 + progress * deltaScale)
+            sourceLabel.transform = CGAffineTransform(scaleX: style.titleMaximumScaleFactor - progress * deltaScale,
+                                                      y: style.titleMaximumScaleFactor - progress * deltaScale)
+            targetLabel.transform = CGAffineTransform(scaleX: 1.0 + progress * deltaScale,
+                                                      y: 1.0 + progress * deltaScale)
         }
         
         if style.isShowBottomLine {
             if style.bottomLineWidth <= 0 {
+                let titleInset = style.isTitleViewScrollEnabled ? style.titleInset : 0
                 let deltaWidth = targetLabel.frame.width - sourceLabel.frame.width
-                bottomLine.frame.size.width = sourceLabel.frame.width + progress * deltaWidth
+                bottomLine.frame.size.width = sourceLabel.frame.width - titleInset + progress * deltaWidth
             }
             let deltaCenterX = targetLabel.center.x - sourceLabel.center.x
             bottomLine.center.x = sourceLabel.center.x + progress * deltaCenterX
@@ -391,7 +412,9 @@ extension PageTitleView: PageContentViewDelegate {
 
         if style.isShowCoverView {
             let deltaWidth = targetLabel.frame.width - sourceLabel.frame.width
-            coverView.frame.size.width = style.isTitleViewScrollEnabled ? (sourceLabel.frame.width + 2 * style.coverMargin + deltaWidth * progress) : (sourceLabel.frame.width + deltaWidth * progress)
+            coverView.frame.size.width = style.isTitleViewScrollEnabled ?
+                (sourceLabel.frame.width + 2 * style.coverMargin + deltaWidth * progress) :
+                (sourceLabel.frame.width + deltaWidth * progress)
             let deltaCenterX = targetLabel.center.x - sourceLabel.center.x
             coverView.center.x = sourceLabel.center.x + deltaCenterX * progress
         }
@@ -407,13 +430,16 @@ extension PageTitleView: PageContentViewDelegate {
             
             if self.style.isShowBottomLine {
                 if self.style.bottomLineWidth <= 0 {
-                    self.bottomLine.frame.size.width = targetLabel.frame.width
+                    let titleInset = self.style.isTitleViewScrollEnabled ? self.style.titleInset : 0
+                    self.bottomLine.frame.size.width = targetLabel.frame.width - titleInset
                 }
                 self.bottomLine.center.x = targetLabel.center.x
             }
             
             if self.style.isShowCoverView {
-                self.coverView.frame.size.width = self.style.isTitleViewScrollEnabled ? (targetLabel.frame.width + 2 * self.style.coverMargin) : targetLabel.frame.width
+                self.coverView.frame.size.width = self.style.isTitleViewScrollEnabled ?
+                    (targetLabel.frame.width + 2 * self.style.coverMargin) :
+                    targetLabel.frame.width
                 self.coverView.center.x = targetLabel.center.x
             }
         }

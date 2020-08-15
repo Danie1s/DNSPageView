@@ -21,7 +21,9 @@ class ViewController1: UIViewController {
         // 创建PageStyle，设置样式
         let style = PageStyle()
         style.isTitleViewScrollEnabled = true
-        style.titleSelectedFont = UIFont.systemFont(ofSize: 11)
+        style.titleMargin = 10
+        style.titleInset = 20
+        style.titleSelectedFont = UIFont.systemFont(ofSize: 20)
 //        style.isTitleScaleEnabled = true
 
 
