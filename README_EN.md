@@ -15,12 +15,12 @@ __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageV
 - [Installation](#installation)
 - [Example](#example)
 - [Usage](#usage)
-  - [Initialize PageView Programmatically](#直接使用pageview初始化)
-  - [Initialize by xib or storyboard](#使用xib或者storyboard初始化)
-  - [Initialize by PageViewManager, then setup titleView and contentView's layout](#使用pageviewmanager初始化，再分别对titleview和contentview进行布局)
-  - [Styles](#样式)
-  - [Event Listener](#事件监听)
-  - [FAQ](#常见问题)
+  - [Initialize with PageView](#initialize-with-pageview)
+  - [Initialize from xib or storyboard](#initialize-from-xib-or-storyboard)
+  - [Initialize from PageViewManager](#initialize-from-pageviewmanager)
+  - [Styles](#styles)
+  - [Event Callbacks](#event-callbacks)
+  - [FAQ](#faq)
 - [License](#license)
 
 ## Features:
@@ -169,7 +169,7 @@ let pageViewManager = PageViewManager(style: style,
 
 
 
-### Initialize from PageViewManager，then setup `titleView` and `contentView` layout
+### Initialize from PageViewManager
 
 Create `PageViewManager`
 
