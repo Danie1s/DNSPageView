@@ -141,7 +141,7 @@ public class PageTitleView: UIView {
     /// - Parameter index: 需要点击的 titleView 的索引
     public func selectedTitle(at index: Int, animated: Bool = true) {
         if index > titles.count || index < 0 {
-            print("PageTitleView -- selectedTitle: 数组越界了, index的值超出有效范围");
+            print("PageTitleView -- selectedTitle: 数组越界了, index 的值超出有效范围");
         }
 
         clickHandler?(self, index)
@@ -262,8 +262,8 @@ extension PageTitleView {
             bottomLine.removeFromSuperview()
             return
         }
-        bottomLine.backgroundColor = self.style.bottomLineColor
-        bottomLine.layer.cornerRadius = self.style.bottomLineRadius
+        bottomLine.backgroundColor = style.bottomLineColor
+        bottomLine.layer.cornerRadius = style.bottomLineRadius
         scrollView.addSubview(bottomLine)
     }
     
@@ -272,8 +272,8 @@ extension PageTitleView {
             coverView.removeFromSuperview()
             return
         }
-        coverView.backgroundColor = self.style.coverViewBackgroundColor
-        coverView.alpha = self.style.coverViewAlpha
+        coverView.backgroundColor = style.coverViewBackgroundColor
+        coverView.alpha = style.coverViewAlpha
         coverView.layer.cornerRadius = style.coverViewRadius
         coverView.layer.masksToBounds = true
         scrollView.insertSubview(coverView, at: 0)

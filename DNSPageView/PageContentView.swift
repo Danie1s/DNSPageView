@@ -78,7 +78,7 @@ public class PageContentView: UIView {
     }()
     
     
-    public init(frame: CGRect, style: PageStyle, childViewControllers: [UIViewController], currentIndex: Int) {
+    public init(frame: CGRect, style: PageStyle, childViewControllers: [UIViewController], currentIndex: Int = 0) {
         assert(currentIndex >= 0 && currentIndex < childViewControllers.count,
                "currentIndex < 0 or currentIndex >= childViewControllers.count")
         super.init(frame: frame)
