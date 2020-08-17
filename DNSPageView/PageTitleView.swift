@@ -142,6 +142,7 @@ public class PageTitleView: UIView {
     public func selectedTitle(at index: Int, animated: Bool = true) {
         if index > titles.count || index < 0 {
             print("PageTitleView -- selectedTitle: 数组越界了, index 的值超出有效范围");
+            return;
         }
 
         clickHandler?(self, index)
@@ -196,6 +197,16 @@ public class PageTitleView: UIView {
 
         sourceLabel.backgroundColor = UIColor.clear
         targetLabel.backgroundColor = style.titleViewSelectedColor
+    }
+    
+    public func updateTitle(_ title: String, at index: Int) {
+        if index > titles.count || index < 0 {
+            print("PageTitleView -- updateTitle(_:at:): 数组越界了, index 的值超出有效范围");
+            return;
+        }
+        titles[index] = title
+        titleLabels[index].text = title
+        setNeedsLayout()
     }
     
 }

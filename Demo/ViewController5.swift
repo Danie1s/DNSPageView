@@ -81,9 +81,20 @@ class ViewController5: UIViewController {
     }
     
     @objc func change() {
-        changeTitles()
+        changeTitle()
+        
+//        changeTitles()
         
 //        changeAll()
+    }
+    
+    func changeTitle() {
+        if !changed {
+            pageViewManager.titleView.updateTitle("JavaScript", at: 3)
+        } else {
+            pageViewManager.titleView.updateTitle("王者荣耀", at: 3)
+        }
+        changed.toggle()
     }
     
     func changeTitles() {
