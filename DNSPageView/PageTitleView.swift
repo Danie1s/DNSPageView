@@ -79,6 +79,7 @@ public class PageTitleView: UIView {
     
     private (set) public var titles: [String] = [String]()
     
+    private lazy var titLableWidthConstraints = [NSLayoutConstraint]()
     
     private lazy var normalRGB: ColorRGB = style.titleColor.getRGB()
     private lazy var selectRGB: ColorRGB = style.titleSelectedColor.getRGB()
@@ -96,6 +97,18 @@ public class PageTitleView: UIView {
         return scrollView
     }()
     
+    private lazy var scrollContainView: UIView = {
+        let scrollContainView = UIView()
+        scrollContainView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollContainView
+    }()
+    
+    
+    private lazy var widthConstraint = NSLayoutConstraint(item: scrollContainView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
+    
+    private lazy var heightConstraint = NSLayoutConstraint(item: scrollContainView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
+
+    
     private lazy var bottomLine: UIView = UIView()
     
     private (set) public lazy var coverView: UIView = UIView()
@@ -104,13 +117,13 @@ public class PageTitleView: UIView {
         assert(currentIndex >= 0 && currentIndex < titles.count,
                "currentIndex < 0 or currentIndex >= titles.count")
         super.init(frame: frame)
-        addSubview(scrollView)
+        configureScrollView()
         configure(titles: titles, style: style, currentIndex: currentIndex)
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        addSubview(scrollView)
+        configureScrollView()
     }
     
     
@@ -214,6 +227,16 @@ public class PageTitleView: UIView {
 
 // MARK: - 构建 UI
 extension PageTitleView {
+    private func configureScrollView() {
+        addSubview(scrollView)
+
+        scrollView.addSubview(scrollContainView)
+        scrollView.addConstraint(NSLayoutConstraint(item: scrollContainView, attribute: .leading, relatedBy: .equal, toItem: scrollView, attribute: .leading, multiplier: 1, constant: 0))
+        scrollView.addConstraint(NSLayoutConstraint(item: scrollContainView, attribute: .top, relatedBy: .equal, toItem: scrollView, attribute: .top, multiplier: 1, constant: 0))
+        scrollView.addConstraint(NSLayoutConstraint(item: scrollContainView, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1, constant: 0))
+        scrollView.addConstraint(NSLayoutConstraint(item: scrollContainView, attribute: .trailing, relatedBy: .equal, toItem: scrollView, attribute: .trailing, multiplier: 1, constant: 0))
+    }
+    
     internal func configure(titles: [String]? = nil, style: PageStyle? = nil, currentIndex: Int? = nil) {
         if let titles = titles {
             self.titles = titles
@@ -253,9 +276,34 @@ extension PageTitleView {
                 label.addGestureRecognizer(tapGes)
                 label.isUserInteractionEnabled = true
                 configureLabel(label, i, title)
-                scrollView.addSubview(label)
+                scrollContainView.addSubview(label)
                 titleLabels.append(label)
             }
+        }
+        scrollContainView.removeConstraints(scrollContainView.constraints)
+        scrollContainView.addConstraints([widthConstraint, heightConstraint])
+        var preLabel: UILabel?
+        titLableWidthConstraints.removeAll()
+        for (i, titleLabel) in titleLabels.enumerated() {
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.removeConstraints(titleLabel.constraints)
+            let margin: CGFloat
+            if style.isTitleViewScrollEnabled {
+                margin = i == 0 ? style.titleMargin * 0.5 : style.titleMargin
+            } else {
+                margin = 0
+            }
+            titleLabel.transform = CGAffineTransform.identity
+            if let preLabel = preLabel {
+                scrollContainView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: preLabel, attribute: .trailing, multiplier: 1, constant: margin))
+            } else {
+                scrollContainView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: scrollContainView, attribute: .leading, multiplier: 1, constant: margin))
+            }
+            scrollContainView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .centerY, relatedBy: .equal, toItem: scrollContainView, attribute: .centerY, multiplier: 1, constant: 0))
+            let widthConstraint = NSLayoutConstraint(item: titleLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
+            titleLabel.addConstraint(widthConstraint)
+            titLableWidthConstraints.append(widthConstraint)
+            preLabel = titleLabel
         }
     }
     
@@ -275,7 +323,7 @@ extension PageTitleView {
         }
         bottomLine.backgroundColor = style.bottomLineColor
         bottomLine.layer.cornerRadius = style.bottomLineRadius
-        scrollView.addSubview(bottomLine)
+        scrollContainView.addSubview(bottomLine)
     }
     
     private func configureCoverView() {
@@ -287,7 +335,7 @@ extension PageTitleView {
         coverView.alpha = style.coverViewAlpha
         coverView.layer.cornerRadius = style.coverViewRadius
         coverView.layer.masksToBounds = true
-        scrollView.insertSubview(coverView, at: 0)
+        scrollContainView.insertSubview(coverView, at: 0)
     }
 }
 
@@ -295,39 +343,39 @@ extension PageTitleView {
 // MARK: - Layout
 extension PageTitleView {
     private func layoutLabels() {
-        var x: CGFloat = 0
-        let y: CGFloat = 0
-        var width: CGFloat = 0
-        let height = frame.height
-        
-        let count = titleLabels.count
-        for (i, titleLabel) in titleLabels.enumerated() {
+        var width = scrollView.frame.width / CGFloat(titleLabels.count)
+
+        for (i, title) in titles.enumerated() {
             if style.isTitleViewScrollEnabled {
-                width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0),
+                width = (title as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0),
                                                              options: .usesLineFragmentOrigin,
                                                              attributes: [NSAttributedString.Key.font : style.titleFont],
                                                              context: nil).width + style.titleInset
-                x = i == 0 ? style.titleMargin * 0.5 : (titleLabels[i - 1].frame.maxX + style.titleMargin)
-            } else {
-                width = frame.width / CGFloat(count)
-                x = width * CGFloat(i)
+                width = ceil(width)
             }
-            titleLabel.transform = CGAffineTransform.identity
-            titleLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+            titLableWidthConstraints[i].constant = width
         }
+
         if let font = style.titleSelectedFont {
             titleLabels[currentIndex].font = font
         }
         if style.isTitleScaleEnabled {
             titleLabels[currentIndex].transform = CGAffineTransform(scaleX: style.titleMaximumScaleFactor, y: style.titleMaximumScaleFactor)
         }
-        if style.isTitleViewScrollEnabled {
-            guard let titleLabel = titleLabels.last else { return }
-            scrollView.contentSize.width = titleLabel.frame.maxX + style.titleMargin * 0.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            if self.style.isTitleViewScrollEnabled {
+                guard let titleLabel = self.titleLabels.last else { return }
+                self.widthConstraint.constant = titleLabel.frame.maxX + self.style.titleMargin * 0.5
+            } else {
+                self.widthConstraint.constant = self.scrollView.frame.width
+            }
+            self.heightConstraint.constant = self.scrollView.frame.height
         }
         
-        adjustLabelPosition(titleLabels[currentIndex], animated: false)
-        fixUI(titleLabels[currentIndex])
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.adjustLabelPosition(self.titleLabels[self.currentIndex], animated: false)
+            self.fixUI(self.titleLabels[self.currentIndex])
+        }
     }
     
     private func layoutCoverView() {
@@ -339,7 +387,10 @@ extension PageTitleView {
             width += 2 * style.coverMargin
         }
         coverView.frame.size = CGSize(width: width, height: height)
-        coverView.center = label.center
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
+            self.coverView.center = label.center
+        }
+        
     }
     
     private func layoutBottomLine() {
