@@ -33,8 +33,8 @@ class ViewController1: UIViewController {
         // 创建每一页对应的 controller
         for i in 0..<titles.count {
             let controller = ContentViewController()
-            controller.view.backgroundColor = UIColor.randomColor
             controller.index = i
+            controller.view.backgroundColor = UIColor.random
             addChild(controller)
         }
 

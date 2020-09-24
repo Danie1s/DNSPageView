@@ -67,7 +67,7 @@ public class PageTitleView: UIView {
     /// 点击标题时调用
     public var clickHandler: TitleClickHandler?
     
-    private (set) public var currentIndex: Int = 0 {
+    private (set) public var currentIndex: Int {
         didSet {
             container?.updateCurrentIndex(currentIndex)
         }
@@ -103,12 +103,14 @@ public class PageTitleView: UIView {
     public init(frame: CGRect, style: PageStyle, titles: [String], currentIndex: Int = 0) {
         assert(currentIndex >= 0 && currentIndex < titles.count,
                "currentIndex < 0 or currentIndex >= titles.count")
+        self.currentIndex = UIView.dns.isRightToLeftLayoutDirection(UIView()) ? titles.count - 1 : 0
         super.init(frame: frame)
         addSubview(scrollView)
         configure(titles: titles, style: style, currentIndex: currentIndex)
     }
     
     required public init?(coder aDecoder: NSCoder) {
+        self.currentIndex = UIView.dns.isRightToLeftLayoutDirection(UIView()) ? titles.count - 1 : 0
         super.init(coder: aDecoder)
         addSubview(scrollView)
     }
@@ -299,22 +301,69 @@ extension PageTitleView {
         let y: CGFloat = 0
         var width: CGFloat = 0
         let height = frame.height
-        
         let count = titleLabels.count
-        for (i, titleLabel) in titleLabels.enumerated() {
+        let averageWidth: CGFloat = frame.width / CGFloat(count)
+        if UIView.dns.isRightToLeftLayoutDirection(self) {
             if style.isTitleViewScrollEnabled {
-                width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0),
-                                                             options: .usesLineFragmentOrigin,
-                                                             attributes: [NSAttributedString.Key.font : style.titleFont],
-                                                             context: nil).width + style.titleInset
-                x = i == 0 ? style.titleMargin * 0.5 : (titleLabels[i - 1].frame.maxX + style.titleMargin)
+                // 根据总长度是否超过 frame.width，分两种情况布局
+                var outOfBounds = false
+                var preTitleLabelMaxX: CGFloat = 0
+                // 如果总长度超过 frame.width，倒序布局
+                for (i, titleLabel) in titleLabels.reversed().enumerated() {
+                    width = ((titleLabel.text ?? "") as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0),
+                                                                               options: .usesLineFragmentOrigin,
+                                                                               attributes: [NSAttributedString.Key.font : style.titleFont],
+                                                                               context: nil).width + style.titleInset
+                    
+                    x = i == 0 ? style.titleMargin * 0.5 : (preTitleLabelMaxX + style.titleMargin)
+                    preTitleLabelMaxX = x + width
+                    titleLabel.transform = CGAffineTransform.identity
+                    titleLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+                    if x + width > frame.width {
+                        outOfBounds = true
+                    }
+                }
+                // 如果总长度不超过 frame.width，顺序布局，但需要从右到左
+                if !outOfBounds {
+                    for (i, titleLabel) in titleLabels.enumerated() {
+                        width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0),
+                                                                     options: .usesLineFragmentOrigin,
+                                                                     attributes: [NSAttributedString.Key.font : style.titleFont],
+                                                                     context: nil).width + style.titleInset
+                        if i == 0 {
+                            x = frame.width - width - style.titleMargin
+                        } else {
+                            x = titleLabels[i - 1].frame.origin.x - width - style.titleMargin
+                        }
+                        titleLabel.transform = CGAffineTransform.identity
+                        titleLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+                    }
+                }
             } else {
-                width = frame.width / CGFloat(count)
-                x = width * CGFloat(i)
+                for (i, titleLabel) in titleLabels.enumerated() {
+                    width = averageWidth
+                    x = frame.width - width * CGFloat(i + 1)
+                    titleLabel.transform = CGAffineTransform.identity
+                    titleLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+                }
             }
-            titleLabel.transform = CGAffineTransform.identity
-            titleLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+        } else {
+            for (i, titleLabel) in titleLabels.enumerated() {
+                if style.isTitleViewScrollEnabled {
+                    width = (titles[i] as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 0),
+                                                                 options: .usesLineFragmentOrigin,
+                                                                 attributes: [NSAttributedString.Key.font : style.titleFont],
+                                                                 context: nil).width + style.titleInset
+                    x = i == 0 ? style.titleMargin * 0.5 : (titleLabels[i - 1].frame.maxX + style.titleMargin)
+                } else {
+                    width = averageWidth
+                    x = width * CGFloat(i)
+                }
+                titleLabel.transform = CGAffineTransform.identity
+                titleLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+            }
         }
+        
         if let font = style.titleSelectedFont {
             titleLabels[currentIndex].font = font
         }
@@ -322,7 +371,7 @@ extension PageTitleView {
             titleLabels[currentIndex].transform = CGAffineTransform(scaleX: style.titleMaximumScaleFactor, y: style.titleMaximumScaleFactor)
         }
         if style.isTitleViewScrollEnabled {
-            guard let titleLabel = titleLabels.last else { return }
+            guard let titleLabel = UIView.dns.isRightToLeftLayoutDirection(self) ? titleLabels.first : titleLabels.last else { return }
             scrollView.contentSize.width = titleLabel.frame.maxX + style.titleMargin * 0.5
         }
         

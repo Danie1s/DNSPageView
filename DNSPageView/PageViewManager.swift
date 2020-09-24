@@ -58,7 +58,7 @@ public class PageViewManager {
         self.style = style
         self.titles = titles
         self.childViewControllers = childViewControllers
-        self.currentIndex = currentIndex
+        self.currentIndex = UIView.dns.isRightToLeftLayoutDirection(UIView()) ? titles.count - currentIndex - 1 : currentIndex
         
         if let titleView = titleView {
             self.titleView = titleView

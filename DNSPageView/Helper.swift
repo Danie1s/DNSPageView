@@ -64,6 +64,20 @@ public extension DNSExtension where ExtendedType: UIColor {
     }
 }
 
+extension UIView: DNSExtended {}
+public extension DNSExtension where ExtendedType: UIView {
+    
+    static func isRightToLeftLayoutDirection(_ view: UIView) -> Bool {
+        if #available(iOS 9.0, *), UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute) == .rightToLeft {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+
+
 
 typealias ColorRGB = (red: CGFloat, green: CGFloat, blue: CGFloat)
 
@@ -82,4 +96,5 @@ extension UIColor {
         return (red * 255, green * 255, blue * 255)
     }
 }
+
 

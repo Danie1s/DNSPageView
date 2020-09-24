@@ -31,12 +31,12 @@ class ViewController4: UIViewController {
         let titles = ["微信支付", "支付宝"]
         for i in 0..<titles.count {
             let controller = ContentViewController()
-            controller.view.backgroundColor = UIColor.randomColor
             controller.index = i
+            controller.view.backgroundColor = UIColor.random
             addChild(controller)
         }
 
-        return PageViewManager(style: style, titles: titles, childViewControllers: children)
+        return PageViewManager(style: style, titles: titles, childViewControllers: children, currentIndex: 1)
     }()
 
     override func viewDidLoad() {

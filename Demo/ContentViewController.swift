@@ -13,6 +13,28 @@ class ContentViewController: UIViewController  {
     
     var index: Int = 0
     
+    let pageControl = UIPageControl()
+    
+    lazy var collectionView: UICollectionView = {
+        
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.addSubview(collectionView)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width, height: 200)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .horizontal
+        
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isPagingEnabled = true
+        collectionView.scrollsToTop = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.bounces = false
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "reuseID")
+        return collectionView
+    }()
+    
     lazy var button: UIButton = {
         let button = UIButton()
         button.setTitle("点击我进行push", for: .normal)
@@ -21,16 +43,44 @@ class ContentViewController: UIViewController  {
         button.backgroundColor = UIColor.white
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(button)
-        button.snp.makeConstraints { (maker) in
+        collectionView.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
+            maker.width.equalToSuperview()
+            maker.height.equalTo(300)
         }
+        
+        
+        pageControl.numberOfPages = 3
+        pageControl.currentPage = 0
+        pageControl.pageIndicatorTintColor = UIColor.gray
+        pageControl.currentPageIndicatorTintColor = UIColor.blue
+        view.addSubview(pageControl)
+        pageControl.snp.makeConstraints { (maker) in
+            maker.centerX.equalToSuperview()
+            maker.bottom.equalToSuperview().offset(-100)
+        }
+        
+        let label = UILabel()
+        label.text = "pageView 第 \(index) 页"
+        label.textColor = UIColor.white
+        view.addSubview(label)
+        label.snp.makeConstraints { (maker) in
+            maker.centerX.equalToSuperview()
+            maker.top.equalToSuperview().offset(100)
+        }
+        
     }
-    
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = collectionView.frame.size
+        
+    }
     
     // pop 或者 cell 复用的时候调用
     override func viewDidDisappear(_ animated: Bool) {
@@ -67,5 +117,32 @@ extension ContentViewController: PageEventHandleable {
     
     func contentViewDidDisappear() {
         print("我消失了，index：\(index)")
+    }
+}
+
+
+
+extension ContentViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reuseID", for: indexPath)
+        cell.backgroundColor = UIColor.random
+        let label = UILabel()
+        label.text = "内部 collectionView 第 \(indexPath.item) 页"
+        label.textColor = UIColor.white
+        cell.addSubview(label)
+        label.snp.makeConstraints { (maker) in
+            maker.center.equalToSuperview()
+        }
+        return cell
+    }
+    
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        pageControl.currentPage = pageControl.numberOfPages - Int(round(scrollView.contentOffset.x / scrollView.frame.width)) - 1
     }
 }

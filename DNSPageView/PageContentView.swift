@@ -46,7 +46,7 @@ public class PageContentView: UIView {
     private (set) public var childViewControllers : [UIViewController] = [UIViewController]()
     
     /// 初始化后，默认显示的页数
-    private (set) public var currentIndex: Int = 0 {
+    private (set) public var currentIndex: Int {
         didSet {
             guard delegate == nil else { return }
             container?.updateCurrentIndex(currentIndex)
@@ -81,12 +81,14 @@ public class PageContentView: UIView {
     public init(frame: CGRect, style: PageStyle, childViewControllers: [UIViewController], currentIndex: Int = 0) {
         assert(currentIndex >= 0 && currentIndex < childViewControllers.count,
                "currentIndex < 0 or currentIndex >= childViewControllers.count")
+        self.currentIndex = UIView.dns.isRightToLeftLayoutDirection(UIView()) ? childViewControllers.count - currentIndex - 1 : currentIndex
         super.init(frame: frame)
         addSubview(collectionView)
         configure(childViewControllers: childViewControllers, style: style, currentIndex: currentIndex)
     }
     
     required public init?(coder aDecoder: NSCoder) {
+        self.currentIndex = UIView.dns.isRightToLeftLayoutDirection(UIView()) ? childViewControllers.count - 1 : 0
         super.init(coder: aDecoder)
         addSubview(collectionView)
     }
@@ -96,7 +98,9 @@ public class PageContentView: UIView {
         collectionView.frame = CGRect(origin: CGPoint.zero, size: frame.size)
         let layout = collectionView.collectionViewLayout as! PageCollectionViewFlowLayout
         layout.itemSize = frame.size
-        layout.offset = CGFloat(currentIndex) * frame.size.width
+        let index = UIView.dns.isRightToLeftLayoutDirection(self) ? childViewControllers.count - currentIndex - 1 : currentIndex
+        layout.offset = CGFloat(index) * frame.size.width
+        layout.invalidateLayout()
     }
 }
 
@@ -159,7 +163,7 @@ extension PageContentView: UICollectionViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateUI(scrollView)
-        
+        print(scrollView.contentOffset.x)
     }
     
     
@@ -175,7 +179,13 @@ extension PageContentView: UICollectionViewDelegate {
     
     
     private func collectionViewDidEndScroll(_ scrollView: UIScrollView) {
-        let index = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
+        let index: Int
+        
+        if UIView.dns.isRightToLeftLayoutDirection(self) {
+            index = Int(round((scrollView.contentSize.width - scrollView.contentOffset.x) / scrollView.frame.width)) - 1
+        } else {
+            index = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
+        }
         
         delegate?.contentView(self, didEndScrollAt: index)
         
@@ -208,21 +218,18 @@ extension PageContentView: UICollectionViewDelegate {
         if progress == 0 || progress.isNaN {
             return
         }
-        
         let index = Int(scrollView.contentOffset.x / scrollView.frame.width)
-        
+        let isRTL = UIView.dns.isRightToLeftLayoutDirection(self)
         if collectionView.contentOffset.x > startOffsetX { // 左滑动
-            sourceIndex = index
-            targetIndex = index + 1
-            guard targetIndex < childViewControllers.count else { return }
+            sourceIndex = isRTL ? childViewControllers.count - index  - 1: index
+            targetIndex = isRTL ? childViewControllers.count - index - 2 : index + 1
         } else {
-            sourceIndex = index + 1
-            targetIndex = index
+            sourceIndex = isRTL ? childViewControllers.count - index - 2 : index + 1
+            targetIndex = isRTL ? childViewControllers.count - index - 1: index
             progress = 1 - progress
-            if targetIndex < 0 {
-                return
-            }
         }
+        guard targetIndex < childViewControllers.count && targetIndex >= 0 else { return }
+
         
         if progress > 0.998 {
             progress = 1
