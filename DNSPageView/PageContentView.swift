@@ -96,7 +96,12 @@ public class PageContentView: UIView {
         collectionView.frame = CGRect(origin: CGPoint.zero, size: frame.size)
         let layout = collectionView.collectionViewLayout as! PageCollectionViewFlowLayout
         layout.itemSize = frame.size
+      if #available(iOS 9.0, *), UIView.userInterfaceLayoutDirection(for: collectionView.semanticContentAttribute) == .rightToLeft {
+        layout.offset = collectionView.contentSize.width - CGFloat(currentIndex) * frame.size.width
+      } else {
         layout.offset = CGFloat(currentIndex) * frame.size.width
+      }
+      layout.invalidateLayout()
     }
 }
 
