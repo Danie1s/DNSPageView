@@ -163,7 +163,6 @@ extension PageContentView: UICollectionViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateUI(scrollView)
-        print(scrollView.contentOffset.x)
     }
     
     
