@@ -13,13 +13,25 @@ class ContentViewController: UIViewController  {
     
     var index: Int = 0
     
-    let pageControl = UIPageControl()
+    var isRTL: Bool = false {
+        didSet {
+            collectionView.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+            pageControl.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+        }
+    }
+
+    lazy var pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.numberOfPages = 3
+        pageControl.currentPage = 0
+        pageControl.pageIndicatorTintColor = UIColor.gray
+        pageControl.currentPageIndicatorTintColor = UIColor.blue
+        return pageControl
+    }()
     
     lazy var collectionView: UICollectionView = {
-        
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.addSubview(collectionView)
         layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width, height: 200)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
@@ -46,7 +58,9 @@ class ContentViewController: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.random
         
+        view.addSubview(collectionView)
         collectionView.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
             maker.width.equalToSuperview()
@@ -54,10 +68,6 @@ class ContentViewController: UIViewController  {
         }
         
         
-        pageControl.numberOfPages = 3
-        pageControl.currentPage = 0
-        pageControl.pageIndicatorTintColor = UIColor.gray
-        pageControl.currentPageIndicatorTintColor = UIColor.blue
         view.addSubview(pageControl)
         pageControl.snp.makeConstraints { (maker) in
             maker.centerX.equalToSuperview()
@@ -133,6 +143,7 @@ extension ContentViewController: UICollectionViewDataSource, UICollectionViewDel
         let label = UILabel()
         label.text = "内部 collectionView 第 \(indexPath.item) 页"
         label.textColor = UIColor.white
+        cell.subviews.forEach { $0.removeFromSuperview() }
         cell.addSubview(label)
         label.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
@@ -141,8 +152,8 @@ extension ContentViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        pageControl.currentPage = pageControl.numberOfPages - Int(round(scrollView.contentOffset.x / scrollView.frame.width)) - 1
+        let index = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
+        pageControl.currentPage = isRTL ? pageControl.numberOfPages - index - 1 : index
     }
 }

@@ -17,6 +17,7 @@ class ViewController4: UIViewController {
         style.isShowBottomLine = true
         style.isTitleViewScrollEnabled = true
         style.titleViewBackgroundColor = UIColor.clear
+        style.userInterfaceLayoutDirection = .forceRightToLeft
         // 适配 dark mode
         if #available(iOS 13.0, *) {
             style.titleSelectedColor = UIColor.dns.dynamic(UIColor.red, dark: UIColor.blue)
@@ -32,11 +33,11 @@ class ViewController4: UIViewController {
         for i in 0..<titles.count {
             let controller = ContentViewController()
             controller.index = i
-            controller.view.backgroundColor = UIColor.random
+            controller.isRTL = style.isRTL
             addChild(controller)
         }
 
-        return PageViewManager(style: style, titles: titles, childViewControllers: children, currentIndex: 1)
+        return PageViewManager(style: style, titles: titles, childViewControllers: children)
     }()
 
     override func viewDidLoad() {
@@ -45,7 +46,6 @@ class ViewController4: UIViewController {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
-
 
         let titleView = pageViewManager.titleView
         view.addSubview(titleView)

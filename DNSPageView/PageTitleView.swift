@@ -103,14 +103,14 @@ public class PageTitleView: UIView {
     public init(frame: CGRect, style: PageStyle, titles: [String], currentIndex: Int = 0) {
         assert(currentIndex >= 0 && currentIndex < titles.count,
                "currentIndex < 0 or currentIndex >= titles.count")
-        self.currentIndex = UIView.dns.isRightToLeftLayoutDirection(UIView()) ? titles.count - 1 : 0
+        self.currentIndex = style.isRTL ? titles.count - 1 : 0
         super.init(frame: frame)
         addSubview(scrollView)
         configure(titles: titles, style: style, currentIndex: currentIndex)
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        self.currentIndex = UIView.dns.isRightToLeftLayoutDirection(UIView()) ? titles.count - 1 : 0
+        self.currentIndex = style.isRTL ? titles.count - 1 : 0
         super.init(coder: aDecoder)
         addSubview(scrollView)
     }
@@ -303,7 +303,7 @@ extension PageTitleView {
         let height = frame.height
         let count = titleLabels.count
         let averageWidth: CGFloat = frame.width / CGFloat(count)
-        if UIView.dns.isRightToLeftLayoutDirection(self) {
+        if style.isRTL {
             if style.isTitleViewScrollEnabled {
                 // 根据总长度是否超过 frame.width，分两种情况布局
                 var outOfBounds = false
@@ -371,7 +371,7 @@ extension PageTitleView {
             titleLabels[currentIndex].transform = CGAffineTransform(scaleX: style.titleMaximumScaleFactor, y: style.titleMaximumScaleFactor)
         }
         if style.isTitleViewScrollEnabled {
-            guard let titleLabel = UIView.dns.isRightToLeftLayoutDirection(self) ? titleLabels.first : titleLabels.last else { return }
+            guard let titleLabel = style.isRTL ? titleLabels.first : titleLabels.last else { return }
             scrollView.contentSize.width = titleLabel.frame.maxX + style.titleMargin * 0.5
         }
         

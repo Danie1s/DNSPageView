@@ -66,9 +66,9 @@ public extension DNSExtension where ExtendedType: UIColor {
 
 extension UIView: DNSExtended {}
 public extension DNSExtension where ExtendedType: UIView {
-    
-    static func isRightToLeftLayoutDirection(_ view: UIView) -> Bool {
-        if #available(iOS 9.0, *), UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute) == .rightToLeft {
+    static func isRightToLeftLayoutDirection(_ view: UIView? = nil) -> Bool {
+        let context: UIView = view ?? UIView.appearance()
+        if UIView.userInterfaceLayoutDirection(for: context.semanticContentAttribute) == .rightToLeft {
             return true
         } else {
             return false

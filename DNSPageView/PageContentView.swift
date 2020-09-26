@@ -41,7 +41,11 @@ public class PageContentView: UIView {
 
     public weak var eventHandler: PageEventHandleable?
     
-    private (set) public var style: PageStyle = PageStyle()
+    private (set) public var style: PageStyle = PageStyle() {
+        didSet {
+            collectionView.semanticContentAttribute = style.isRTL ? .forceRightToLeft : .forceLeftToRight
+        }
+    }
 
     private (set) public var childViewControllers : [UIViewController] = [UIViewController]()
     
@@ -81,14 +85,14 @@ public class PageContentView: UIView {
     public init(frame: CGRect, style: PageStyle, childViewControllers: [UIViewController], currentIndex: Int = 0) {
         assert(currentIndex >= 0 && currentIndex < childViewControllers.count,
                "currentIndex < 0 or currentIndex >= childViewControllers.count")
-        self.currentIndex = UIView.dns.isRightToLeftLayoutDirection(UIView()) ? childViewControllers.count - currentIndex - 1 : currentIndex
+        self.currentIndex = style.isRTL ? childViewControllers.count - currentIndex - 1 : currentIndex
         super.init(frame: frame)
         addSubview(collectionView)
         configure(childViewControllers: childViewControllers, style: style, currentIndex: currentIndex)
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        self.currentIndex = UIView.dns.isRightToLeftLayoutDirection(UIView()) ? childViewControllers.count - 1 : 0
+        self.currentIndex = style.isRTL ? childViewControllers.count - 1 : 0
         super.init(coder: aDecoder)
         addSubview(collectionView)
     }
@@ -98,7 +102,7 @@ public class PageContentView: UIView {
         collectionView.frame = CGRect(origin: CGPoint.zero, size: frame.size)
         let layout = collectionView.collectionViewLayout as! PageCollectionViewFlowLayout
         layout.itemSize = frame.size
-        let index = UIView.dns.isRightToLeftLayoutDirection(self) ? childViewControllers.count - currentIndex - 1 : currentIndex
+        let index = style.isRTL ? childViewControllers.count - currentIndex - 1 : currentIndex
         layout.offset = CGFloat(index) * frame.size.width
         layout.invalidateLayout()
     }
@@ -180,7 +184,7 @@ extension PageContentView: UICollectionViewDelegate {
     private func collectionViewDidEndScroll(_ scrollView: UIScrollView) {
         let index: Int
         
-        if UIView.dns.isRightToLeftLayoutDirection(self) {
+        if style.isRTL {
             index = Int(round((scrollView.contentSize.width - scrollView.contentOffset.x) / scrollView.frame.width)) - 1
         } else {
             index = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
@@ -218,13 +222,13 @@ extension PageContentView: UICollectionViewDelegate {
             return
         }
         let index = Int(scrollView.contentOffset.x / scrollView.frame.width)
-        let isRTL = UIView.dns.isRightToLeftLayoutDirection(self)
+        let isRTL = style.isRTL
         if collectionView.contentOffset.x > startOffsetX { // 左滑动
-            sourceIndex = isRTL ? childViewControllers.count - index  - 1: index
+            sourceIndex = isRTL ? childViewControllers.count - index - 1 : index
             targetIndex = isRTL ? childViewControllers.count - index - 2 : index + 1
         } else {
             sourceIndex = isRTL ? childViewControllers.count - index - 2 : index + 1
-            targetIndex = isRTL ? childViewControllers.count - index - 1: index
+            targetIndex = isRTL ? childViewControllers.count - index - 1 : index
             progress = 1 - progress
         }
         guard targetIndex < childViewControllers.count && targetIndex >= 0 else { return }

@@ -42,7 +42,7 @@ class ViewController2: UIViewController {
         for i in 0..<titles.count {
             let controller = ContentViewController()
             controller.index = i
-            controller.view.backgroundColor = UIColor.random
+            controller.isRTL = style.isRTL
             addChild(controller)
         }
 
