@@ -85,14 +85,14 @@ public class PageContentView: UIView {
     public init(frame: CGRect, style: PageStyle, childViewControllers: [UIViewController], currentIndex: Int = 0) {
         assert(currentIndex >= 0 && currentIndex < childViewControllers.count,
                "currentIndex < 0 or currentIndex >= childViewControllers.count")
-        self.currentIndex = style.isRTL ? childViewControllers.count - currentIndex - 1 : currentIndex
+        self.currentIndex = currentIndex
         super.init(frame: frame)
         addSubview(collectionView)
         configure(childViewControllers: childViewControllers, style: style, currentIndex: currentIndex)
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        self.currentIndex = style.isRTL ? childViewControllers.count - 1 : 0
+        self.currentIndex = 0
         super.init(coder: aDecoder)
         addSubview(collectionView)
     }
@@ -102,8 +102,7 @@ public class PageContentView: UIView {
         collectionView.frame = CGRect(origin: CGPoint.zero, size: frame.size)
         let layout = collectionView.collectionViewLayout as! PageCollectionViewFlowLayout
         layout.itemSize = frame.size
-        let index = style.isRTL ? childViewControllers.count - currentIndex - 1 : currentIndex
-        layout.offset = CGFloat(index) * frame.size.width
+        layout.offset = CGFloat(currentIndex) * frame.size.width
         layout.invalidateLayout()
     }
 }
@@ -182,13 +181,8 @@ extension PageContentView: UICollectionViewDelegate {
     
     
     private func collectionViewDidEndScroll(_ scrollView: UIScrollView) {
-        let index: Int
         
-        if style.isRTL {
-            index = Int(round((scrollView.contentSize.width - scrollView.contentOffset.x) / scrollView.frame.width)) - 1
-        } else {
-            index = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
-        }
+        let index = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
         
         delegate?.contentView(self, didEndScrollAt: index)
         
@@ -222,13 +216,12 @@ extension PageContentView: UICollectionViewDelegate {
             return
         }
         let index = Int(scrollView.contentOffset.x / scrollView.frame.width)
-        let isRTL = style.isRTL
         if collectionView.contentOffset.x > startOffsetX { // 左滑动
-            sourceIndex = isRTL ? childViewControllers.count - index - 1 : index
-            targetIndex = isRTL ? childViewControllers.count - index - 2 : index + 1
+            sourceIndex = index
+            targetIndex = index + 1
         } else {
-            sourceIndex = isRTL ? childViewControllers.count - index - 2 : index + 1
-            targetIndex = isRTL ? childViewControllers.count - index - 1 : index
+            sourceIndex = index + 1
+            targetIndex = index
             progress = 1 - progress
         }
         guard targetIndex < childViewControllers.count && targetIndex >= 0 else { return }

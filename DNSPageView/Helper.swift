@@ -79,21 +79,22 @@ public extension DNSExtension where ExtendedType: UIView {
 
 
 
-typealias ColorRGB = (red: CGFloat, green: CGFloat, blue: CGFloat)
+typealias ColorRGBA = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
 
 extension UIColor {
     
-    convenience init(_ rgb: ColorRGB, alpha: CGFloat = 1.0) {
-        self.init(red: rgb.red / 255.0, green: rgb.green / 255.0, blue: rgb.blue / 255.0, alpha: alpha)
+    convenience init(_ rgba: ColorRGBA) {
+        self.init(red: rgba.red / 255.0, green: rgba.green / 255.0, blue: rgba.blue / 255.0, alpha: rgba.alpha)
     }
     
     
-    func getRGB() -> ColorRGB {
+    func getRGBA() -> ColorRGBA {
         var red: CGFloat = 0
         var green: CGFloat = 0
         var blue: CGFloat = 0
-        getRed(&red, green: &green, blue: &blue, alpha: nil)
-        return (red * 255, green * 255, blue * 255)
+        var alpha: CGFloat = 0
+        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        return (red * 255, green * 255, blue * 255, alpha)
     }
 }
 

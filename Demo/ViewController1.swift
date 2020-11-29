@@ -24,6 +24,7 @@ class ViewController1: UIViewController {
         style.titleMargin = 10
         style.titleInset = 20
         style.titleSelectedFont = UIFont.systemFont(ofSize: 20)
+        style.userInterfaceLayoutDirection = .forceRightToLeft
 //        style.isTitleScaleEnabled = true
 
 
