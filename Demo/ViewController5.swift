@@ -33,8 +33,8 @@ class ViewController5: UIViewController {
         let titles = ["NBA", "CBA", "英雄联盟", "王者荣耀", "中国足球", "国际足球"]
         for i in 0..<titles.count {
             let controller = ContentViewController()
-            controller.view.backgroundColor = UIColor.randomColor
             controller.index = i
+            controller.isRTL = style.isRTL
             addChild(controller)
         }
 
@@ -119,8 +119,8 @@ class ViewController5: UIViewController {
             children.forEach { $0.removeFromParent() }
             for i in 0..<titles.count {
                 let controller = ContentViewController()
-                controller.view.backgroundColor = UIColor.randomColor
                 controller.index = i
+                controller.isRTL = style.isRTL
                 addChild(controller)
             }
             pageViewManager.configure(titles: titles, childViewControllers: self.children, style: style)
@@ -143,8 +143,8 @@ class ViewController5: UIViewController {
             children.forEach { $0.removeFromParent() }
             for i in 0..<titles.count {
                 let controller = ContentViewController()
-                controller.view.backgroundColor = UIColor.randomColor
                 controller.index = i
+                controller.isRTL = style.isRTL
                 addChild(controller)
             }
             pageViewManager.configure(titles: titles, childViewControllers: self.children, style: style)

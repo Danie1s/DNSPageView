@@ -50,7 +50,7 @@ public class PageView: UIView {
         self.style = style
         self.titles = titles
         self.childViewControllers = childViewControllers
-        self.currentIndex = currentIndex
+        self.currentIndex = style.isRTL ? self.titles.count - currentIndex - 1 : currentIndex
         self.titleView = PageTitleView(frame: CGRect(x: 0,
                                                      y: 0,
                                                      width: frame.width,

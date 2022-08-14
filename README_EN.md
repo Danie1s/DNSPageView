@@ -33,10 +33,11 @@ __NOTE__: Please refer to [DNSPageView-ObjC](https://github.com/Danie1s/DNSPageV
 - [x] `contentView` Scroll Listener
 - [x] iOS 13 Dark Mode Support
 - [x] Changing styles dynamically
+- [x] RTL Layout
 
 ## Requirements
 
-- iOS 8.0+
+- iOS 9.0+
 
 - Xcode 10.0+
 

@@ -17,6 +17,7 @@ class ViewController4: UIViewController {
         style.isShowBottomLine = true
         style.isTitleViewScrollEnabled = true
         style.titleViewBackgroundColor = UIColor.clear
+        style.userInterfaceLayoutDirection = .forceRightToLeft
         // 适配 dark mode
         if #available(iOS 13.0, *) {
             style.titleSelectedColor = UIColor.dns.dynamic(UIColor.red, dark: UIColor.blue)
@@ -31,8 +32,8 @@ class ViewController4: UIViewController {
         let titles = ["微信支付", "支付宝"]
         for i in 0..<titles.count {
             let controller = ContentViewController()
-            controller.view.backgroundColor = UIColor.randomColor
             controller.index = i
+            controller.isRTL = style.isRTL
             addChild(controller)
         }
 
@@ -45,7 +46,6 @@ class ViewController4: UIViewController {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
-
 
         let titleView = pageViewManager.titleView
         view.addSubview(titleView)

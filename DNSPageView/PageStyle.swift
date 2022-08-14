@@ -28,6 +28,12 @@ import UIKit
 
 public class PageStyle {
     
+    public enum UserInterfaceLayoutDirection {
+        case unspecified
+        case forceLeftToRight
+        case forceRightToLeft
+    }
+    
     /// titleView
     public var titleViewHeight: CGFloat = 44
     public var titleColor: UIColor = UIColor.black
@@ -68,8 +74,22 @@ public class PageStyle {
     public var isContentScrollEnabled : Bool = true
     public var contentViewBackgroundColor = UIColor.white
     
+    /// 设置布局方向，默认跟随系统
+    public var userInterfaceLayoutDirection: UserInterfaceLayoutDirection = .unspecified
     
-    public init() {
-        
+    /// 获取当前 PageView 实际的布局方向
+    public var isRTL: Bool {
+        get {
+            switch userInterfaceLayoutDirection {
+            case .unspecified:
+                return UIView.dns.isRightToLeftLayoutDirection()
+            case .forceLeftToRight:
+                return false
+            case .forceRightToLeft:
+                return true
+            }
+        }
     }
+    
+    public init() {}
 }

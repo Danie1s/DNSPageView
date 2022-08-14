@@ -35,4 +35,8 @@ public class PageCollectionViewFlowLayout: UICollectionViewFlowLayout {
         guard let offset = offset else { return }
         collectionView?.contentOffset = CGPoint(x: offset, y: 0)
     }
+    
+    public override var flipsHorizontallyInOppositeLayoutDirection: Bool {
+        return true
+    }
 }

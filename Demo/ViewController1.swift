@@ -24,6 +24,7 @@ class ViewController1: UIViewController {
         style.titleMargin = 10
         style.titleInset = 20
         style.titleSelectedFont = UIFont.systemFont(ofSize: 20)
+        style.userInterfaceLayoutDirection = .forceRightToLeft
 //        style.isTitleScaleEnabled = true
 
 
@@ -33,8 +34,8 @@ class ViewController1: UIViewController {
         // 创建每一页对应的 controller
         for i in 0..<titles.count {
             let controller = ContentViewController()
-            controller.view.backgroundColor = UIColor.randomColor
             controller.index = i
+            controller.isRTL = style.isRTL
             addChild(controller)
         }
 

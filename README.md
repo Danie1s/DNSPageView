@@ -33,10 +33,11 @@ DNSPageView 一个纯 Swift 的轻量级、灵活且易于使用的 `PageView` �
 - [x] `contentView` 滑动监听
 - [x] 适配 iOS 13 Dark Mode
 - [x] 动态改变样式
+- [x] 适配 RTL 布局
 
 ## Requirements
 
-- iOS 8.0+
+- iOS 9.0+
 - Xcode 10.2+
 - Swift 5.0+
 
