@@ -26,7 +26,7 @@
 
 import UIKit
 
-public protocol PageTitleViewDelegate: class {
+public protocol PageTitleViewDelegate: AnyObject {
     
     /// DNSPageView 的事件回调处理者
     var eventHandler: PageEventHandleable? { get }
@@ -35,7 +35,7 @@ public protocol PageTitleViewDelegate: class {
 }
 
 /// DNSPageView 的事件回调，如果有需要，请让对应的 childViewController 遵守这个协议
-public protocol PageEventHandleable: class {
+public protocol PageEventHandleable: AnyObject {
     
     /// 重复点击 pageTitleView 后调用
     func titleViewDidSelectSameTitle()

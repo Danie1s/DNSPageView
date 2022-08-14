@@ -26,7 +26,7 @@
 
 import UIKit
 
-public protocol PageViewContainer: class {
+public protocol PageViewContainer: AnyObject {
     
     func updateCurrentIndex(_ index: Int)
 }

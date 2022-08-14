@@ -58,7 +58,7 @@ To integrate DNSPageView into your Xcode project using CocoaPods, specify it in 
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
 target '<Your Target Name>' do
@@ -272,5 +272,4 @@ DNSPageView 提供了常见事件监听回调，它属于 `PageTitleViewDelegate
 ## License
 
 DNSPageView is available under the MIT license. See the LICENSE file for more info.
-
 

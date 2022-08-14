@@ -26,7 +26,7 @@
 
 import UIKit
 
-public protocol PageContentViewDelegate: class {
+public protocol PageContentViewDelegate: AnyObject {
     func contentView(_ contentView: PageContentView, didEndScrollAt index: Int)
     func contentView(_ contentView: PageContentView, scrollingWith sourceIndex: Int, targetIndex: Int, progress: CGFloat)
 }
